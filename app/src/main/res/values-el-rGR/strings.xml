@@ -132,7 +132,7 @@
     <string name="attestation_challenge">Πρόκληση βεβαίωσης</string>
     <string name="attestation_challenge_description">Περιέχει την πρόκληση που δόθηκε τη στιγμή της δημιουργίας κλειδιού. Ελέγξτε αν αυτή η τιμή ταιριάζει με την τιμή που έδωσε ο διακομιστής σας. Διαφορετικά, η υπηρεσία σας μπορεί να είναι ευάλωτη στην επανάληψη των παλαιών πιστοποιητικών βεβαίωσης.</string>
     <string name="unique_id">Μοναδικό Αναγνωριστικό</string>
-    <string name="unique_id_description"><![CDATA[Αυτή η τιμή προσδιορίζει τη συσκευή, αλλά μόνο για περιορισμένο χρονικό διάστημα. It is <a href="https://source.android.com/security/keystore/attestation#unique-id">computed</a> και χρησιμοποιείται μόνο από εφαρμογές συστήματος. Σε όλες τις άλλες εφαρμογές, το μοναδικό αναγνωριστικό είναι κενό.]]></string>
+    <string name="unique_id_description"><![CDATA[Αυτή η τιμή προσδιορίζει τη συσκευή, αλλά μόνο για περιορισμένο χρονικό διάστημα. Είναι <a href="https://source.android.com/security/keystore/attestation#unique-id">υπολογισμένο</a> και χρησιμοποιείται μόνο από εφαρμογές συστήματος. Σε όλες τις άλλες εφαρμογές, το μοναδικό αναγνωριστικό είναι κενό.]]></string>
 
     <string name="empty">(κενό)</string>
     <string name="security_level_software">Λογισμικό</string>
