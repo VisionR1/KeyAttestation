@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Key Attestation</string>
+    <string name="app_name">Βεβαίωση Κλειδιού</string>
+    <string name="menu_language">Γλώσσα</string>
     <string name="secret_mode">Μυστική Λειτουργία</string>
     <string name="use_shizuku">Χρήση Shizuku</string>
     <string name="use_sak">Χρήση βεβαίωσης Knox</string>
@@ -284,13 +285,13 @@
     Παρέχει την επωνυμία της συσκευής, όπως επιστρέφεται από το Build.BRAND στο Android. Αυτό το πεδίο ορίζεται μόνο όταν ζητείται πιστοποίηση των αναγνωριστικών της συσκευής.
     ]]></string>
     <string name="authorization_list_attestationIdDevice_description"><![CDATA[
-    Παρέχει το όνομα της συσκευής της συσκευής, όπως επιστρέφεται από το Build.DEVICE στο Android.. Αυτό το πεδίο ορίζεται μόνο όταν ζητείται πιστοποίηση των αναγνωριστικών της συσκευής.
+    Παρέχει το όνομα της συσκευής της συσκευής, όπως επιστρέφεται από το Build.DEVICE στο Android. Αυτό το πεδίο ορίζεται μόνο όταν ζητείται πιστοποίηση των αναγνωριστικών της συσκευής.
     ]]></string>
     <string name="authorization_list_attestationIdProduct_description"><![CDATA[
     Παρέχει το όνομα προϊόντος της συσκευής, όπως επιστράφηκε από το Build.PRODUCT στο Android. Αυτό το πεδίο ορίζεται μόνο όταν ζητείται πιστοποίηση των αναγνωριστικών της συσκευής.
     ]]></string>
     <string name="authorization_list_attestationIdSerial_description"><![CDATA[
-    Παρέχει τον σειριακό αριθμό της συσκευής.. Αυτό το πεδίο ορίζεται μόνο όταν ζητείται πιστοποίηση των αναγνωριστικών της συσκευής.
+    Παρέχει τον σειριακό αριθμό της συσκευής. Αυτό το πεδίο ορίζεται μόνο όταν ζητείται πιστοποίηση των αναγνωριστικών της συσκευής.
     ]]></string>
     <string name="authorization_list_attestationIdImei_description"><![CDATA[
     Παρέχει στο IMEI ένα από τα ραδιόφωνα της συσκευής για πιστοποιημένες λειτουργίες παραγωγής/εισαγωγής κλειδιών. Αυτό το πεδίο ορίζεται μόνο όταν ζητείται πιστοποίηση των αναγνωριστικών της συσκευής.

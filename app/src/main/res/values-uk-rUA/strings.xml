@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Атестація ключів</string>
+    <string name="menu_language">Мова</string>
     <string name="secret_mode">Режим прихованості</string>
     <string name="use_shizuku">Використовувати Shizuku</string>
     <string name="use_sak">Використовувати атестацію Knox</string>

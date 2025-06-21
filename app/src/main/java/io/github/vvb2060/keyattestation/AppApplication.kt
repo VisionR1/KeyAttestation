@@ -7,6 +7,7 @@ import android.content.pm.PackageManager
 import android.widget.Toast
 import androidx.arch.core.executor.ArchTaskExecutor
 import io.github.vvb2060.keyattestation.keystore.KeyStoreManager
+import io.github.vvb2060.keyattestation.util.LocaleManager
 import org.bouncycastle.jce.provider.BouncyCastleProvider
 import rikka.html.text.HtmlCompat
 import rikka.material.app.DayNightDelegate
@@ -31,6 +32,7 @@ class AppApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        LocaleManager.loadLocale(this)
         app = this
         DayNightDelegate.setApplicationContext(this)
         DayNightDelegate.setDefaultNightMode(DayNightDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
