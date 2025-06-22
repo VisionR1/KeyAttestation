@@ -12,6 +12,7 @@ object LocaleManager {
         return listOf(
             Locale("en"),
             Locale("el"),
+            Locale("bg"),
             Locale("pt", "BR"),
             Locale("uk", "UA"),
             Locale("zh", "CN"),

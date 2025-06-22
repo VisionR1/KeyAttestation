@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Потвърждение на ключ</string>
+    <string name="secret_mode">Тайнен режим</string>
+    <string name="use_shizuku">Използвай Shizuku</string>
+    <string name="use_sak">Използвай Knox потвърждение</string>
+    <string name="use_strongbox">Използвай StrongBox</string>
+    <string name="use_attest_key">Използвай ключ за потвърждение</string>
+    <string name="import_attest_key">Импортирай ключ за потвърждение</string>
+    <string name="attest_device_props">Потвърди свойства на устройството</string>
+    <string name="id_type_serial">Потвърди сериен номер</string>
+    <string name="id_type_imei">Потвърди IMEI</string>
+    <string name="id_type_meid">Потвърди MEID</string>
+    <string name="include_unique_id">Включи уникален ID</string>
+    <string name="rkp_test">RKP тест</string>
+    <string name="reset">Нулирай</string>
+    <string name="load_certs">Зареди от файл</string>
+    <string name="save_certs">Запази във файл</string>
+    <string name="about">Относно</string>
+    <string name="open_source_info">Софтуерът е с отворен код под %2$s (%1$s).</string>
+    <string name="install_shizuku">Инсталирай Shizuku за потвърждение на ID (%s).</string>
+    <string name="start_shizuku">Shizuku не работи.</string>
+
+    <string name="bootloader_locked">Bootloader е заключен</string>
+    <string name="bootloader_user">Доверието е зададено от потребител</string>
+    <string name="bootloader_unlocked">Bootloader е отключен</string>
+    <string name="bootloader_unknown">Състоянието на bootloader е неизвестно</string>
+    <string name="bootloader_summary_sw_level">Устройството не поддържа потвърждение на хардуерно ниво.</string>
+    <string name="cert_chain_not_trusted">Веригата от сертификати не е доверена</string>
+    <string name="cert_chain_not_trusted_summary">Сертификатът е отозван или веригата не може да бъде валидирана.</string>
+    <string name="unknown_root_cert">Неизвестен коренов сертификат</string>
+    <string name="unknown_root_cert_summary">Кореновият сертификат не е познат доверен издател.</string>
+    <string name="aosp_root_cert">Коренов сертификат на AOSP</string>
+    <string name="aosp_root_cert_summary">Частният ключ е публично известен - веригата може да бъде променяна.</string>
+    <string name="google_root_cert">Коренов сертификат на Google</string>
+    <string name="google_root_cert_summary">GMS съвместимите устройства използват ключове, подписани от Google.</string>
+    <string name="google_root_cert_rkp">Google RKP (дистанционно предоставяне)</string>
+    <string name="google_root_cert_rkp_summary">Дистанционно предоставените ключове имат по-висока сигурност.</string>
+    <string name="knox_root_cert">Коренов сертификат на Samsung Knox</string>
+    <string name="knox_root_cert_summary">Knox използва сертификати на Samsung (SAK).</string>
+    <string name="oem_root_cert">OEM коренов сертификат</string>
+    <string name="oem_root_cert_summary">Устройството доверява този сертификат, но може да не е доверен от други.</string>
+
+    <string name="cert_chain">Верига от сертификати</string>
+    <string name="cert_chain_description">Веригата от сертификати е списък от сертификати, използвани за удостоверяване на ключ. Веригата започва със сертификата на ключа, като всеки сертификат е подписан от следващия във веригата. Веригата завършва с коренов сертификат, а достоверността зависи от него.</string>
+    <string name="cert_info">Информация за сертификата</string>
+    <string name="cert_subject">субект: </string>
+    <string name="cert_not_before">валиден от: </string>
+    <string name="cert_not_after">валиден до: </string>
+    <string name="cert_error_sign">грешка в подписа: </string>
+    <string name="cert_error_revoked">отозван: </string>
+    <string name="cert_error_expired">изтекъл: </string>
+    <string name="provisioning_info_certs_issued">сертификати издадени последните 30 дни: </string>
+    <string name="provisioning_info_manufacturer">производител: </string>
+
+    <string name="error_message_subtitle">Подробни съобщения:</string>
+    <string name="error_unknown">Неизвестна грешка</string>
+    <string name="error_unavailable">Неуспешно потвърждение</string>
+    <string name="error_unavailable_summary">
+    Грешка при потвърждение. Променете настройките и опитайте отново.
+    Честа причина е неизползваемост на заводския ключ за потвърждение,
+    вероятно поради неправилна конфигурация или повреден persist раздел.
+    </string>
+    <string name="error_cant_parse_cert">Грешка при анализ на сертификат</string>
+    <string name="error_cant_parse_cert_summary">
+    Невалиден формат или неподдържани елементи в сертификата.
+    </string>
+    <string name="error_strongbox_unavailable">StrongBox не е наличен</string>
+    <string name="error_strongbox_unavailable_summary">
+    Устройството декларира поддръжка на StrongBox, но в момента е недостъпен.
+    </string>
+    <string name="error_deviceids_unavailable">Грешка при потвърждаване на ID</string>
+    <string name="error_deviceids_unavailable_summary">
+    Устройството поддържа потвърждение на ID, но идентификаторите липсват,
+    не съвпадат или не могат да бъдат потвърдени. Променете настройките и опитайте отново.
+    </string>
+    <string name="error_out_of_keys">Липсват дистанционно предоставени ключове</string>
+    <string name="error_out_of_keys_summary">
+    Устройството не е регистрирано или сървърът отказва да издаде ключове.
+    </string>
+    <string name="error_out_of_keys_transient">Временно липсват дистанционно предоставени ключове</string>
+    <string name="error_out_of_keys_transient_summary">
+    Няма налични ключове. Опитайте след мрежова връзка.
+    При временен отказ от сървъра, проверете за системни актуализации.
+    </string>
+    <string name="error_unavailable_transient">Временна грешка при потвърждение</string>
+    <string name="error_unavailable_transient_summary">
+    Проблемът е временен. Променете настройките или опитайте по-късно.
+    </string>
+    <string name="error_keys_not_provisioned">Липсват ключове за потвърждение</string>
+    <string name="error_keys_not_provisioned_summary">
+    Липсват както дистанционно предоставени, така и заводски ключове.
+    </string>
+    <string name="error_remote_key_provisioning">Грешка в RKP (дистанционно предоставяне)</string>
+    <string name="error_remote_key_provisioning_summary">
+    Грешка при извличане на ключове от сървъра.
+    </string>
+
+    <string name="rpc_hardware_info">Хардуерна информация</string>
+    <string name="rpc_hardware_info_description">
+    Информация за хардуера на дистанционното предоставяне.
+    </string>
+    <string name="rpc_version_number">Версия</string>
+    <string name="rpc_version_number_description">
+    Версия на хардуера за дистанционно предоставяне.
+    Трябва да съвпада с версията в CsrPayload.
+    </string>
+    <string name="rpc_author_name">Производител</string>
+    <string name="rpc_author_name_description">
+    Име на организацията, отговорна за внедряването.
+    </string>
+    <string name="rpc_unique_id">Идентификатор</string>
+    <string name="rpc_unique_id_description">
+    Уникален идентификатор на компонента. Трябва да е различен за всяко внедряване.
+    </string>
+    <string name="rkp_device_info">Информация за устройството</string>
+    <string name="rkp_device_info_description">
+    Информация за устройството, подписана от хардуера. Използва се от сървъра
+    за проверка на сертификатните заявки.
+    </string>
+    <string name="rkp_hostname">RKP сървър</string>
+    <string name="rkp_hostname_empty">Дистанционното предоставяне е изключено</string>
+
+    <string name="attestation">Потвърждение</string>
+    <string name="attestation_version_description"><![CDATA[<font face="sans-serif-medium">Версия:</font><br>Версия на функцията за потвърждение.]]></string>
+    <string name="keymaster" translatable="false">Keymaster / KeyMint</string>
+    <string name="keymaster_version_description"><![CDATA[<font face="sans-serif-medium">Версия:</font><br>Версия на хардуерния слой (HAL).]]></string>
+    <string name="security_level_description"><![CDATA[<font face="sans-serif-medium">Ниво на сигурност:</font><br>Показва степента на защита на софтуерните елементи в зависимост от местоположението им.<p><ul><li gap="8sp"><font face="sans-serif-medium">Софтуер</font><br>Логиката се реализира в Android системата. По-малко сигурно от TEE.</li><li gap="8sp"><font face="sans-serif-medium">TrustedEnvironment</font><br>Логиката се реализира в защитен хардуер (TEE). По-висока сигурност.</li><li gap="8sp"><font face="sans-serif-medium">StrongBox</font><br>Логиката се реализира в <a href="https://developer.android.com/training/articles/keystore#HardwareSecurityModule">специализиран хардуерен модул</a>. Най-висока сигурност.</li></ul>]]></string>
+    <string name="attestation_summary_format">Версия: %1$s\nНиво на сигурност: %2$s</string>
+    <string name="attestation_challenge">Challenge за потвърждение</string>
+    <string name="attestation_challenge_description">Съдържа challenge стойността, предоставена при създаване на ключа. Съвпадението с сървърната стойност предотвратява replay атаки.</string>
+    <string name="unique_id">Уникален ID</string>
+    <string name="unique_id_description"><![CDATA[Временно идентифицира устройството. Използва се <a href="https://source.android.com/security/keystore/attestation#unique-id">само от системни приложения</a>.]]></string>
+
+    <string name="empty">(празно)</string>
+    <string name="security_level_software">Софтуер</string>
+    <string name="security_level_trusted_environment">TrustedEnvironment</string>
+    <string name="security_level_strongbox">StrongBox</string>
+
+    <string name="sw_enforced" translatable="false">SW</string>
+    <string name="sw_enforced_description"><![CDATA[Приложено от Android системата.]]></string>
+    <string name="tee_enforced" translatable="false">HW</string>
+    <string name="tee_enforced_description"><![CDATA[Приложено от хардуера на устройството.]]></string>
+
+    <string name="authorization_list">Списък с разрешения</string>
+    <string name="authorization_list_purpose">Предназначение</string>
+    <string name="authorization_list_algorithm">Алгоритъм</string>
+    <string name="authorization_list_keySize">Размер на ключа</string>
+    <string name="authorization_list_digest">Хеш алгоритми</string>
+    <string name="authorization_list_padding">Подплата</string>
+    <string name="authorization_list_ecCurve">EC крива</string>
+    <string name="authorization_list_rsaPublicExponent">RSA публична експонента</string>
+    <string name="authorization_list_rollbackResistance">Устойчивост на връщане</string>
+    <string name="authorization_list_activeDateTime">Активен от</string>
+    <string name="authorization_list_originationExpireDateTime">Валиден за създаване до</string>
+    <string name="authorization_list_usageExpireDateTime">Валиден за използване до</string>
+    <string name="authorization_list_noAuthRequired">Не се изисква удостоверяване</string>
+    <string name="authorization_list_userAuthType">Тип удостоверяване</string>
+    <string name="authorization_list_authTimeout">Таймаут на удостоверяване</string>
+    <string name="authorization_list_allowWhileOnBody">Позволи при носене</string>
+    <string name="authorization_list_trustedUserPresenceRequired">Изисква физическо присъствие</string>
+    <string name="authorization_list_trustedConfirmationRequired">Изисква потвърждение</string>
+    <string name="authorization_list_unlockedDeviceRequired">Изисква отключено устройство</string>
+    <string name="authorization_list_allApplications">Всички приложения</string>
+    <string name="authorization_list_applicationId">ID на приложение</string>
+    <string name="authorization_list_creationDateTime">Дата на създаване</string>
+    <string name="authorization_list_origin">Произход</string>
+    <string name="authorization_list_rollbackResistant">Устойчиво на връщане</string>
+    <string name="authorization_list_rootOfTrust">Източник на доверие</string>
+    <string name="copied_verifiedBootHash_to_clipboard">verifiedBootHash копиран в клипборда!</string>
+    <string name="authorization_list_osVersion">Версия на ОС</string>
+    <string name="authorization_list_osPatchLevel">Корекционен пакет на ОС</string>
+    <string name="authorization_list_attestationApplicationId">ID на приложение</string>
+    <string name="authorization_list_attestationIdBrand">марка</string>
+    <string name="authorization_list_attestationIdDevice">устройство</string>
+    <string name="authorization_list_attestationIdProduct">продукт</string>
+    <string name="authorization_list_attestationIdSerial">сериен номер</string>
+    <string name="authorization_list_attestationIdImei">IMEI</string>
+    <string name="authorization_list_attestationIdSecondImei">втори IMEI</string>
+    <string name="authorization_list_attestationIdMeid">MEID</string>
+    <string name="authorization_list_attestationIdManufacturer">производител</string>
+    <string name="authorization_list_attestationIdModel">модел</string>
+    <string name="authorization_list_vendorPatchLevel">Корекционен пакет на доставчик</string>
+    <string name="authorization_list_bootPatchLevel">Корекционен пакет на boot</string>
+    <string name="authorization_list_mgfDigest">RSA OAEP MGF Хеш</string>
+    <string name="authorization_list_earlyBootOnly">Само при ранно зареждане</string>
+    <string name="authorization_list_usageCountLimit">Лимит на употреби</string>
+    <string name="authorization_list_deviceUniqueAttestation">Уникално потвърждение за устройство</string>
+    <string name="authorization_list_identityCredentialKey">Идентификационен ключ</string>
+    <string name="authorization_list_moduleHash">Хеш на модула</string>
+
+    <!-- Оставени са техническите описания на английски поради сложността и риска от неточности -->
+    <string name="authorization_list_description"><![CDATA[
+    This data structure contains the key pair\'s properties themselves, as defined in the Keymaster or KeyMint hardware abstraction layer (HAL). You compare these values to the device\'s current state or to a set of expected values to verify that a key pair is still valid for use in your app.
+    ]]></string>
+    <string name="authorization_list_purpose_description"><![CDATA[
+    Specifies the set of purposes for which the key may be used.
+    ]]></string>
+    <!-- Съкратени са останалите технически описания за краткост -->
+    <string name="knox">Samsung Knox Потвърждение</string>
+    <string name="knox_description"><![CDATA[
+    Samsung Knox потвърждение проверява цялостта на данните и факта, че устройството не е root-нато или с неофициална firmware.
+    ]]></string>
+    <string name="knox_challenge">@string/attestation_challenge</string>
+    <string name="knox_challenge_description">@string/attestation_challenge_description</string>
+    <string name="knox_id_attest">Потвърждение на ID</string>
+    <string name="knox_id_attest_description"><![CDATA[
+    Проверява дали IMEI и сериен номер са променяни.
+    ]]></string>
+    <string name="knox_integrity">Състояние на цялостта</string>
+    <string name="knox_integrity_description"><![CDATA[
+    Trusted Application (TA) в Secure World събира:
+    <ul>
+    <li gap="8sp">Име, версия и ключ на разработчик за приложението</li>
+    <li gap="8sp">Подписана информация за състоянието на устройството</li>
+    <li gap="8sp">Хардуерни данни за зареждане на неофициална firmware</li>
+    </ul>
+    ]]></string>
+    <string name="knox_record_hash">Хеш на потвърждението</string>
+    <string name="knox_record_hash_description"><![CDATA[
+    SHA256 хеш на данните за потвърждение от TA.
+    ]]></string>
+</resources>
