@@ -21,12 +21,8 @@ import io.github.vvb2060.keyattestation.R;
 
 public record RevocationList(String status, String reason) {
     private static final String TAG = "RevocationList";
-    private static JSONObject data;
-    private static Date publishTime;
-    
-    static {
-        data = getStatus();
-    }
+    private static JSONObject data = null;
+    private static Date publishTime = null;
 
     private static String toString(InputStream input) throws IOException {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -122,10 +118,19 @@ public record RevocationList(String status, String reason) {
     }
 
     public static void refresh() {
-        data = getStatus();
+        synchronized (RevocationList.class) {
+            data = getStatus();
+        }
     }
 
     public static RevocationList get(BigInteger serialNumber) {
+        if (data == null) {
+            synchronized (RevocationList.class) {
+                if (data == null) {
+                    data = getStatus();
+                }
+            }
+        }
         String serialNumberString = serialNumber.toString(16).toLowerCase();
         JSONObject revocationStatus;
         try {

@@ -37,6 +37,15 @@ class AppApplication : Application() {
         HtmlCompat.setContext(this)
         installProvider(this)
 
+        // Initialize revocation list in background to fetch latest from network
+        executor.execute {
+            try {
+                io.github.vvb2060.keyattestation.attestation.RevocationList.refresh()
+            } catch (e: Exception) {
+                android.util.Log.w(TAG, "Failed to initialize revocation list", e)
+            }
+        }
+
         if (Sui.init(BuildConfig.APPLICATION_ID)) {
             KeyStoreManager.requestPermission();
         } else {
