@@ -40,15 +40,6 @@ public record RevocationList(String status, String reason) {
     private static JSONObject parseStatus(InputStream inputStream) throws IOException {
         try {
             var statusListJson = new JSONObject(toString(inputStream));
-            // Try to extract the publish time if it exists
-            try {
-                if (statusListJson.has("timestamp")) {
-                    long timestamp = statusListJson.getLong("timestamp");
-                    publishTime = new Date(timestamp);
-                }
-            } catch (JSONException e) {
-                Log.w(TAG, "Failed to parse timestamp from revocation list", e);
-            }
             return statusListJson.getJSONObject("entries");
         } catch (JSONException e) {
             throw new IOException(e);
@@ -67,6 +58,13 @@ public record RevocationList(String status, String reason) {
             
             int responseCode = connection.getResponseCode();
             if (responseCode == HttpURLConnection.HTTP_OK) {
+                // Extract Last-Modified header for publish time
+                long lastModified = connection.getLastModified();
+                if (lastModified != 0) {
+                    publishTime = new Date(lastModified);
+                    Log.i(TAG, "Revocation list Last-Modified: " + publishTime);
+                }
+                
                 try (var input = connection.getInputStream()) {
                     return parseStatus(input);
                 }
