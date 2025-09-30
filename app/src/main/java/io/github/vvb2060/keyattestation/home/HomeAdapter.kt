@@ -94,6 +94,18 @@ class HomeAdapter(listener: Listener) : IdBasedRecyclerViewAdapter() {
             addItem(CommonItemViewHolder.CERT_INFO_CREATOR, certInfo, id++)
         }
 
+        // Add revocation list information
+        val publishTime = io.github.vvb2060.keyattestation.attestation.RevocationList.getPublishTime()
+        val dateStr = if (publishTime != null) {
+            io.github.vvb2060.keyattestation.attestation.AuthorizationList.formatDate(publishTime)
+        } else {
+            null
+        }
+        addItem(CommonItemViewHolder.COMMON_CREATOR, CommonData(
+                R.string.revocation_list_publish_time,
+                R.string.revocation_list_description,
+                dateStr), ID_REVOCATION_INFO)
+
         when (baseData) {
             is AttestationData -> updateData(baseData)
             is RemoteProvisioningData -> updateData(baseData)
@@ -271,6 +283,7 @@ class HomeAdapter(listener: Listener) : IdBasedRecyclerViewAdapter() {
         private const val ID_CERT_STATUS = 1L
         private const val ID_BOOT_STATUS = 2L
         private const val ID_CERT_INFO_START = 1000L
+        private const val ID_REVOCATION_INFO = 1900L
         private const val ID_RKP_HOSTNAME = 2000L
         private const val ID_DESCRIPTION_START = 3000L
         private const val ID_AUTHORIZATION_LIST_START = 4000L

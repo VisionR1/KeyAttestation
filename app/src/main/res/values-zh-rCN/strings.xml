@@ -51,6 +51,8 @@
     <string name="cert_error_expired">已过期：</string>
     <string name="provisioning_info_certs_issued">过去 30 天证书颁发数量：</string>
     <string name="provisioning_info_manufacturer">制造商：</string>
+    <string name="revocation_list_publish_time">吊销列表发布时间</string>
+    <string name="revocation_list_description">吊销列表用于检查证书是否被吊销。这里显示当前使用的吊销列表发布时间。</string>
 
     <string name="error_message_subtitle">详细信息：</string>
     <string name="error_unknown">未知错误</string>
