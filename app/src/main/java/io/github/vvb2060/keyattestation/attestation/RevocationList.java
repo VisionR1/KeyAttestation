@@ -1,5 +1,6 @@
 package io.github.vvb2060.keyattestation.attestation;
 
+import android.content.Context;
 import android.os.Build;
 import android.util.Log;
 
@@ -21,6 +22,9 @@ import io.github.vvb2060.keyattestation.R;
 
 public record RevocationList(String status, String reason) {
     private static final String TAG = "RevocationList";
+    private static final String CACHE_FILE = "revocation_cache.json";
+    private static final String PREFS_NAME = "revocation_prefs";
+    private static final String KEY_PUBLISH_TIME = "last_publish_time";
     private static JSONObject data = null;
     private static Date publishTime = null;
 
@@ -46,6 +50,18 @@ public record RevocationList(String status, String reason) {
         }
     }
 
+    private static void saveToCache(JSONObject json) {
+        try (var output = AppApplication.app.openFileOutput(CACHE_FILE, Context.MODE_PRIVATE)) {
+            output.write(json.toString().getBytes(StandardCharsets.UTF_8));
+            if (publishTime != null) {
+                var prefs = AppApplication.app.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+                prefs.edit().putLong(KEY_PUBLISH_TIME, publishTime.getTime()).apply();
+            }
+        } catch (IOException e) {
+            Log.w(TAG, "Failed to cache revocation list", e);
+        }
+    }
+
     private static JSONObject fetchFromNetwork(String statusUrl) {
         HttpURLConnection connection = null;
         try {
@@ -58,7 +74,6 @@ public record RevocationList(String status, String reason) {
             
             int responseCode = connection.getResponseCode();
             if (responseCode == HttpURLConnection.HTTP_OK) {
-                // Extract Last-Modified header for publish time
                 long lastModified = connection.getLastModified();
                 if (lastModified != 0) {
                     publishTime = new Date(lastModified);
@@ -95,15 +110,27 @@ public record RevocationList(String status, String reason) {
             }
         }
         
-        // Try to fetch from network first
+        // 1. Try Network
         JSONObject networkData = fetchFromNetwork(statusUrl);
         if (networkData != null) {
             Log.i(TAG, "Successfully fetched revocation list from network");
+            saveToCache(networkData);
             return networkData;
         }
         
-        // Fallback to local resource
-        Log.i(TAG, "Using local revocation list");
+        // 2. Try Cache (osm0sis fallback)
+        try (var fis = AppApplication.app.openFileInput(CACHE_FILE)) {
+            Log.i(TAG, "Using cached revocation list");
+            var prefs = AppApplication.app.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+            long lastTime = prefs.getLong(KEY_PUBLISH_TIME, 0);
+            if (lastTime != 0) publishTime = new Date(lastTime);
+            return parseStatus(fis);
+        } catch (IOException e) {
+            Log.i(TAG, "No cached revocation list found");
+        }
+
+        // 3. Fallback to bundled resource
+        Log.i(TAG, "Using bundled revocation list");
         try (var input = res.openRawResource(R.raw.status)) {
             return parseStatus(input);
         } catch (IOException e) {
