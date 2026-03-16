@@ -54,6 +54,8 @@
     <string name="cert_error_expired">expirado: </string>
     <string name="provisioning_info_certs_issued">número de certificados emitidos nos últimos 30 dias: </string>
     <string name="provisioning_info_manufacturer">fabricante: </string>
+    <string name="revocation_list_publish_time">Hora de publicação da lista de revogação</string>
+    <string name="revocation_list_description">A lista de revogação é usada para verificar se certificados foram revogados. Isto mostra a hora de publicação da lista de revogação atualmente utilizada.</string>
 
     <string name="error_message_subtitle">Mensagens detalhadas:</string>
     <string name="error_unknown">Erro desconhecido</string>

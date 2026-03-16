@@ -54,6 +54,8 @@
     <string name="cert_error_expired">έληξε: </string>
     <string name="provisioning_info_certs_issued">αριθμός πιστοποιητικών που εκδόθηκαν τις τελευταίες 30 ημέρες: </string>
     <string name="provisioning_info_manufacturer">κατασκευαστής: </string>
+    <string name="revocation_list_publish_time">Ώρα δημοσίευσης λίστας ανάκλησης</string>
+    <string name="revocation_list_description">Η λίστα ανάκλησης χρησιμοποιείται για να ελεγχθεί εάν έχουν ανακληθεί πιστοποιητικά. Αυτή δείχνει την ώρα δημοσίευσης της λίστας ανάκλησης που χρησιμοποιείται αυτήν τη στιγμή.</string>
 
     <string name="error_message_subtitle">Αναλυτικά μηνύματα:</string>
     <string name="error_unknown">Άγνωστο σφάλμα</string>

@@ -54,6 +54,8 @@
     <string name="cert_error_expired">已過期：</string>
     <string name="provisioning_info_certs_issued">過去 30 天憑證頒發數量：</string>
     <string name="provisioning_info_manufacturer">製造商：</string>
+    <string name="revocation_list_publish_time">撤銷清單發布時間</string>
+    <string name="revocation_list_description">撤銷清單用於檢查憑證是否已被撤銷。此處顯示目前使用中的撤銷清單發布時間。</string>
 
     <string name="error_message_subtitle">詳細資訊：</string>
     <string name="error_unknown">未知錯誤</string>

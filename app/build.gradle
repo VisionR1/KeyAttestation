@@ -36,7 +36,7 @@ android {
         minSdk = 24
         targetSdk = 35
         versionCode = gitCommitCount
-        versionName = '1.8.4'
+        versionName = '2.0.0'
         resourceConfigurations += supportedLocales
         optimization {
             keepRules {
@@ -54,6 +54,13 @@ android {
                 keyPassword properties.getProperty("keyPassword")
             }
         }
+        release {
+            def sFile = System.getenv("STORE_FILE") ?: properties.getProperty("storeFile") ?: "Vision.jks"
+            storeFile file(sFile)
+            storePassword System.getenv("STORE_PASSWORD") ?: properties.getProperty("storePassword")
+            keyAlias System.getenv("KEY_ALIAS") ?: properties.getProperty("keyAlias")
+            keyPassword System.getenv("KEY_PASSWORD") ?: properties.getProperty("keyPassword")
+        }
     }
     buildTypes {
         debug {
@@ -63,7 +70,7 @@ android {
             minifyEnabled true
             shrinkResources true
             vcsInfo.include false
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
             proguardFiles 'proguard-rules.pro'
         }
     }

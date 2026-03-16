@@ -54,6 +54,8 @@
     <string name="cert_error_expired">термін дії минув: </string>
     <string name="provisioning_info_certs_issued">кількість виданих сертифікатів за останні 30 днів: </string>
     <string name="provisioning_info_manufacturer">виробник: </string>
+    <string name="revocation_list_publish_time">Час публікації списку відкликань</string>
+    <string name="revocation_list_description">Список відкликань використовується для перевірки, чи були сертифікати відкликані. Тут показано час публікації списку відкликань, який наразі використовується.</string>
 
     <string name="error_message_subtitle">Детальні повідомлення:</string>
     <string name="error_unknown">Невідома помилка</string>
