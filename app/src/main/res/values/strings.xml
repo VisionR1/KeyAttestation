@@ -56,6 +56,11 @@
     <string name="provisioning_info_manufacturer">manufacturer: </string>
     <string name="revocation_list_publish_time">Revocation list publish time</string>
     <string name="revocation_list_description">The revocation list is used to check if certificates have been revoked. This shows the publication time of the currently used revocation list.</string>
+    
+    <string name="revocation_status_new_fetch">ℹ️ New CRL Fetched!</string>
+    <string name="revocation_status_up_to_date">✅ CRL Up-to-date</string>
+    <string name="revocation_status_offline_cached">⚠️ Device offline - using cached CRL</string>
+    <string name="revocation_status_offline_bundled">❌ Offline - using hardcoded 27th Feb CRL</string>
 
     <string name="error_message_subtitle">Detailed messages:</string>
     <string name="error_unknown">Unknown error</string>

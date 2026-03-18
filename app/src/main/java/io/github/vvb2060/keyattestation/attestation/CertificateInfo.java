@@ -68,11 +68,14 @@ public class CertificateInfo {
         try {
             status = CERT_SIGN;
             cert.verify(parentKey);
+            
             status = CERT_REVOKED;
             var certStatus = RevocationList.get(cert.getSerialNumber());
             if (certStatus != null) {
-                throw new CertificateException("Certificate revocation " + certStatus);
+                // Just throw the status message (e.g., "REVOKED") without any suffix
+                throw new CertificateException(certStatus.status());
             }
+            
             status = CERT_EXPIRED;
             cert.checkValidity();
             status = CERT_NORMAL;
@@ -86,11 +89,6 @@ public class CertificateInfo {
         boolean terminate;
         try {
             attestation = Attestation.loadFromCertificate(cert);
-            // If key purpose included KeyPurpose::SIGN,
-            // then it could be used to sign arbitrary data, including any tbsCertificate,
-            // and so an attestation produced by the key would have no security properties.
-            // If the parent certificate can attest that the key purpose is only KeyPurpose::ATTEST_KEY,
-            // then the child certificate can be trusted.
             var purposes = attestation.getTeeEnforced().getPurposes();
             terminate = purposes == null || !purposes.contains(AuthorizationList.KM_PURPOSE_ATTEST_KEY);
         } catch (CertificateParsingException e) {
