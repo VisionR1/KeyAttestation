@@ -15,6 +15,9 @@
     <string name="id_type_meid">Attest device MEID</string>
     <string name="include_unique_id">Include unique ID</string>
     <string name="rkp_test">RKP test</string>
+    <string name="rkp_register">Register RKP root</string>
+    <string name="rkp_unregister">Unregister RKP root</string>
+
     <string name="reset">Reset</string>
     <string name="load_certs">Load from file</string>
     <string name="save_certs">Save to file</string>

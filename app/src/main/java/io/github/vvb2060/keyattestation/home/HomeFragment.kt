@@ -37,6 +37,10 @@ import rikka.html.text.HtmlCompat
 import rikka.html.text.toHtml
 import rikka.shizuku.Shizuku
 import rikka.widget.borderview.BorderView
+import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.launch
+import io.github.vvb2060.keyattestation.keystore.RkpRegistrationManager
 
 class HomeFragment : AppFragment(), HomeAdapter.Listener, MenuProvider {
 
@@ -175,6 +179,13 @@ class HomeFragment : AppFragment(), HomeAdapter.Listener, MenuProvider {
             viewModel.preferShizuku && viewModel.canIncludeUniqueId
         menu.findItem(R.id.menu_rkp_test).isVisible =
             viewModel.preferShizuku && viewModel.canCheckRkp
+
+		menu.findItem(R.id.menu_rkp_register)?.isVisible = 
+            viewModel.preferShizuku && viewModel.canCheckRkp
+            
+        menu.findItem(R.id.menu_rkp_unregister)?.isVisible = 
+            viewModel.preferShizuku && viewModel.canCheckRkp
+		
         menu.findItem(R.id.menu_use_sak)?.isVisible =
             viewModel.preferShizuku && viewModel.canSak
 
@@ -290,6 +301,28 @@ class HomeFragment : AppFragment(), HomeAdapter.Listener, MenuProvider {
 
             R.id.menu_rkp_test -> {
                 viewModel.rkp()
+            }
+			
+            R.id.menu_rkp_register -> {
+                viewLifecycleOwner.lifecycleScope.launch {
+                    val result = RkpRegistrationManager.performAction(RkpRegistrationManager.Action.REGISTER)
+                    val msg = when (result) {
+                        is RkpRegistrationManager.Result.Success -> result.message
+                        is RkpRegistrationManager.Result.Error -> result.message
+                    }
+                    Toast.makeText(requireContext(), msg, Toast.LENGTH_LONG).show()
+                }
+            }
+
+            R.id.menu_rkp_unregister -> {
+                viewLifecycleOwner.lifecycleScope.launch {
+                    val result = RkpRegistrationManager.performAction(RkpRegistrationManager.Action.UNREGISTER)
+                    val msg = when (result) {
+                        is RkpRegistrationManager.Result.Success -> result.message
+                        is RkpRegistrationManager.Result.Error -> result.message
+                    }
+                    Toast.makeText(requireContext(), msg, Toast.LENGTH_LONG).show()
+                }
             }
 
             R.id.menu_reset -> {

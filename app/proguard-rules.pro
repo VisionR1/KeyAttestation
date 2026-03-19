@@ -22,3 +22,7 @@
 -keep class com.google.android.material.theme.MaterialComponentsViewInflater {
     <init>();
 }
+
+-dontwarn org.codehaus.mojo.animal_sniffer.IgnoreJRERequirement
+
+-keep class rikka.shizuku.** { *; }
