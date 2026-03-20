@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts.CreateDocument
 import androidx.activity.result.contract.ActivityResultContracts.GetContent
 import androidx.appcompat.app.AlertDialog
@@ -19,7 +20,9 @@ import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.view.MenuProvider
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import io.github.vvb2060.keyattestation.AppApplication
 import io.github.vvb2060.keyattestation.BuildConfig
 import io.github.vvb2060.keyattestation.R
@@ -28,19 +31,17 @@ import io.github.vvb2060.keyattestation.app.AppFragment
 import io.github.vvb2060.keyattestation.attestation.Attestation
 import io.github.vvb2060.keyattestation.databinding.HomeBinding
 import io.github.vvb2060.keyattestation.keystore.KeyStoreManager
+import io.github.vvb2060.keyattestation.keystore.RkpRegistrationManager
 import io.github.vvb2060.keyattestation.lang.AttestationException
 import io.github.vvb2060.keyattestation.repository.AttestationData
-import io.github.vvb2060.keyattestation.util.Status
 import io.github.vvb2060.keyattestation.util.ColorManager
 import io.github.vvb2060.keyattestation.util.LocaleManager
+import io.github.vvb2060.keyattestation.util.Status
+import kotlinx.coroutines.launch
 import rikka.html.text.HtmlCompat
 import rikka.html.text.toHtml
 import rikka.shizuku.Shizuku
 import rikka.widget.borderview.BorderView
-import android.widget.Toast
-import androidx.lifecycle.lifecycleScope
-import kotlinx.coroutines.launch
-import io.github.vvb2060.keyattestation.keystore.RkpRegistrationManager
 
 class HomeFragment : AppFragment(), HomeAdapter.Listener, MenuProvider {
 
@@ -143,7 +144,7 @@ class HomeFragment : AppFragment(), HomeAdapter.Listener, MenuProvider {
             .show()
     }
 
-    override fun onCommonDataClick(data: Data) {
+    override fun onCommonDataClick(data: HomeAdapter.Data) {
         val context = requireActivity()
 
         AlertDialogFragment.Builder(context)
@@ -180,12 +181,12 @@ class HomeFragment : AppFragment(), HomeAdapter.Listener, MenuProvider {
         menu.findItem(R.id.menu_rkp_test).isVisible =
             viewModel.preferShizuku && viewModel.canCheckRkp
 
-		menu.findItem(R.id.menu_rkp_register)?.isVisible = 
+        menu.findItem(R.id.menu_rkp_register)?.isVisible = 
             viewModel.preferShizuku && viewModel.canCheckRkp
             
         menu.findItem(R.id.menu_rkp_unregister)?.isVisible = 
             viewModel.preferShizuku && viewModel.canCheckRkp
-		
+        
         menu.findItem(R.id.menu_use_sak)?.isVisible =
             viewModel.preferShizuku && viewModel.canSak
 
@@ -238,12 +239,12 @@ class HomeFragment : AppFragment(), HomeAdapter.Listener, MenuProvider {
                 LocaleManager.showLanguagePickerDialog(requireContext())
                 return true
             }
-			
+            
             R.id.menu_color -> {
                 ColorManager.showColorPickerDialog(requireActivity())
                 return true
             }
-		
+        
             R.id.menu_secret_mode -> {
                 viewModel.secretMode = status
                 viewModel.load()
@@ -268,7 +269,7 @@ class HomeFragment : AppFragment(), HomeAdapter.Listener, MenuProvider {
                 viewModel.preferAttestKey = status
                 viewModel.load()
             }
-			
+            
             R.id.menu_attest_rsa_key -> {
                 viewModel.preferAttestRsaKey = status
                 viewModel.load()
@@ -302,27 +303,13 @@ class HomeFragment : AppFragment(), HomeAdapter.Listener, MenuProvider {
             R.id.menu_rkp_test -> {
                 viewModel.rkp()
             }
-			
+            
             R.id.menu_rkp_register -> {
-                viewLifecycleOwner.lifecycleScope.launch {
-                    val result = RkpRegistrationManager.performAction(RkpRegistrationManager.Action.REGISTER)
-                    val msg = when (result) {
-                        is RkpRegistrationManager.Result.Success -> result.message
-                        is RkpRegistrationManager.Result.Error -> result.message
-                    }
-                    Toast.makeText(requireContext(), msg, Toast.LENGTH_LONG).show()
-                }
+                handleRkpAction(RkpRegistrationManager.Action.REGISTER)
             }
 
             R.id.menu_rkp_unregister -> {
-                viewLifecycleOwner.lifecycleScope.launch {
-                    val result = RkpRegistrationManager.performAction(RkpRegistrationManager.Action.UNREGISTER)
-                    val msg = when (result) {
-                        is RkpRegistrationManager.Result.Success -> result.message
-                        is RkpRegistrationManager.Result.Error -> result.message
-                    }
-                    Toast.makeText(requireContext(), msg, Toast.LENGTH_LONG).show()
-                }
+                handleRkpAction(RkpRegistrationManager.Action.UNREGISTER)
             }
 
             R.id.menu_reset -> {
@@ -348,6 +335,27 @@ class HomeFragment : AppFragment(), HomeAdapter.Listener, MenuProvider {
             else -> return false
         }
         return true
+    }
+
+    private fun handleRkpAction(action: RkpRegistrationManager.Action) {
+        val title = if (action == RkpRegistrationManager.Action.REGISTER) 
+            "Register RKP Root" else "Unregister RKP Root"
+
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle(title)
+            .setMessage("This feature requires Root access via Shizuku to execute the system commands.\n\nNotice: If you are not rooted, this action will likely fail to execute. If it does succeed, you will be unable to revert the change without a Full Factory Reset as the RKPD cache cannot be cleared without root. Proceed?")
+            .setPositiveButton("Proceed") { _, _ ->
+                viewLifecycleOwner.lifecycleScope.launch {
+                    val result = RkpRegistrationManager.performAction(action)
+                    val msg = when (result) {
+                        is RkpRegistrationManager.Result.Success -> result.message
+                        is RkpRegistrationManager.Result.Error -> result.message
+                    }
+                    Toast.makeText(requireContext(), msg, Toast.LENGTH_LONG).show()
+                }
+            }
+            .setNegativeButton(android.R.string.cancel, null)
+            .show()
     }
 
     private fun showAboutDialog() {
@@ -384,6 +392,5 @@ class HomeFragment : AppFragment(), HomeAdapter.Listener, MenuProvider {
             movementMethod = LinkMovementMethod.getInstance()
             this.text = text.toHtml(HtmlCompat.FROM_HTML_OPTION_TRIM_WHITESPACE)
         }
-
     }
 }
