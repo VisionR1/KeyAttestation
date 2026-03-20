@@ -44,7 +44,14 @@ object RkpRegistrationManager {
             val csrBytes = Base64.decode(csrBase64, Base64.NO_WRAP)
 
             // 4. Send the POST request
-            return@withContext sendRequest(csrBytes, action.requestId)
+            val result = sendRequest(csrBytes, action.requestId)
+
+            // 5. Automatically clear the cache on success so the next test fetches fresh certs
+            if (result is Result.Success) {
+                clearRkpCache()
+            }
+
+            return@withContext result
 
         } catch (e: Exception) {
             Log.e(TAG, "RKP Action Failed", e)
@@ -82,6 +89,18 @@ object RkpRegistrationManager {
     private fun getCsr(hal: String): String? {
         val output = runShizukuCommand("cmd", "remote_provisioning", "csr", hal).trim()
         return output.ifEmpty { null }
+    }
+
+    private fun clearRkpCache() {
+        try {
+            // Try clearing both GMS and AOSP daemon packages. 
+            // It will silently fail on the one that doesn't exist, which is perfectly fine.
+            runShizukuCommand("pm", "clear", "com.google.android.rkpdapp")
+            runShizukuCommand("pm", "clear", "com.android.rkpd")
+            Log.i(TAG, "RKPD cache successfully cleared.")
+        } catch (e: Exception) {
+            Log.w(TAG, "Failed to clear RKPD cache. A manual pm clear might be required.", e)
+        }
     }
 
     private fun sendRequest(csrBytes: ByteArray, requestId: String): Result {
