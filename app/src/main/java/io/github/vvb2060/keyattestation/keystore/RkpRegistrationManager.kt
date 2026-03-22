@@ -25,6 +25,7 @@ object RkpRegistrationManager {
     }
 
     suspend fun performAction(action: Action): Result = withContext(Dispatchers.IO) {
+        // Defense in Depth: Layer 1
         if (!Shizuku.pingBinder()) {
             return@withContext Result.Error("Shizuku is not running or permission denied.")
         }
@@ -46,9 +47,9 @@ object RkpRegistrationManager {
             // 4. Send the POST request
             val result = sendRequest(csrBytes, action.requestId)
 
-            // 5. Automatically clear the cache on success so the next test fetches fresh certs
+            // 5. Automatically clear the RKP keys on success so the next test fetches fresh certs
             if (result is Result.Success) {
-                clearRkpCache()
+                clearRkpKeys()
             }
 
             return@withContext result
@@ -60,7 +61,7 @@ object RkpRegistrationManager {
     }
 
     // Shizuku recently made newProcess private to encourage using UserService, 
-    // but we can cleanly bypass it with reflection for these simple shell commands.
+    // but we cleanly bypass it with reflection for these simple shell commands.
     private fun runShizukuCommand(vararg command: String): String {
         val clazz = Class.forName("rikka.shizuku.Shizuku")
         val method = clazz.getDeclaredMethod(
@@ -73,7 +74,14 @@ object RkpRegistrationManager {
         
         val process = method.invoke(null, arrayOf(*command), null, null) as rikka.shizuku.ShizukuRemoteProcess
         val output = BufferedReader(InputStreamReader(process.inputStream)).use { it.readText() }
-        process.waitFor()
+        val exitCode = process.waitFor()
+        
+        // Stop the logcat from lying to us on silent shell failures
+        if (exitCode != 0) {
+            val errorOutput = BufferedReader(InputStreamReader(process.errorStream)).use { it.readText() }
+            Log.w(TAG, "Command '${command.joinToString(" ")}' failed with code $exitCode: $errorOutput")
+        }
+        
         return output
     }
 
@@ -85,21 +93,71 @@ object RkpRegistrationManager {
             else -> null
         }
     }
+    
+    private fun runCommandAndCaptureOutput(command: String): String {
+        return try {
+        // The Shizuku.newProcess API is hidden in recent versions, so we bypass it via reflection
+            val clazz = Class.forName("rikka.shizuku.Shizuku")
+            val method = clazz.getDeclaredMethod(
+                "newProcess", 
+                Array<String>::class.java, 
+                Array<String>::class.java, 
+                String::class.java
+            )
+            method.isAccessible = true
+        
+            // Execute the shell command and cast the result to a standard Java Process
+            val process = method.invoke(null, arrayOf("sh", "-c", command), null, null) as java.lang.Process
+        
+            // Capture the standard output
+            val reader = java.io.BufferedReader(java.io.InputStreamReader(process.inputStream))
+            val output = reader.readText().trim()
+            process.waitFor()
+            output
+        } catch (e: Exception) {
+            "Error executing command: ${e.message}"
+        }
+    }
+
+
+    suspend fun dumpCertChains(): Result {
+        return kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
+            if (!Shizuku.pingBinder()) {
+                return@withContext Result.Error("Shizuku is not running.")
+            }
+
+        val defaultOutput = runCommandAndCaptureOutput("cmd remote_provisioning certify default")
+        val strongboxOutput = runCommandAndCaptureOutput("cmd remote_provisioning certify strongbox")
+
+        val sb = java.lang.StringBuilder()
+        
+            sb.append("--- RKP DEFAULT HAL ---\n")
+            sb.append(defaultOutput.ifEmpty { "No Default HAL output or unsupported." })
+            sb.append("\n\n")
+        
+            sb.append("--- RKP STRONGBOX HAL ---\n")
+            sb.append(strongboxOutput.ifEmpty { "No Strongbox HAL output or unsupported." })
+
+        // Return the massive string payload in a Success wrapper
+            Result.Success(sb.toString())
+        }
+    } 
 
     private fun getCsr(hal: String): String? {
         val output = runShizukuCommand("cmd", "remote_provisioning", "csr", hal).trim()
         return output.ifEmpty { null }
     }
 
-    private fun clearRkpCache() {
+    private fun clearRkpKeys() {
         try {
+            Log.i(TAG, "Attempting to clear stored RKP keys...")
             // Try clearing both GMS and AOSP daemon packages. 
-            // It will silently fail on the one that doesn't exist, which is perfectly fine.
+            // It will exit with code 1 on the one that doesn't exist, which runShizukuCommand will cleanly log.
             runShizukuCommand("pm", "clear", "com.google.android.rkpdapp")
             runShizukuCommand("pm", "clear", "com.android.rkpd")
-            Log.i(TAG, "RKPD cache successfully cleared.")
+            Log.i(TAG, "RKP key clearing commands executed.")
         } catch (e: Exception) {
-            Log.w(TAG, "Failed to clear RKPD cache. A manual pm clear might be required.", e)
+            Log.w(TAG, "Failed to execute pm clear commands for RKP keys.", e)
         }
     }
 

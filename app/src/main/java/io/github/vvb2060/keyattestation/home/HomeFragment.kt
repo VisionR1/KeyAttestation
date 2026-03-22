@@ -144,7 +144,7 @@ class HomeFragment : AppFragment(), HomeAdapter.Listener, MenuProvider {
             .show()
     }
 
-    override fun onCommonDataClick(data: HomeAdapter.Data) {
+    override fun onCommonDataClick(data: Data) {
         val context = requireActivity()
 
         AlertDialogFragment.Builder(context)
@@ -181,12 +181,12 @@ class HomeFragment : AppFragment(), HomeAdapter.Listener, MenuProvider {
         menu.findItem(R.id.menu_rkp_test).isVisible =
             viewModel.preferShizuku && viewModel.canCheckRkp
 
-        menu.findItem(R.id.menu_rkp_register)?.isVisible = 
+		menu.findItem(R.id.menu_rkp_register)?.isVisible = 
             viewModel.preferShizuku && viewModel.canCheckRkp
             
         menu.findItem(R.id.menu_rkp_unregister)?.isVisible = 
             viewModel.preferShizuku && viewModel.canCheckRkp
-        
+		
         menu.findItem(R.id.menu_use_sak)?.isVisible =
             viewModel.preferShizuku && viewModel.canSak
 
@@ -239,12 +239,12 @@ class HomeFragment : AppFragment(), HomeAdapter.Listener, MenuProvider {
                 LocaleManager.showLanguagePickerDialog(requireContext())
                 return true
             }
-            
+			
             R.id.menu_color -> {
                 ColorManager.showColorPickerDialog(requireActivity())
                 return true
             }
-        
+		
             R.id.menu_secret_mode -> {
                 viewModel.secretMode = status
                 viewModel.load()
@@ -253,6 +253,11 @@ class HomeFragment : AppFragment(), HomeAdapter.Listener, MenuProvider {
             R.id.menu_use_shizuku -> {
                 viewModel.preferShizuku = status
                 viewModel.load()
+            }
+
+			R.id.menu_rkp_dump -> {
+            handleDumpAction()
+            true
             }
 
             R.id.menu_use_sak -> {
@@ -269,7 +274,7 @@ class HomeFragment : AppFragment(), HomeAdapter.Listener, MenuProvider {
                 viewModel.preferAttestKey = status
                 viewModel.load()
             }
-            
+			
             R.id.menu_attest_rsa_key -> {
                 viewModel.preferAttestRsaKey = status
                 viewModel.load()
@@ -303,7 +308,7 @@ class HomeFragment : AppFragment(), HomeAdapter.Listener, MenuProvider {
             R.id.menu_rkp_test -> {
                 viewModel.rkp()
             }
-            
+			
             R.id.menu_rkp_register -> {
                 handleRkpAction(RkpRegistrationManager.Action.REGISTER)
             }
@@ -337,27 +342,61 @@ class HomeFragment : AppFragment(), HomeAdapter.Listener, MenuProvider {
         return true
     }
 
-    private fun handleRkpAction(action: RkpRegistrationManager.Action) {
-        val title = if (action == RkpRegistrationManager.Action.REGISTER) 
-            "Register RKP Root" else "Unregister RKP Root"
+        private fun handleRkpAction(action: RkpRegistrationManager.Action) {
+        val isRegister = action == RkpRegistrationManager.Action.REGISTER
+        val actionName = if (isRegister) "register" else "unregister"
+        val title = if (isRegister) "Register RKP Root" else "Unregister RKP Root"
 
-        MaterialAlertDialogBuilder(requireContext())
-            .setTitle(title)
-            .setMessage("This feature requires Root access via Shizuku to execute the system commands.\n\nNotice: If you are not rooted, this action will likely fail to execute. If it does succeed, you will be unable to revert the change without a Full Factory Reset as the RKPD cache cannot be cleared without root. Proceed?")
-            .setPositiveButton("Proceed") { _, _ ->
-                viewLifecycleOwner.lifecycleScope.launch {
-                    val result = RkpRegistrationManager.performAction(action)
-                    val msg = when (result) {
-                        is RkpRegistrationManager.Result.Success -> result.message
-                        is RkpRegistrationManager.Result.Error -> result.message
+        // 1. Verify Shizuku is active and our app has permission
+        if (Shizuku.pingBinder() && Shizuku.checkSelfPermission() == android.content.pm.PackageManager.PERMISSION_GRANTED) {
+
+            // THE HAPPY PATH: Both Root (UID 0) and ADB (UID 2000) can execute pm clear!
+            MaterialAlertDialogBuilder(requireContext())
+                .setTitle(title)
+                .setMessage("This will $actionName the RKP Root and clear all stored RKP keys.\n\nYour next attestation test will automatically fetch a fresh certificate chain. Proceed?")
+                .setNegativeButton(android.R.string.cancel, null)
+                .setPositiveButton("PROCEED") { _, _ ->
+                    viewLifecycleOwner.lifecycleScope.launch {
+                        val result = RkpRegistrationManager.performAction(action)
+                        val msg = when (result) {
+                            is RkpRegistrationManager.Result.Success -> result.message
+                            is RkpRegistrationManager.Result.Error -> result.message
+                        }
+                        Toast.makeText(requireContext(), msg, Toast.LENGTH_LONG).show()
                     }
-                    Toast.makeText(requireContext(), msg, Toast.LENGTH_LONG).show()
                 }
-            }
-            .setNegativeButton(android.R.string.cancel, null)
-            .show()
+                .show()
+            
+        } else {
+            // THE FALLBACK: Shizuku crashed or permission revoked
+            MaterialAlertDialogBuilder(requireContext())
+                .setTitle("Shizuku Unavailable")
+                .setMessage("Shizuku is not running or permission is denied. Please ensure Shizuku is active (via Root or Wireless Debugging).")
+                .setPositiveButton(android.R.string.ok, null)
+                .show()
+        }
     }
 
+    private fun handleDumpAction() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            android.widget.Toast.makeText(requireContext(), "Dumping RKP Chains...", android.widget.Toast.LENGTH_SHORT).show()
+            
+            val result = io.github.vvb2060.keyattestation.keystore.RkpRegistrationManager.dumpCertChains()
+            
+            if (result is io.github.vvb2060.keyattestation.keystore.RkpRegistrationManager.Result.Success) {
+                val sendIntent = android.content.Intent().apply {
+                    action = android.content.Intent.ACTION_SEND
+                    putExtra(android.content.Intent.EXTRA_TEXT, result.message)
+                    type = "text/plain"
+                }
+                val shareIntent = android.content.Intent.createChooser(sendIntent, "Share RKP Dump")
+                startActivity(shareIntent)
+            } else if (result is io.github.vvb2060.keyattestation.keystore.RkpRegistrationManager.Result.Error) {
+                android.widget.Toast.makeText(requireContext(), result.message, android.widget.Toast.LENGTH_LONG).show()
+            }
+        }
+    }		
+		
     private fun showAboutDialog() {
         val context = requireContext()
         val text = StringBuilder()
@@ -392,5 +431,6 @@ class HomeFragment : AppFragment(), HomeAdapter.Listener, MenuProvider {
             movementMethod = LinkMovementMethod.getInstance()
             this.text = text.toHtml(HtmlCompat.FROM_HTML_OPTION_TRIM_WHITESPACE)
         }
+
     }
 }
