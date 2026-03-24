@@ -57,6 +57,11 @@
     <string name="revocation_list_publish_time">Час публікації списку відкликань</string>
     <string name="revocation_list_description">Список відкликань використовується для перевірки, чи були сертифікати відкликані. Тут показано час публікації списку відкликань, який наразі використовується.</string>
 
+    <string name="revocation_status_new_fetch">ℹ️ Отримано новий CRL!</string>
+    <string name="revocation_status_up_to_date">✅ CRL актуальний</string>
+    <string name="revocation_status_offline_cached">⚠️ Пристрій офлайн — використовується кешований CRL</string>
+    <string name="revocation_status_offline_bundled">❌ Офлайн — CRL застарілий</string>
+
     <string name="error_message_subtitle">Детальні повідомлення:</string>
     <string name="error_unknown">Невідома помилка</string>
     <string name="error_unavailable">Неможливо атестувати</string>

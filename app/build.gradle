@@ -36,7 +36,7 @@ android {
         minSdk = 24
         targetSdk = 35
         versionCode = gitCommitCount
-        versionName = '2.0.0'
+        versionName = '2.0.1'
         resourceConfigurations += supportedLocales
         optimization {
             keepRules {
@@ -81,7 +81,7 @@ android {
     }
     kotlinOptions {
         jvmTarget = "21"
-        options.languageVersion = KotlinVersion.KOTLIN_2_0
+        options.languageVersion = KotlinVersion.KOTLIN_2_1
         options.progressiveMode = true
     }
 
