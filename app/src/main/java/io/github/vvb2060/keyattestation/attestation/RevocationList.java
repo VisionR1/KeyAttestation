@@ -129,23 +129,41 @@ public record RevocationList(String status, String reason, DataSource source) {
         
         // 1. Network Check
         NetworkResult networkResult = fetchFromNetwork(statusUrl, cachedTime);
-        if (networkResult != null) {
-            if (networkResult.responseCode() == HttpURLConnection.HTTP_NOT_MODIFIED) {
-                try (var fis = AppApplication.app.openFileInput(CACHE_FILE)) {
-                    var cacheJson = parseStatus(fis);
-                    publishTime = new Date(cachedTime);
-                    return new StatusResult(cacheJson.getJSONObject("entries"), DataSource.NETWORK_UP_TO_DATE);
-                } catch (Exception e) {
-                    Log.w(TAG, "Failed to read cache despite 304 response. Falling back.", e);
-                }
-            } else if (networkResult.json() != null) {
-                saveToCache(networkResult.json());
-                try {
-                    return new StatusResult(networkResult.json().getJSONObject("entries"), DataSource.NETWORK_UPDATE);
-                } catch (JSONException ignored) {}
-            }
-        }
         
+        if (networkResult != null && networkResult.responseCode() == HttpURLConnection.HTTP_NOT_MODIFIED) {
+            try (var fis = AppApplication.app.openFileInput(CACHE_FILE)) {
+                var cacheJson = parseStatus(fis);
+                publishTime = new Date(cachedTime);
+                return new StatusResult(cacheJson.getJSONObject("entries"), DataSource.NETWORK_UP_TO_DATE);
+            } catch (Exception e) {
+                Log.w(TAG, "Legacy cache format detected. Clearing and forcing fresh fetch.", e);
+                
+                // 1. Wipe the old, incompatible cache file
+                AppApplication.app.deleteFile(CACHE_FILE);
+                
+                // 2. Wipe the saved timestamp so we don't send If-Modified-Since again
+                prefs.edit().remove(KEY_PUBLISH_TIME).apply();
+                
+                // 3. Immediately force a fresh 200 OK download
+                NetworkResult retryResult = fetchFromNetwork(statusUrl, 0);
+                
+                if (retryResult != null && retryResult.json() != null) {
+                    saveToCache(retryResult.json()); 
+                    
+                    try {
+                        return new StatusResult(retryResult.json().getJSONObject("entries"), DataSource.NETWORK_UPDATE);
+                    } catch (JSONException je) {
+                        Log.e(TAG, "Failed to parse entries from fresh fallback fetch", je);
+                    }
+                }
+            }
+        } else if (networkResult != null && networkResult.json() != null) {
+            saveToCache(networkResult.json());
+            try {
+                return new StatusResult(networkResult.json().getJSONObject("entries"), DataSource.NETWORK_UPDATE);
+            } catch (JSONException ignored) {}
+        }
+
         // 2. Cache
         try (var fis = AppApplication.app.openFileInput(CACHE_FILE)) {
             var cacheJson = parseStatus(fis);
