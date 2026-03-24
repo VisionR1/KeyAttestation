@@ -102,8 +102,7 @@ class HomeAdapter(listener: Listener) : IdBasedRecyclerViewAdapter() {
         val dateStr = publishTime?.let {
             io.github.vvb2060.keyattestation.attestation.AuthorizationList.formatDate(it)
         } ?: ""
-
-        val app = io.github.vvb2060.keyattestation.AppApplication.app
+        
         val locales = androidx.appcompat.app.AppCompatDelegate.getApplicationLocales()
         val context = if (!locales.isEmpty) {
         val config = android.content.res.Configuration(app.resources.configuration)
