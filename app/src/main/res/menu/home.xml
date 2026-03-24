@@ -91,6 +91,16 @@
         android:showAsAction="never"
         android:title="@string/rkp_test" />
 
+	<item
+        android:id="@+id/menu_rkp_register"
+        android:title="@string/rkp_register"
+        android:showAsAction="never" />
+
+    <item
+        android:id="@+id/menu_rkp_unregister"
+        android:title="@string/rkp_unregister"
+        android:showAsAction="never" />
+
     <item
         android:id="@+id/menu_reset"
         android:showAsAction="never"
@@ -110,5 +120,10 @@
         android:id="@+id/menu_about"
         android:showAsAction="never"
         android:title="@string/about" />
+	
+	<item
+        android:id="@+id/menu_rkp_dump"
+        android:title="Dump RKP Chains"
+        android:showAsAction="never" />
 
 </menu>
