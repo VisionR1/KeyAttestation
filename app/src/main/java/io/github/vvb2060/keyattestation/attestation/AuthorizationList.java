@@ -532,8 +532,10 @@ public class AuthorizationList {
     }
 
     public static String formatDate(Date date) {
-        return DateFormat.getDateTimeInstance().format(date);
-    }
+        java.text.DateFormat df = java.text.DateFormat.getDateTimeInstance();
+        df.setTimeZone(java.util.TimeZone.getTimeZone("UTC"));
+        return df.format(date) + " UTC";
+    }    
 
     public static String paddingModesToString(final Set<Integer> paddingModes) {
         return joinStrings(transform(paddingModes, forMap(paddingMap, "Unknown")));
