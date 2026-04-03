@@ -57,7 +57,8 @@
     <string name="revocation_list_publish_time">Revocation list publish time</string>
     <string name="revocation_list_description">The revocation list is used to check if certificates have been revoked. This shows the publication time of the currently used revocation list.</string>
     
-    <string name="revocation_status_new_fetch">ℹ️ New CRL Fetched!</string>
+    <string name="revocation_status_initial">⚙️ Initial list downloaded</string>
+    <string name="revocation_status_new_fetch">✨ New list fetched!</string>
     <string name="revocation_status_up_to_date">✅ CRL Up-to-date</string>
     <string name="revocation_status_offline_cached">⚠️ Device offline - using cached CRL</string>
     <string name="revocation_status_offline_bundled">❌ Offline - CRL Out-of-date</string>

@@ -21,13 +21,14 @@ import io.github.vvb2060.keyattestation.AppApplication;
 import io.github.vvb2060.keyattestation.R;
 
 public record RevocationList(String status, String reason, DataSource source) {
-    public enum DataSource {
+	public enum DataSource {
+        NETWORK_INITIAL,
         NETWORK_UPDATE,
         NETWORK_UP_TO_DATE,
         CACHE,
         BUNDLED
     }
-
+    
     private static final String TAG = "RevocationList";
     private static final String CACHE_FILE = "revocation_cache.json";
     private static final String PREFS_NAME = "revocation_prefs";
@@ -83,6 +84,15 @@ public record RevocationList(String status, String reason, DataSource source) {
             connection.setReadTimeout(10000);
             connection.setRequestProperty("User-Agent", "KeyAttestation");
             
+            double rand = Math.round(Math.random() * 1000.0) / 1000.0;
+            
+            // Force the CDN to bypass edge caches
+            connection.setRequestProperty("Cache-Control", "no-cache, no-store, no-transform, max-age=0");
+            connection.setRequestProperty("Accept", "application/json, */*;q=" + rand);
+            connection.setRequestProperty("Accept-Encoding", "identity, *;q=" + rand);
+            connection.setRequestProperty("Accept-Ranges", "bytes");
+            
+            // Standard conditional GET for bandwidth saving (if the node IS synced)
             if (cachedTime != 0) {
                 connection.setIfModifiedSince(cachedTime);
             }
@@ -160,7 +170,8 @@ public record RevocationList(String status, String reason, DataSource source) {
         } else if (networkResult != null && networkResult.json() != null) {
             saveToCache(networkResult.json());
             try {
-                return new StatusResult(networkResult.json().getJSONObject("entries"), DataSource.NETWORK_UPDATE);
+                DataSource successState = (cachedTime == 0) ? DataSource.NETWORK_INITIAL : DataSource.NETWORK_UPDATE;
+                return new StatusResult(networkResult.json().getJSONObject("entries"), successState);
             } catch (JSONException ignored) {}
         }
 
@@ -198,7 +209,7 @@ public record RevocationList(String status, String reason, DataSource source) {
             
             // If we successfully fetched a brand new file this session, 
             // don't let a subsequent UI refresh overwrite our status with a 304!
-            if (currentSource == DataSource.NETWORK_UPDATE && result.source() == DataSource.NETWORK_UP_TO_DATE) {
+            if ((currentSource == DataSource.NETWORK_UPDATE || currentSource == DataSource.NETWORK_INITIAL) && result.source() == DataSource.NETWORK_UP_TO_DATE) {
                 Log.i(TAG, "Preserving NETWORK_UPDATE status across multiple refreshes");
             } else {
                 currentSource = result.source();
@@ -213,7 +224,7 @@ public record RevocationList(String status, String reason, DataSource source) {
                     StatusResult result = getStatus();
                     data = result.json();
                     
-                    if (currentSource == DataSource.NETWORK_UPDATE && result.source() == DataSource.NETWORK_UP_TO_DATE) {
+                    if ((currentSource == DataSource.NETWORK_UPDATE || currentSource == DataSource.NETWORK_INITIAL) && result.source() == DataSource.NETWORK_UP_TO_DATE) {
                         Log.i(TAG, "Preserving NETWORK_UPDATE status in get()");
                     } else {
                         currentSource = result.source();
