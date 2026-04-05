@@ -57,10 +57,11 @@
     <string name="revocation_list_publish_time">Ώρα δημοσίευσης λίστας ανάκλησης</string>
     <string name="revocation_list_description">Η λίστα ανάκλησης χρησιμοποιείται για να ελεγχθεί εάν έχουν ανακληθεί πιστοποιητικά. Αυτή δείχνει την ώρα δημοσίευσης της λίστας ανάκλησης που χρησιμοποιείται αυτήν τη στιγμή.</string>
 
-    <string name="revocation_status_new_fetch">ℹ️ Ελήφθη νέα CRL!</string>
+    <string name="revocation_status_initial">⚙️ Αρχική λίστα ελήφθη</string>
+    <string name="revocation_status_new_fetch">✨ Ελήφθη νέα λίστα!</string>
     <string name="revocation_status_up_to_date">✅ Ενημερωμένη CRL</string>
-    <string name="revocation_status_offline_cached">⚠️ Συσκευή εκτός σύνδεσης - χρήση προσωρινά αποθηκευμένης CRL</string>
-    <string name="revocation_status_offline_bundled">❌ Εκτός σύνδεσης - μη ενημερωμένη CRL</string>
+    <string name="revocation_status_offline_cached">⚠️ Συσκευή εκτός σύνδεσης - χρήση αποθηκευμένης CRL</string>
+    <string name="revocation_status_offline_bundled">❌ Εκτός σύνδεσης - Μη ενημερωμένη CRL</string>
 
     <string name="error_message_subtitle">Αναλυτικά μηνύματα:</string>
     <string name="error_unknown">Άγνωστο σφάλμα</string>

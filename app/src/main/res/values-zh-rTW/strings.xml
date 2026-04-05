@@ -57,7 +57,8 @@
     <string name="revocation_list_publish_time">撤銷清單發布時間</string>
     <string name="revocation_list_description">撤銷清單用於檢查憑證是否已被撤銷。此處顯示目前使用中的撤銷清單發布時間。</string>
 
-    <string name="revocation_status_new_fetch">ℹ️ 已取得新的 CRL!</string>
+    <string name="revocation_status_initial">⚙️ 已下載初始清單</string>
+    <string name="revocation_status_new_fetch">✨ 已取得新清單!</string>
     <string name="revocation_status_up_to_date">✅ CRL 為最新狀態</string>
     <string name="revocation_status_offline_cached">⚠️ 裝置離線 - 使用快取的 CRL</string>
     <string name="revocation_status_offline_bundled">❌ 離線 - CRL 已過期</string>

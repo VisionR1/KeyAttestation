@@ -57,7 +57,8 @@
     <string name="revocation_list_publish_time">Hora de publicação da lista de revogação</string>
     <string name="revocation_list_description">A lista de revogação é usada para verificar se certificados foram revogados. Isto mostra a hora de publicação da lista de revogação atualmente utilizada.</string>
 
-    <string name="revocation_status_new_fetch">ℹ️ Nova CRL obtida!</string>
+    <string name="revocation_status_initial">⚙️ Lista inicial baixada</string>
+    <string name="revocation_status_new_fetch">✨ Nova lista obtida!</string>
     <string name="revocation_status_up_to_date">✅ CRL atualizada</string>
     <string name="revocation_status_offline_cached">⚠️ Dispositivo offline - usando CRL em cache</string>
     <string name="revocation_status_offline_bundled">❌ Offline - CRL desatualizada</string>

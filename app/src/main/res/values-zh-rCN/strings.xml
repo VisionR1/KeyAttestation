@@ -57,7 +57,8 @@
     <string name="revocation_list_publish_time">吊销列表发布时间</string>
     <string name="revocation_list_description">吊销列表用于检查证书是否被吊销。这里显示当前使用的吊销列表发布时间。</string>
 
-    <string name="revocation_status_new_fetch">ℹ️ 已获取新的 CRL!</string>
+    <string name="revocation_status_initial">⚙️ 已下载初始列表</string>
+    <string name="revocation_status_new_fetch">✨ 已获取新列表!</string>
     <string name="revocation_status_up_to_date">✅ CRL 为最新状态</string>
     <string name="revocation_status_offline_cached">⚠️ 设备离线 - 使用缓存的 CRL</string>
     <string name="revocation_status_offline_bundled">❌ 离线 - CRL 已过期</string>
