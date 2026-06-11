@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="AppTheme" parent="Theme" />
+
+    <style name="HomeCardStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingStart">16dp</item>
+        <item name="android:paddingTop">16dp</item>
+        <item name="android:paddingEnd">16dp</item>
+        <item name="android:paddingBottom">16dp</item>
+        <!--<item name="android:background">?outlineButtonBackground</item>-->
+    </style>
+
+    <style name="HomeItemTitleText">
+        <item name="android:textSize">16sp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textAppearance">?textAppearanceSubtitle2</item>
+        <item name="android:textColor">@color/material_on_surface_emphasis_high_type</item>
+    </style>
+
+    <style name="HomeItemSummaryText">
+        <item name="android:textSize">14sp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textAppearance">?textAppearanceBody2</item>
+        <item name="android:textColor">@color/material_on_surface_emphasis_medium</item>
+        <item name="android:lineSpacingExtra">1sp</item>
+    </style>
+
+</resources>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.Default.Gray" parent="Theme">
+        <item name="android:colorBackground">@color/color_background_default_gray</item>
+        <item name="toolbarColor">@color/color_background_default_gray</item>
+        <item name="colorSurface">@color/color_floating_background_default_gray</item>
+    </style>
+
+    <style name="Theme.Original" parent="Theme">
+        <item name="android:colorBackground">@color/color_background_original</item>
+        <item name="toolbarColor">@color/color_background_original</item>
+        <item name="colorSurface">@color/color_floating_background_original</item>
+    </style>
+	
+    <style name="Theme.Pure.Black" parent="Theme">
+        <item name="android:colorBackground">@color/color_background_pure_black</item>
+        <item name="toolbarColor">@color/color_background_original</item>
+        <item name="colorSurface">@color/color_floating_background_pure_black</item>
+    </style>
+
+    <style name="Theme.Blue" parent="Theme">
+        <item name="android:colorBackground">@color/color_background_blue</item>
+        <item name="toolbarColor">@color/color_background_blue</item>
+        <item name="colorSurface">@color/color_floating_background_blue</item>
+    </style>
+
+    <style name="Theme.Green" parent="Theme">
+        <item name="android:colorBackground">@color/color_background_green</item>
+        <item name="toolbarColor">@color/color_background_green</item>
+        <item name="colorSurface">@color/color_floating_background_green</item>
+    </style>
+	
+    <style name="Theme.Orange" parent="Theme">
+        <item name="android:colorBackground">@color/color_background_orange</item>
+        <item name="toolbarColor">@color/color_background_orange</item>
+        <item name="colorSurface">@color/color_floating_background_orange</item>
+    </style>
+	
+    <style name="Theme.Pink" parent="Theme">
+        <item name="android:colorBackground">@color/color_background_pink</item>
+        <item name="toolbarColor">@color/color_background_pink</item>
+        <item name="colorSurface">@color/color_floating_background_pink</item>
+    </style>
+	
+    <style name="Theme.Purple" parent="Theme">
+        <item name="android:colorBackground">@color/color_background_purple</item>
+        <item name="toolbarColor">@color/color_background_purple</item>
+        <item name="colorSurface">@color/color_floating_background_purple</item>
+    </style>
+
+    <style name="Theme.Red" parent="Theme">
+        <item name="android:colorBackground">@color/color_background_red</item>
+        <item name="toolbarColor">@color/color_background_red</item>
+        <item name="colorSurface">@color/color_floating_background_red</item>
+    </style>
+</resources>

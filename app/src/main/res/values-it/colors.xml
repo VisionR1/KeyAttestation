@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="color_background_default_gray">#212121</color>
+    <color name="color_floating_background_default_gray">#242424</color>
+
+    <color name="color_background_original">#365161</color>
+    <color name="color_floating_background_original">#465f6d</color>
+	
+    <color name="color_background_pure_black">#000000</color>
+    <color name="color_floating_background_pure_black">#030303</color>
+	
+    <color name="color_background_blue">#3F51B5</color>
+    <color name="color_floating_background_blue">#3949AB</color>
+	
+    <color name="color_background_green">#0A8451</color>
+    <color name="color_floating_background_green">#0D8754</color>
+	
+    <color name="color_background_orange">#E67200</color>
+    <color name="color_floating_background_orange">#E97500</color>
+	
+    <color name="color_background_pink">#E6007E</color>
+    <color name="color_floating_background_pink">#E90081</color>
+	
+    <color name="color_background_purple">#800080</color>
+    <color name="color_floating_background_purple">#850085</color>
+	
+    <color name="color_background_red">#D4041D</color>
+    <color name="color_floating_background_red">#D70420</color>
+	
+    <color name="icon_background">#1765a4</color>
+    <color name="color_safe">#efe0f7fA</color>
+    <color name="color_warning">#efffd180</color>
+    <color name="color_alert">#efff8a80</color>
+    <color name="color_inactive">#88ffffff</color>
+    <color name="color_accent">#E1F5FE</color>
+</resources>
