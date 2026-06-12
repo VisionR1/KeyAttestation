@@ -14,6 +14,7 @@ object LocaleManager {
     private val supportedLocales = listOf(
         Locale("en"),
         Locale("el"),
+		Locale("it"),
         Locale("pt", "BR"),
         Locale("uk", "UA"),
         Locale("zh", "CN"),

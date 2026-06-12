@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="color_default_gray">Grigio (Predefinito)</string>
+    <string name="color_original">Originale</string>
+    <string name="color_pure_black">Nero puro</string>
+    <string name="color_blue">Blu</string>
+    <string name="color_green">Verde</string>
+    <string name="color_orange">Arancione</string>
+    <string name="color_pink">Rosa</string>
+    <string name="color_purple">Viola</string>
+    <string name="color_red">Rosso</string>
+</resources>
