@@ -4,3 +4,4 @@ zh-rTW
 pt-rBR
 el
 uk-rUA
+it
