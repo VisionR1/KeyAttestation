@@ -181,8 +181,10 @@ class HomeViewModel(
         attestationData.postValue(result)
     }
 
-    fun load(reset: Boolean = false) = AppApplication.executor.execute {
-        attestationData.postValue(Resource.loading(null))
+    fun load(reset: Boolean = false, showLoading: Boolean = true) = AppApplication.executor.execute {
+        if (showLoading) {
+            attestationData.postValue(Resource.loading(null))
+        }
 
         var uniqueIdIncluded = false
         var useSak = false

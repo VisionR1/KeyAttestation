@@ -32,6 +32,7 @@ import io.github.vvb2060.keyattestation.lang.AttestationException
 import io.github.vvb2060.keyattestation.repository.AttestationData
 import io.github.vvb2060.keyattestation.util.Status
 import io.github.vvb2060.keyattestation.util.ColorManager
+import io.github.vvb2060.keyattestation.util.CrlManager
 import io.github.vvb2060.keyattestation.util.LocaleManager
 import rikka.html.text.HtmlCompat
 import rikka.html.text.toHtml
@@ -80,6 +81,10 @@ class HomeFragment : AppFragment(), HomeAdapter.Listener, MenuProvider {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         requireActivity().addMenuProvider(this, viewLifecycleOwner)
+		
+		CrlManager.refreshTrigger.observe(viewLifecycleOwner) {
+            viewModel.load(showLoading = false)
+        }
 
         val context = view.context
 

@@ -7,6 +7,7 @@ import android.content.pm.PackageManager
 import android.widget.Toast
 import androidx.arch.core.executor.ArchTaskExecutor
 import io.github.vvb2060.keyattestation.keystore.KeyStoreManager
+import io.github.vvb2060.keyattestation.util.CrlManager
 import io.github.vvb2060.keyattestation.util.LocaleManager
 import org.bouncycastle.jce.provider.BouncyCastleProvider
 import rikka.html.text.HtmlCompat
@@ -39,14 +40,7 @@ class AppApplication : Application() {
         HtmlCompat.setContext(this)
         installProvider(this)
 
-        // Initialize revocation list in background to fetch latest from network
-        executor.execute {
-            try {
-                io.github.vvb2060.keyattestation.attestation.RevocationList.refresh()
-            } catch (e: Exception) {
-                android.util.Log.w(TAG, "Failed to initialize revocation list", e)
-            }
-        }
+        CrlManager.install(this)
 
         if (Sui.init(BuildConfig.APPLICATION_ID)) {
             KeyStoreManager.requestPermission();
