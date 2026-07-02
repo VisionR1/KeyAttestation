@@ -270,6 +270,17 @@ class HomeAdapter(listener: Listener) : IdBasedRecyclerViewAdapter() {
         rkpData.deviceInfo.forEach { key, value ->
             addItem(CommonItemViewHolder.SIMPLE_CREATOR, Pair(key, value), id++)
         }
+
+        if (rkpData.diceChain.isNotEmpty()) {
+            id = ID_RKP_DICE_START
+            addItem(SubtitleViewHolder.CREATOR, CommonData(
+                R.string.rkp_dice_chain,
+                R.string.rkp_dice_chain_description), id++)
+
+            rkpData.diceChain.forEach {
+                addItem(CommonItemViewHolder.SIMPLE_CREATOR, it, id++)
+            }
+        }
     }
 
     fun updateData(e: AttestationException) {
@@ -314,6 +325,7 @@ class HomeAdapter(listener: Listener) : IdBasedRecyclerViewAdapter() {
         private const val ID_DESCRIPTION_START = 3000L
         private const val ID_AUTHORIZATION_LIST_START = 4000L
         private const val ID_KNOX_START = 5000L
+        private const val ID_RKP_DICE_START = 6000L
         private const val ID_ERROR_MESSAGE = 100000L
 
         private fun createAuthorizationItems(list: AuthorizationList): Array<String?> {

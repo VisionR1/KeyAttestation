@@ -131,6 +131,12 @@
     crafted by an IRemotelyProvisionedComponent HAL instance is coming from the expected device
     based on values initially uploaded during device\'s manufacture at the factory.
     </string>
+    <string name="rkp_dice_chain">DICE certificate chain</string>
+    <string name="rkp_dice_chain_description">
+    The DICE chain mirrors the boot stages of the device.
+    Each entry measures the code and configuration of a boot stage and is signed by a key derived by the previous stage.
+    A degenerate chain contains only a single self-signed entry and carries no boot measurements.
+    </string>
     <string name="rkp_hostname">Remote provisioning hostname</string>
     <string name="rkp_hostname_empty">Remote key provisioning disabled</string>
 

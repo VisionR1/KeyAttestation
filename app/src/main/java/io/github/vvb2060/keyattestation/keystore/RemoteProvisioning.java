@@ -67,6 +67,7 @@ class RemoteProvisioning {
     private final String requestId = UUID.randomUUID().toString();
     private final IRemotelyProvisionedComponent binder;
     private byte[] deviceInfoData;
+    private byte[] diceChainData;
 
     private static class EekResponse {
         private final byte[] challenge;
@@ -134,6 +135,10 @@ class RemoteProvisioning {
 
     public byte[] getDeviceInfo() {
         return deviceInfoData;
+    }
+
+    public byte[] getDiceChain() {
+        return diceChainData;
     }
 
     public byte[] check() throws RuntimeException {
@@ -269,6 +274,7 @@ class RemoteProvisioning {
             var array = (Array) decodeCbor(csrBytes);
             var deviceInfo = extractDeviceInfoFromV3Csr(array);
             deviceInfoData = encodeCbor(deviceInfo);
+            diceChainData = encodeCbor(array.getDataItems().get(2));
             return encodeCbor(array.add(unverifiedDeviceInfo));
         }
     }

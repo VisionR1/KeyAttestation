@@ -17,5 +17,6 @@ interface IAndroidKeyStore {
     String getRkpHostname();
     boolean canRemoteProvisioning(boolean useStrongBox);
     RpcHardwareInfo getHardwareInfo(boolean useStrongBox, out DeviceInfo deviceInfo);
+    byte[] getDiceChain(boolean useStrongBox);
     byte[] checkRemoteProvisioning(boolean useStrongBox);
 }

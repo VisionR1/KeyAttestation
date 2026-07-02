@@ -374,6 +374,14 @@ public class AndroidKeyStore extends IAndroidKeyStore.Stub {
     }
 
     @Override
+    public byte[] getDiceChain(boolean useStrongBox) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
+            throw new IllegalStateException();
+        }
+        return RemoteProvisioning.getInstance(useStrongBox).getDiceChain();
+    }
+
+    @Override
     public byte[] checkRemoteProvisioning(boolean useStrongBox) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
             throw new IllegalStateException();

@@ -263,7 +263,8 @@ public class AttestationRepository {
                     ? keyStore.getRkpHostname() : null;
             var deviceInfo = new DeviceInfo();
             var hw = keyStore.getHardwareInfo(useStrongBox, deviceInfo);
-            var info = new RemoteProvisioningData(name, hw, deviceInfo);
+            var diceChain = keyStore.getDiceChain(useStrongBox);
+            var info = new RemoteProvisioningData(name, hw, deviceInfo, diceChain);
             try {
                 var data = keyStore.checkRemoteProvisioning(useStrongBox);
                 info.setCerts(factory.generateCertificates(new ByteArrayInputStream(data)));
