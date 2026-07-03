@@ -212,7 +212,7 @@ class RemoteProvisioning {
         uri = uri.buildUpon().appendQueryParameter("requestId", requestId).build();
         var con = (HttpsURLConnection) new URL(uri.toString()).openConnection();
         con.setRequestMethod("POST");
-        con.setConnectTimeout(2_000);
+        con.setConnectTimeout(10_000);
         con.setReadTimeout(20_000);
         con.setDoOutput(true);
         con.setFixedLengthStreamingMode(input.length);
