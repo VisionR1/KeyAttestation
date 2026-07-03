@@ -139,6 +139,12 @@
     Each entry measures the code and configuration of a boot stage and is signed by a key derived by the previous stage.
     A degenerate chain contains only a single self-signed entry and carries no boot measurements.
     </string>
+    <string name="dice_chain_valid">DICE chain verified</string>
+    <string name="dice_chain_valid_summary">Every entry in the DICE chain is correctly signed by the key of the previous boot stage.</string>
+    <string name="dice_chain_degenerate">Degenerate DICE chain</string>
+    <string name="dice_chain_degenerate_summary">The DICE chain is a single self-signed entry. Its signature is valid but it carries no boot stage measurements.</string>
+    <string name="dice_chain_invalid">DICE chain signature invalid</string>
+    <string name="dice_chain_invalid_summary">A signature in the DICE chain failed to verify against the previous stage key. The chain may be forged or corrupt.</string>
     <string name="rkp_hostname">Remote provisioning hostname</string>
     <string name="rkp_hostname_empty">Remote key provisioning disabled</string>
 

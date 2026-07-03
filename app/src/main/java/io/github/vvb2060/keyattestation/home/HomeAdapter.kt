@@ -87,11 +87,13 @@ class HomeAdapter(listener: Listener) : IdBasedRecyclerViewAdapter() {
         }
 
         var id = ID_CERT_INFO_START
-        addItem(SubtitleViewHolder.CREATOR, CommonData(
-                R.string.cert_chain,
-                R.string.cert_chain_description), id++)
-        baseData.certs.forEach { certInfo ->
-            addItem(CommonItemViewHolder.CERT_INFO_CREATOR, certInfo, id++)
+        if (baseData.certs.isNotEmpty()) {
+            addItem(SubtitleViewHolder.CREATOR, CommonData(
+                    R.string.cert_chain,
+                    R.string.cert_chain_description), id++)
+            baseData.certs.forEach { certInfo ->
+                addItem(CommonItemViewHolder.CERT_INFO_CREATOR, certInfo, id++)
+            }
         }
 
         // Add revocation list information with source status
@@ -279,6 +281,25 @@ class HomeAdapter(listener: Listener) : IdBasedRecyclerViewAdapter() {
         }
 
         if (rkpData.diceChain.isNotEmpty()) {
+            val header = when {
+                !rkpData.isDiceChainValid -> HeaderData(
+                    R.string.dice_chain_invalid,
+                    R.string.dice_chain_invalid_summary,
+                    R.drawable.ic_error_outline_24,
+                    rikka.material.R.attr.colorAlert)
+                rkpData.isDiceDegenerate -> HeaderData(
+                    R.string.dice_chain_degenerate,
+                    R.string.dice_chain_degenerate_summary,
+                    R.drawable.ic_error_outline_24,
+                    rikka.material.R.attr.colorWarning)
+                else -> HeaderData(
+                    R.string.dice_chain_valid,
+                    R.string.dice_chain_valid_summary,
+                    R.drawable.ic_trustworthy_24,
+                    rikka.material.R.attr.colorSafe)
+            }
+            addItemAt(1, HeaderViewHolder.CREATOR, header, ID_DICE_STATUS)
+
             id = ID_RKP_DICE_START
             addItem(SubtitleViewHolder.CREATOR, CommonData(
                 R.string.rkp_dice_chain,
@@ -327,6 +348,7 @@ class HomeAdapter(listener: Listener) : IdBasedRecyclerViewAdapter() {
         private const val ID_CERT_STATUS = 1L
         private const val ID_BOOT_STATUS = 2L
         private const val ID_PATCH_STATUS = 3L
+        private const val ID_DICE_STATUS = 4L
         private const val ID_CERT_INFO_START = 1000L
         private const val ID_REVOCATION_INFO = 1900L
         private const val ID_RKP_HOSTNAME = 2000L
