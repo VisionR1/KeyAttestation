@@ -154,6 +154,13 @@ class HomeAdapter(listener: Listener) : IdBasedRecyclerViewAdapter() {
                     R.drawable.ic_error_outline_24,
                     rikka.material.R.attr.colorWarning), ID_PATCH_STATUS)
         }
+        if (attestationData.isBootHashMismatch) {
+            addItemAt(2, HeaderViewHolder.CREATOR, HeaderData(
+                    R.string.vbmeta_mismatch,
+                    R.string.vbmeta_mismatch_summary,
+                    R.drawable.ic_error_outline_24,
+                    rikka.material.R.attr.colorAlert), ID_VBMETA_STATUS)
+        }
         addItem(CommonItemViewHolder.SECURITY_LEVEL_CREATOR, SecurityLevelData(
                 R.string.attestation,
                 R.string.attestation_version_description,
@@ -348,7 +355,8 @@ class HomeAdapter(listener: Listener) : IdBasedRecyclerViewAdapter() {
         private const val ID_CERT_STATUS = 1L
         private const val ID_BOOT_STATUS = 2L
         private const val ID_PATCH_STATUS = 3L
-        private const val ID_DICE_STATUS = 4L
+        private const val ID_VBMETA_STATUS = 4L
+        private const val ID_DICE_STATUS = 5L
         private const val ID_CERT_INFO_START = 1000L
         private const val ID_REVOCATION_INFO = 1900L
         private const val ID_RKP_HOSTNAME = 2000L

@@ -19,4 +19,5 @@ interface IAndroidKeyStore {
     RpcHardwareInfo getHardwareInfo(boolean useStrongBox, out DeviceInfo deviceInfo);
     byte[] getDiceChain(boolean useStrongBox);
     byte[] checkRemoteProvisioning(boolean useStrongBox);
+    String getVbmetaDigest();
 }

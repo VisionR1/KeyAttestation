@@ -191,7 +191,14 @@ public class AttestationRepository {
             if (reset) keyStore.deleteAllEntry();
             doAttestation(useAttestKey, useStrongBox, includeProps,
                     uniqueIdIncluded, idFlags, keyStoreKeyType, useSak);
-            return Resource.Companion.success(AttestationData.parseCertificateChain(currentCerts));
+            var data = AttestationData.parseCertificateChain(currentCerts);
+            try {
+                data.vbmetaDigest = keyStore.getVbmetaDigest();
+            } catch (Exception e) {
+                var cause = e instanceof AttestationException ? e.getCause() : e;
+                Log.w(AppApplication.TAG, "Get vbmeta digest error.", cause);
+            }
+            return Resource.Companion.success(data);
         } catch (Exception e) {
             var cause = e instanceof AttestationException ? e.getCause() : e;
             Log.w(AppApplication.TAG, "Do attestation error.", cause);

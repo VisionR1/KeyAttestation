@@ -3,6 +3,8 @@ package io.github.vvb2060.keyattestation.repository;
 import static io.github.vvb2060.keyattestation.attestation.Attestation.KM_SECURITY_LEVEL_SOFTWARE;
 import static io.github.vvb2060.keyattestation.lang.AttestationException.CODE_CANT_PARSE_CERT;
 
+import com.google.common.io.BaseEncoding;
+
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -17,6 +19,7 @@ public class AttestationData extends BaseData {
     private final RootOfTrust rootOfTrust;
     private final boolean sw;
     public Attestation showAttestation;
+    public String vbmetaDigest;
 
     public RootOfTrust getRootOfTrust() {
         return rootOfTrust;
@@ -24,6 +27,17 @@ public class AttestationData extends BaseData {
 
     public boolean isSoftwareLevel() {
         return sw;
+    }
+
+    public boolean isBootHashMismatch() {
+        if (vbmetaDigest == null || vbmetaDigest.isEmpty() || rootOfTrust == null) {
+            return false;
+        }
+        var hash = rootOfTrust.getVerifiedBootHash();
+        if (hash == null) {
+            return false;
+        }
+        return !BaseEncoding.base16().lowerCase().encode(hash).equalsIgnoreCase(vbmetaDigest);
     }
 
     private AttestationData(List<CertificateInfo> certs) {
