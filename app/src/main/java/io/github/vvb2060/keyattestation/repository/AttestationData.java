@@ -40,6 +40,13 @@ public class AttestationData extends BaseData {
         return !BaseEncoding.base16().lowerCase().encode(hash).equalsIgnoreCase(vbmetaDigest);
     }
 
+    public boolean isVbmetaDigestMissing() {
+        if (vbmetaDigest == null || rootOfTrust == null) {
+            return false;
+        }
+        return vbmetaDigest.isEmpty() || vbmetaDigest.chars().allMatch(chr -> chr == '0');
+    }
+
     private AttestationData(List<CertificateInfo> certs) {
         init(certs);
 

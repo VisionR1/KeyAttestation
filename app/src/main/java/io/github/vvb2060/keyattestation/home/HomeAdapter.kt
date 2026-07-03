@@ -154,7 +154,13 @@ class HomeAdapter(listener: Listener) : IdBasedRecyclerViewAdapter() {
                     R.drawable.ic_error_outline_24,
                     rikka.material.R.attr.colorWarning), ID_PATCH_STATUS)
         }
-        if (attestationData.isBootHashMismatch) {
+        if (attestationData.isVbmetaDigestMissing) {
+            addItemAt(2, HeaderViewHolder.CREATOR, HeaderData(
+                    R.string.vbmeta_missing,
+                    R.string.vbmeta_missing_summary,
+                    R.drawable.ic_error_outline_24,
+                    rikka.material.R.attr.colorWarning), ID_VBMETA_STATUS)
+        } else if (attestationData.isBootHashMismatch) {
             addItemAt(2, HeaderViewHolder.CREATOR, HeaderData(
                     R.string.vbmeta_mismatch,
                     R.string.vbmeta_mismatch_summary,
