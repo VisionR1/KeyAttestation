@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.Dynamic" parent="Theme">
+        <item name="android:colorBackground">@color/color_background_dynamic</item>
+        <item name="toolbarColor">@color/color_background_dynamic</item>
+        <item name="colorSurface">@color/color_floating_background_dynamic</item>
+    </style>
+</resources>
