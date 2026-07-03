@@ -37,7 +37,11 @@ open class CommonItemViewHolder<T>(itemView: View, binding: HomeCommonItemBindin
 
                 override fun onBind() {
                     binding.title.text = data.first
-                    binding.summary.text = data.second
+                    if (data.second.isEmpty()) {
+                        binding.summary.setText(R.string.empty)
+                    } else {
+                        binding.summary.text = data.second
+                    }
                 }
             }
         }

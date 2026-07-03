@@ -50,9 +50,12 @@ public class RootOfTrust {
         deviceLocked = Asn1Utils.getBooleanFromAsn1(sequence.getObjectAt(DEVICE_LOCKED_INDEX));
         verifiedBootState =
                 Asn1Utils.getIntegerFromAsn1(sequence.getObjectAt(VERIFIED_BOOT_STATE_INDEX));
-        if (sequence.size() == 3) verifiedBootHash = null;
-        else verifiedBootHash =
-                Asn1Utils.getByteArrayFromAsn1(sequence.getObjectAt(VERIFIED_BOOT_HASH_INDEX));
+        if (sequence.size() == 3) {
+            verifiedBootHash = null;
+        } else {
+            var hash = Asn1Utils.getByteArrayFromAsn1(sequence.getObjectAt(VERIFIED_BOOT_HASH_INDEX));
+            verifiedBootHash = hash.length == 0 ? null : hash;
+        }
     }
 
     RootOfTrust(byte[] verifiedBootKey, boolean deviceLocked,
