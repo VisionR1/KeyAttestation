@@ -40,6 +40,9 @@ public class RootPublicKey {
             ixPvZtXQpUpuL12ab+9EaDK8Z4RHJYYfCT3Q5vNAXaiWQ+8PTWm2QgBR/bkwSWc+\
             NpUFgNPN9PvQi8WEg5UmAGMCAwEAAQ==""";
 
+    // New P-384 KeyMint attestation root (CN=Key Attestation CA1)
+    // RKP devices use it exclusively
+    // https://developer.android.com/privacy-and-security/security-key-attestation#root_certificate_rotation
     private static final String GOOGLE_RKP_ROOT_PUBLIC_KEY = """
             MHYwEAYHKoZIzj0CAQYFK4EEACIDYgAEI9ojcU7fPlsFCjxy6IRqzgeOoK0b+YsV\
             9FPQywiyw8EQRTkJ9u3qwfnI4DGoSLlBqClTXJfgfCcZvs60FikNMHnu4fkRzObf\
