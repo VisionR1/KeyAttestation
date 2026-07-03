@@ -147,6 +147,13 @@ class HomeAdapter(listener: Listener) : IdBasedRecyclerViewAdapter() {
 
         var id = ID_DESCRIPTION_START
         val attestation = attestationData.showAttestation ?: return
+        if (!attestationData.isSoftwareLevel) {
+            addItemAt(2, HeaderViewHolder.CREATOR, HeaderData(
+                    R.string.software_attestation,
+                    R.string.software_attestation_summary,
+                    R.drawable.ic_error_outline_24,
+                    rikka.material.R.attr.colorWarning), ID_SOFTWARE_STATUS)
+        }
         if (attestation.teeEnforced.isPatchLevelOutdated) {
             addItemAt(2, HeaderViewHolder.CREATOR, HeaderData(
                     R.string.patch_level_outdated,
@@ -362,7 +369,8 @@ class HomeAdapter(listener: Listener) : IdBasedRecyclerViewAdapter() {
         private const val ID_BOOT_STATUS = 2L
         private const val ID_PATCH_STATUS = 3L
         private const val ID_VBMETA_STATUS = 4L
-        private const val ID_DICE_STATUS = 5L
+        private const val ID_SOFTWARE_STATUS = 5L
+        private const val ID_DICE_STATUS = 6L
         private const val ID_CERT_INFO_START = 1000L
         private const val ID_REVOCATION_INFO = 1900L
         private const val ID_RKP_HOSTNAME = 2000L
