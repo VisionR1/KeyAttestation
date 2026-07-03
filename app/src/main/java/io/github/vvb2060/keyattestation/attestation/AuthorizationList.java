@@ -19,6 +19,7 @@ package io.github.vvb2060.keyattestation.attestation;
 import static com.google.common.base.Functions.forMap;
 import static com.google.common.collect.Collections2.transform;
 
+import android.os.Build;
 import android.security.keystore.KeyProperties;
 import android.util.Log;
 
@@ -709,6 +710,27 @@ public class AuthorizationList {
 
     public Integer getOsPatchLevel() {
         return osPatchLevel;
+    }
+
+    public boolean isPatchLevelOutdated() {
+        try {
+            int device = Integer.parseInt(
+                    Build.VERSION.SECURITY_PATCH.substring(0, 7).replace("-", ""));
+            return isOlder(osPatchLevel, device)
+                    || isOlder(vendorPatchLevel, device)
+                    || isOlder(bootPatchLevel, device);
+        } catch (RuntimeException e) {
+            return false;
+        }
+    }
+
+    // Normalize YYYYMMDD to YYYYMM
+    private static int toMonth(int patchLevel) {
+        return patchLevel > 999999 ? patchLevel / 100 : patchLevel;
+    }
+
+    private static boolean isOlder(Integer patchLevel, int device) {
+        return patchLevel != null && toMonth(patchLevel) < device;
     }
 
     public AttestationApplicationId getAttestationApplicationId() {
