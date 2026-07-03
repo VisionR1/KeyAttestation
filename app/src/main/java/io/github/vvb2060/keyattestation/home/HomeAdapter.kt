@@ -147,7 +147,7 @@ class HomeAdapter(listener: Listener) : IdBasedRecyclerViewAdapter() {
 
         var id = ID_DESCRIPTION_START
         val attestation = attestationData.showAttestation ?: return
-        if (!attestationData.isSoftwareLevel) {
+        if (attestationData.isSoftwareLevel) {
             addItemAt(2, HeaderViewHolder.CREATOR, HeaderData(
                     R.string.software_attestation,
                     R.string.software_attestation_summary,
