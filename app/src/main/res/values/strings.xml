@@ -50,6 +50,8 @@
     <string name="vbmeta_missing_summary">The device reports an empty or all-zero vbmeta digest, so the boot state was never attested.</string>
     <string name="software_attestation">Software attestation</string>
     <string name="software_attestation_summary">This key is not hardware-backed. The attestation was produced in software with no hardware root of trust.</string>
+    <string name="verified_boot_key_suspicious">Verified boot key is invalid</string>
+    <string name="verified_boot_key_suspicious_summary">The verified boot key is only zeros, which is only expected on an unlocked or unverified bootloader. This is a strong sign of tampering.</string>
 
     <string name="cert_chain">Certificate chain</string>
     <string name="cert_chain_description">Certificate chain is a list of certificates used to authenticate a key. The chain starts with the certificate associated with that key, and each certificate is signed by the next in the chain. The chain ends with a root certificate, and the trustworthiness of the attestation depends on the root certificate of the chain.</string>

@@ -97,6 +97,20 @@ public class RootOfTrust {
         return verifiedBootHash;
     }
 
+    private static boolean isAllZero(byte[] data) {
+        for (var b : data) {
+            if (b != 0) return false;
+        }
+        return true;
+    }
+
+    public boolean isVerifiedBootKeySuspicious() {
+        if (verifiedBootKey == null || !isAllZero(verifiedBootKey)) {
+            return false;
+        }
+        return deviceLocked || verifiedBootState == KM_VERIFIED_BOOT_VERIFIED;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder()
