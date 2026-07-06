@@ -1,5 +1,6 @@
 package io.github.vvb2060.keyattestation.home
 
+import android.hardware.security.keymint.RpcHardwareInfo
 import android.os.Build
 import android.util.Base64
 import android.util.Pair
@@ -301,6 +302,11 @@ class HomeAdapter(listener: Listener) : IdBasedRecyclerViewAdapter() {
             R.string.rpc_unique_id_description,
             hardware.uniqueId), id++)
 
+        addItem(CommonItemViewHolder.COMMON_CREATOR, CommonData(
+            R.string.rpc_eek_curve,
+            R.string.rpc_eek_curve_description,
+            eekCurveToString(hardware.supportedEekCurve)), id)
+
         id = ID_AUTHORIZATION_LIST_START
         addItem(SubtitleViewHolder.CREATOR, CommonData(
             R.string.rkp_device_info,
@@ -390,6 +396,14 @@ class HomeAdapter(listener: Listener) : IdBasedRecyclerViewAdapter() {
         private const val ID_KNOX_START = 5000L
         private const val ID_RKP_DICE_START = 6000L
         private const val ID_ERROR_MESSAGE = 100000L
+
+        private fun eekCurveToString(curve: Int): String {
+            return when (curve) {
+                RpcHardwareInfo.CURVE_P256 -> "P-256"
+                RpcHardwareInfo.CURVE_25519 -> "Ed25519"
+                else -> "None"
+            }
+        }
 
         private fun createAuthorizationItems(list: AuthorizationList): Array<String?> {
             return arrayOf(

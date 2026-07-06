@@ -134,6 +134,11 @@
     An opaque identifier for this IRemotelyProvisionedComponent implementation.
     Each implementation must have a distinct identifier from all other implementations, and it must be consistent across all devices.
     </string>
+    <string name="rpc_eek_curve">EEK curve</string>
+    <string name="rpc_eek_curve_description">
+    The curve used to validate the Endpoint Encryption Key (EEK) certificate chain and negotiate the GEEK for encrypting ProtectedData.
+    Only used by the V1/V2 CSR flow; V3 removed the EEK entirely.
+    </string>
     <string name="rkp_device_info">Device info</string>
     <string name="rkp_device_info_description">
     Device info contains information about the device that is signed by the IRemotelyProvisionedComponent HAL.
