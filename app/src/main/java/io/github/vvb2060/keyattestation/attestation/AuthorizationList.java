@@ -592,6 +592,13 @@ public class AuthorizationList {
         };
     }
 
+    public static String osVersionToString(int osVersion) {
+        int major = osVersion / 10000;
+        int minor = (osVersion / 100) % 100;
+        int subMinor = osVersion % 100;
+        return "Android " + major + "." + minor + "." + subMinor + " (" + osVersion + ")";
+    }
+
     public Integer getSecurityLevel() {
         return securityLevel;
     }

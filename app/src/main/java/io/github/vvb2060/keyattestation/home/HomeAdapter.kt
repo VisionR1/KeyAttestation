@@ -417,7 +417,7 @@ class HomeAdapter(listener: Listener) : IdBasedRecyclerViewAdapter() {
                     list.origin?.let { AuthorizationList.originToString(it) },
                     list.rollbackResistant?.toString(),
                     list.rootOfTrust?.toString(),
-                    list.osVersion?.toString(),
+                    list.osVersion?.let { AuthorizationList.osVersionToString(it) },
                     list.osPatchLevel?.toString(),
                     list.attestationApplicationId?.toString()?.trim(),
                     list.brand,
