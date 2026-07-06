@@ -21,7 +21,6 @@ import android.security.keystore.KeyGenParameterSpec;
 import android.security.keystore.KeyGenParameterSpec_rename;
 import android.security.keystore.KeyProperties;
 import android.security.keystore.KeyProtection;
-import android.security.keystore2.AndroidKeyStoreProvider;
 import android.system.Os;
 import android.util.Log;
 

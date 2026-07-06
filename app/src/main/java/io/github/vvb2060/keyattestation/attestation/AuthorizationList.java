@@ -33,7 +33,6 @@ import org.bouncycastle.asn1.ASN1Sequence;
 import org.bouncycastle.asn1.ASN1TaggedObject;
 
 import java.security.cert.CertificateParsingException;
-import java.text.DateFormat;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;

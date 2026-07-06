@@ -16,7 +16,6 @@ import io.github.vvb2060.keyattestation.attestation.CertificateInfo
 import io.github.vvb2060.keyattestation.attestation.RootPublicKey
 import io.github.vvb2060.keyattestation.databinding.HomeCommonItemBinding
 import rikka.core.res.resolveColorStateList
-import rikka.recyclerview.BaseViewHolder.Creator
 import java.util.Date
 import javax.security.auth.x500.X500Principal
 

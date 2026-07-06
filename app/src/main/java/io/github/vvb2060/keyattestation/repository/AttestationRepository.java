@@ -3,7 +3,16 @@ package io.github.vvb2060.keyattestation.repository;
 import static android.security.KeyStoreException.ERROR_ATTESTATION_KEYS_UNAVAILABLE;
 import static android.security.KeyStoreException.ERROR_ID_ATTESTATION_FAILURE;
 import static android.security.KeyStoreException.ERROR_KEYMINT_FAILURE;
-import static io.github.vvb2060.keyattestation.lang.AttestationException.*;
+import static io.github.vvb2060.keyattestation.lang.AttestationException.CODE_CANT_PARSE_CERT;
+import static io.github.vvb2060.keyattestation.lang.AttestationException.CODE_DEVICEIDS_UNAVAILABLE;
+import static io.github.vvb2060.keyattestation.lang.AttestationException.CODE_KEYS_NOT_PROVISIONED;
+import static io.github.vvb2060.keyattestation.lang.AttestationException.CODE_OUT_OF_KEYS;
+import static io.github.vvb2060.keyattestation.lang.AttestationException.CODE_OUT_OF_KEYS_TRANSIENT;
+import static io.github.vvb2060.keyattestation.lang.AttestationException.CODE_RKP;
+import static io.github.vvb2060.keyattestation.lang.AttestationException.CODE_STRONGBOX_UNAVAILABLE;
+import static io.github.vvb2060.keyattestation.lang.AttestationException.CODE_UNAVAILABLE;
+import static io.github.vvb2060.keyattestation.lang.AttestationException.CODE_UNAVAILABLE_TRANSIENT;
+import static io.github.vvb2060.keyattestation.lang.AttestationException.CODE_UNKNOWN;
 
 import android.annotation.SuppressLint;
 import android.hardware.security.keymint.DeviceInfo;

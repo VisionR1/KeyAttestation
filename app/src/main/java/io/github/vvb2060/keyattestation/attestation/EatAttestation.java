@@ -18,19 +18,18 @@ package io.github.vvb2060.keyattestation.attestation;
 
 import android.util.Log;
 
-import co.nstant.in.cbor.CborDecoder;
-import co.nstant.in.cbor.CborException;
-import co.nstant.in.cbor.model.DataItem;
-import co.nstant.in.cbor.model.Map;
-import co.nstant.in.cbor.model.Number;
-import co.nstant.in.cbor.model.UnicodeString;
-
 import org.bouncycastle.asn1.ASN1Encodable;
 
 import java.security.cert.CertificateParsingException;
 import java.security.cert.X509Certificate;
 import java.util.Arrays;
 import java.util.List;
+
+import co.nstant.in.cbor.CborException;
+import co.nstant.in.cbor.model.DataItem;
+import co.nstant.in.cbor.model.Map;
+import co.nstant.in.cbor.model.Number;
+import co.nstant.in.cbor.model.UnicodeString;
 
 public class EatAttestation extends Attestation {
     static final String TAG = "EatAttestation";

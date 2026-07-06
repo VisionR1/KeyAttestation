@@ -4,7 +4,6 @@ import android.view.View
 import androidx.core.view.isVisible
 import io.github.vvb2060.keyattestation.databinding.HomeHeaderBinding
 import rikka.core.res.resolveColorStateList
-import rikka.recyclerview.BaseViewHolder.Creator
 
 class HeaderViewHolder(itemView: View, binding: HomeHeaderBinding) : HomeViewHolder<HeaderData, HomeHeaderBinding>(itemView, binding) {
 
