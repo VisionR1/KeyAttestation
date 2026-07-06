@@ -207,7 +207,7 @@
     <string name="authorization_list_origin">Origin</string>
     <string name="authorization_list_rollbackResistant">Rollback resistant</string>
     <string name="authorization_list_rootOfTrust">Root of trust</string>
-    <string name="copied_verifiedBootHash_to_clipboard">Copied verifiedBootHash to clipboard!</string>
+    <string name="copied_to_clipboard">Copied to clipboard!</string>
     <string name="authorization_list_osVersion">OS version</string>
     <string name="authorization_list_osPatchLevel">OS patch level</string>
     <string name="authorization_list_attestationApplicationId">App ID</string>
