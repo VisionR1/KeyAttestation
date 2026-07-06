@@ -599,6 +599,15 @@ public class AuthorizationList {
         return "Android " + major + "." + minor + "." + subMinor + " (" + osVersion + ")";
     }
 
+    public static String patchLevelToString(int patchLevel) {
+        var s = Integer.toString(patchLevel);
+        return switch (s.length()) {
+            case 6 -> s.substring(0, 4) + "-" + s.substring(4, 6);
+            case 8 -> s.substring(0, 4) + "-" + s.substring(4, 6) + "-" + s.substring(6, 8);
+            default -> s;
+        };
+    }
+
     public Integer getSecurityLevel() {
         return securityLevel;
     }
@@ -738,6 +747,18 @@ public class AuthorizationList {
 
     private static boolean isOlder(Integer patchLevel, int device) {
         return patchLevel != null && toMonth(patchLevel) < device;
+    }
+
+    public String getOldestPatchLevel() {
+        Integer oldest = null;
+        for (var patchLevel : new Integer[]{osPatchLevel, vendorPatchLevel, bootPatchLevel}) {
+            if (patchLevel == null) continue;
+            int month = toMonth(patchLevel);
+            if (oldest == null || month < oldest) oldest = month;
+        }
+        if (oldest == null) return null;
+        var s = oldest.toString();
+        return s.length() == 6 ? s.substring(0, 4) + "-" + s.substring(4) : s;
     }
 
     public AttestationApplicationId getAttestationApplicationId() {

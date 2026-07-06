@@ -1,5 +1,6 @@
 package io.github.vvb2060.keyattestation.home
 
+import android.os.Build
 import android.util.Base64
 import android.util.Pair
 import com.google.common.io.BaseEncoding
@@ -166,7 +167,9 @@ class HomeAdapter(listener: Listener) : IdBasedRecyclerViewAdapter() {
                     R.string.patch_level_outdated,
                     R.string.patch_level_outdated_summary,
                     R.drawable.ic_error_outline_24,
-                    rikka.material.R.attr.colorWarning), ID_PATCH_STATUS)
+                    rikka.material.R.attr.colorWarning,
+                    attestation.teeEnforced.oldestPatchLevel,
+                    Build.VERSION.SECURITY_PATCH.take(7)), ID_PATCH_STATUS)
         }
         if (attestationData.isVbmetaDigestMissing) {
             addItemAt(2, HeaderViewHolder.CREATOR, HeaderData(
@@ -418,7 +421,7 @@ class HomeAdapter(listener: Listener) : IdBasedRecyclerViewAdapter() {
                     list.rollbackResistant?.toString(),
                     list.rootOfTrust?.toString(),
                     list.osVersion?.let { AuthorizationList.osVersionToString(it) },
-                    list.osPatchLevel?.toString(),
+                    list.osPatchLevel?.let { AuthorizationList.patchLevelToString(it) },
                     list.attestationApplicationId?.toString()?.trim(),
                     list.brand,
                     list.device,
@@ -429,8 +432,8 @@ class HomeAdapter(listener: Listener) : IdBasedRecyclerViewAdapter() {
                     list.meid,
                     list.manufacturer,
                     list.model,
-                    list.vendorPatchLevel?.toString(),
-                    list.bootPatchLevel?.toString(),
+                    list.vendorPatchLevel?.let { AuthorizationList.patchLevelToString(it) },
+                    list.bootPatchLevel?.let { AuthorizationList.patchLevelToString(it) },
                     list.deviceUniqueAttestation?.toString(),
                     list.identityCredentialKey?.toString(),
                     list.moduleHash?.let { BaseEncoding.base16().lowerCase().encode(it) },
