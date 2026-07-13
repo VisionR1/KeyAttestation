@@ -95,8 +95,8 @@ public record RevocationList(String status, String reason, DataSource source) {
             URL url = new URL(statusUrl);
             connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
-            connection.setConnectTimeout(3000); 
-            connection.setReadTimeout(3000);    
+            connection.setConnectTimeout(10_000);
+            connection.setReadTimeout(20_000);
             connection.setRequestProperty("User-Agent", "KeyAttestation");
             
             double rand = Math.round(Math.random() * 1000.0) / 1000.0;

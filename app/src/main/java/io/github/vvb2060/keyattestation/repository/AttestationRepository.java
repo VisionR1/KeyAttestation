@@ -3,7 +3,16 @@ package io.github.vvb2060.keyattestation.repository;
 import static android.security.KeyStoreException.ERROR_ATTESTATION_KEYS_UNAVAILABLE;
 import static android.security.KeyStoreException.ERROR_ID_ATTESTATION_FAILURE;
 import static android.security.KeyStoreException.ERROR_KEYMINT_FAILURE;
-import static io.github.vvb2060.keyattestation.lang.AttestationException.*;
+import static io.github.vvb2060.keyattestation.lang.AttestationException.CODE_CANT_PARSE_CERT;
+import static io.github.vvb2060.keyattestation.lang.AttestationException.CODE_DEVICEIDS_UNAVAILABLE;
+import static io.github.vvb2060.keyattestation.lang.AttestationException.CODE_KEYS_NOT_PROVISIONED;
+import static io.github.vvb2060.keyattestation.lang.AttestationException.CODE_OUT_OF_KEYS;
+import static io.github.vvb2060.keyattestation.lang.AttestationException.CODE_OUT_OF_KEYS_TRANSIENT;
+import static io.github.vvb2060.keyattestation.lang.AttestationException.CODE_RKP;
+import static io.github.vvb2060.keyattestation.lang.AttestationException.CODE_STRONGBOX_UNAVAILABLE;
+import static io.github.vvb2060.keyattestation.lang.AttestationException.CODE_UNAVAILABLE;
+import static io.github.vvb2060.keyattestation.lang.AttestationException.CODE_UNAVAILABLE_TRANSIENT;
+import static io.github.vvb2060.keyattestation.lang.AttestationException.CODE_UNKNOWN;
 
 import android.annotation.SuppressLint;
 import android.hardware.security.keymint.DeviceInfo;
@@ -192,7 +201,14 @@ public class AttestationRepository {
             if (reset) keyStore.deleteAllEntry();
             doAttestation(useAttestKey, useStrongBox, includeProps,
                     uniqueIdIncluded, idFlags, keyStoreKeyType, useSak);
-            return Resource.Companion.success(AttestationData.parseCertificateChain(currentCerts));
+            var data = AttestationData.parseCertificateChain(currentCerts);
+            try {
+                data.vbmetaDigest = keyStore.getVbmetaDigest();
+            } catch (Exception e) {
+                var cause = e instanceof AttestationException ? e.getCause() : e;
+                Log.w(AppApplication.TAG, "Get vbmeta digest error.", cause);
+            }
+            return Resource.Companion.success(data);
         } catch (Exception e) {
             var cause = e instanceof AttestationException ? e.getCause() : e;
             Log.w(AppApplication.TAG, "Do attestation error.", cause);
@@ -435,7 +451,8 @@ public class AttestationRepository {
                     ? keyStore.getRkpHostname() : null;
             var deviceInfo = new DeviceInfo();
             var hw = keyStore.getHardwareInfo(useStrongBox, deviceInfo);
-            var info = new RemoteProvisioningData(name, hw, deviceInfo);
+            var diceChain = keyStore.getDiceChain(useStrongBox);
+            var info = new RemoteProvisioningData(name, hw, deviceInfo, diceChain);
             try {
                 var data = keyStore.checkRemoteProvisioning(useStrongBox);
                 info.setCerts(factory.generateCertificates(new ByteArrayInputStream(data)));

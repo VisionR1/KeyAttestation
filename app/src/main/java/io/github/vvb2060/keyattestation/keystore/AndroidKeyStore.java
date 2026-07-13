@@ -21,7 +21,6 @@ import android.security.keystore.KeyGenParameterSpec;
 import android.security.keystore.KeyGenParameterSpec_rename;
 import android.security.keystore.KeyProperties;
 import android.security.keystore.KeyProtection;
-import android.security.keystore2.AndroidKeyStoreProvider;
 import android.system.Os;
 import android.util.Log;
 
@@ -371,6 +370,19 @@ public class AndroidKeyStore extends IAndroidKeyStore.Stub {
             Log.e(AppApplication.TAG, "getHardwareInfo", e);
             throw new IllegalStateException(e.getMessage());
         }
+    }
+
+    @Override
+    public String getVbmetaDigest() {
+        return SystemProperties.get("ro.boot.vbmeta.digest");
+    }
+
+    @Override
+    public byte[] getDiceChain(boolean useStrongBox) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
+            throw new IllegalStateException();
+        }
+        return RemoteProvisioning.getInstance(useStrongBox).getDiceChain();
     }
 
     @Override

@@ -1,6 +1,47 @@
 package io.github.vvb2060.keyattestation.attestation;
 
-import static io.github.vvb2060.keyattestation.attestation.AuthorizationList.*;
+import static io.github.vvb2060.keyattestation.attestation.AuthorizationList.KEYMASTER_TAG_TYPE_MASK;
+import static io.github.vvb2060.keyattestation.attestation.AuthorizationList.KM_TAG_ACTIVE_DATETIME;
+import static io.github.vvb2060.keyattestation.attestation.AuthorizationList.KM_TAG_ALGORITHM;
+import static io.github.vvb2060.keyattestation.attestation.AuthorizationList.KM_TAG_ALLOW_WHILE_ON_BODY;
+import static io.github.vvb2060.keyattestation.attestation.AuthorizationList.KM_TAG_APPLICATION_ID;
+import static io.github.vvb2060.keyattestation.attestation.AuthorizationList.KM_TAG_ATTESTATION_APPLICATION_ID;
+import static io.github.vvb2060.keyattestation.attestation.AuthorizationList.KM_TAG_ATTESTATION_ID_BRAND;
+import static io.github.vvb2060.keyattestation.attestation.AuthorizationList.KM_TAG_ATTESTATION_ID_DEVICE;
+import static io.github.vvb2060.keyattestation.attestation.AuthorizationList.KM_TAG_ATTESTATION_ID_MANUFACTURER;
+import static io.github.vvb2060.keyattestation.attestation.AuthorizationList.KM_TAG_ATTESTATION_ID_MEID;
+import static io.github.vvb2060.keyattestation.attestation.AuthorizationList.KM_TAG_ATTESTATION_ID_MODEL;
+import static io.github.vvb2060.keyattestation.attestation.AuthorizationList.KM_TAG_ATTESTATION_ID_PRODUCT;
+import static io.github.vvb2060.keyattestation.attestation.AuthorizationList.KM_TAG_ATTESTATION_ID_SERIAL;
+import static io.github.vvb2060.keyattestation.attestation.AuthorizationList.KM_TAG_AUTH_TIMEOUT;
+import static io.github.vvb2060.keyattestation.attestation.AuthorizationList.KM_TAG_BLOCK_MODE;
+import static io.github.vvb2060.keyattestation.attestation.AuthorizationList.KM_TAG_BOOT_PATCHLEVEL;
+import static io.github.vvb2060.keyattestation.attestation.AuthorizationList.KM_TAG_CALLER_NONCE;
+import static io.github.vvb2060.keyattestation.attestation.AuthorizationList.KM_TAG_DEVICE_UNIQUE_ATTESTATION;
+import static io.github.vvb2060.keyattestation.attestation.AuthorizationList.KM_TAG_DIGEST;
+import static io.github.vvb2060.keyattestation.attestation.AuthorizationList.KM_TAG_EARLY_BOOT_ONLY;
+import static io.github.vvb2060.keyattestation.attestation.AuthorizationList.KM_TAG_EC_CURVE;
+import static io.github.vvb2060.keyattestation.attestation.AuthorizationList.KM_TAG_IDENTITY_CREDENTIAL_KEY;
+import static io.github.vvb2060.keyattestation.attestation.AuthorizationList.KM_TAG_KDF;
+import static io.github.vvb2060.keyattestation.attestation.AuthorizationList.KM_TAG_KEY_SIZE;
+import static io.github.vvb2060.keyattestation.attestation.AuthorizationList.KM_TAG_MIN_MAC_LENGTH;
+import static io.github.vvb2060.keyattestation.attestation.AuthorizationList.KM_TAG_NO_AUTH_REQUIRED;
+import static io.github.vvb2060.keyattestation.attestation.AuthorizationList.KM_TAG_ORIGIN;
+import static io.github.vvb2060.keyattestation.attestation.AuthorizationList.KM_TAG_ORIGINATION_EXPIRE_DATETIME;
+import static io.github.vvb2060.keyattestation.attestation.AuthorizationList.KM_TAG_OS_PATCHLEVEL;
+import static io.github.vvb2060.keyattestation.attestation.AuthorizationList.KM_TAG_OS_VERSION;
+import static io.github.vvb2060.keyattestation.attestation.AuthorizationList.KM_TAG_PADDING;
+import static io.github.vvb2060.keyattestation.attestation.AuthorizationList.KM_TAG_PURPOSE;
+import static io.github.vvb2060.keyattestation.attestation.AuthorizationList.KM_TAG_ROLLBACK_RESISTANCE;
+import static io.github.vvb2060.keyattestation.attestation.AuthorizationList.KM_TAG_ROLLBACK_RESISTANT;
+import static io.github.vvb2060.keyattestation.attestation.AuthorizationList.KM_TAG_RSA_OAEP_MGF_DIGEST;
+import static io.github.vvb2060.keyattestation.attestation.AuthorizationList.KM_TAG_RSA_PUBLIC_EXPONENT;
+import static io.github.vvb2060.keyattestation.attestation.AuthorizationList.KM_TAG_TRUSTED_CONFIRMATION_REQUIRED;
+import static io.github.vvb2060.keyattestation.attestation.AuthorizationList.KM_TAG_TRUSTED_USER_PRESENCE_REQUIRED;
+import static io.github.vvb2060.keyattestation.attestation.AuthorizationList.KM_TAG_UNLOCKED_DEVICE_REQUIRED;
+import static io.github.vvb2060.keyattestation.attestation.AuthorizationList.KM_TAG_USAGE_EXPIRE_DATETIME;
+import static io.github.vvb2060.keyattestation.attestation.AuthorizationList.KM_TAG_USER_AUTH_TYPE;
+import static io.github.vvb2060.keyattestation.attestation.AuthorizationList.KM_TAG_VENDOR_PATCHLEVEL;
 
 class EatClaim {
     public static final int IAT = 6;

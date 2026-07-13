@@ -187,7 +187,7 @@
     <string name="authorization_list_origin">Προέλευση</string>
     <string name="authorization_list_rollbackResistant">Αντίσταση ανατροπής</string>
     <string name="authorization_list_rootOfTrust">Ρίζα εμπιστοσύνης</string>
-    <string name="copied_verifiedBootHash_to_clipboard">Το verifiedBootHash αντιγράφηκε στο πρόχειρο!</string>
+    <string name="copied_to_clipboard">Αντιγράφηκε στο πρόχειρο!</string>
     <string name="authorization_list_osVersion">Έκδοση OS</string>
     <string name="authorization_list_osPatchLevel">Επίπεδο ενημέρωσης κώδικα OS</string>
     <string name="authorization_list_attestationApplicationId">Αναγνωριστικό Εφαρμογής</string>
