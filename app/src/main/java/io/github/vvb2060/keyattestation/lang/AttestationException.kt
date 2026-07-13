@@ -2,7 +2,8 @@ package io.github.vvb2060.keyattestation.lang
 
 import io.github.vvb2060.keyattestation.R
 
-class AttestationException(code: Int, cause: Throwable) : RuntimeException(cause) {
+class AttestationException(code: Int, cause: Throwable?) : RuntimeException(cause) {
+    val hasDetailedMessage: Boolean = cause != null
 
     companion object {
         const val CODE_UNKNOWN = -1
@@ -15,6 +16,9 @@ class AttestationException(code: Int, cause: Throwable) : RuntimeException(cause
         const val CODE_UNAVAILABLE_TRANSIENT = 7
         const val CODE_KEYS_NOT_PROVISIONED = 8
         const val CODE_RKP = 9
+		const val CODE_ATTEST_RSA_KEY_EC_ONLY = 10
+		const val CODE_ATTEST_EC_KEY_RSA_ONLY = 11
+		const val CODE_INVALID_FILE = 12
     }
 
     val titleResId: Int = when (code) {
@@ -27,6 +31,9 @@ class AttestationException(code: Int, cause: Throwable) : RuntimeException(cause
         CODE_UNAVAILABLE_TRANSIENT -> R.string.error_unavailable_transient
         CODE_KEYS_NOT_PROVISIONED -> R.string.error_keys_not_provisioned
         CODE_RKP -> R.string.error_remote_key_provisioning
+		CODE_ATTEST_RSA_KEY_EC_ONLY -> R.string.error_attest_rsa_key_ec_only
+		CODE_ATTEST_EC_KEY_RSA_ONLY -> R.string.error_attest_ec_key_rsa_only
+		CODE_INVALID_FILE -> R.string.error_invalid_file
         else -> R.string.error_unknown
     }
 
@@ -40,6 +47,9 @@ class AttestationException(code: Int, cause: Throwable) : RuntimeException(cause
         CODE_UNAVAILABLE_TRANSIENT -> R.string.error_unavailable_transient_summary
         CODE_KEYS_NOT_PROVISIONED -> R.string.error_keys_not_provisioned_summary
         CODE_RKP -> R.string.error_remote_key_provisioning_summary
+		CODE_ATTEST_RSA_KEY_EC_ONLY -> R.string.error_attest_rsa_key_ec_only_summary
+		CODE_ATTEST_EC_KEY_RSA_ONLY -> R.string.error_attest_ec_key_rsa_only_summary
+		CODE_INVALID_FILE -> R.string.error_invalid_file_summary
         else -> R.string.error_unknown
     }
 

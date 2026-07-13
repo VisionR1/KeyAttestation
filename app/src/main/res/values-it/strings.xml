@@ -63,6 +63,13 @@
     <string name="revocation_status_offline_cached">⚠️ Dispositivo offline - CRL in cache</string>
     <string name="revocation_status_offline_bundled">❌ Offline - CRL non aggiornata</string>
 
+	<string name="error_attest_rsa_key_ec_only">Nessuna catena di certificati RSA</string>
+    <string name="error_attest_rsa_key_ec_only_summary"><![CDATA[Il file contiene solo la catena di certificati EC.<br><br>Per visualizzarla, disabilita Attesta chiave RSA.]]></string>
+    <string name="error_attest_ec_key_rsa_only">Nessuna catena di certificati EC</string>
+    <string name="error_attest_ec_key_rsa_only_summary"><![CDATA[Il file contiene solo la catena di certificati RSA.<br><br>Per visualizzarla, abilita Attesta chiave RSA.]]></string>
+    <string name="error_invalid_file">Impossibile analizzare il file</string>
+    <string name="error_invalid_file_summary"><![CDATA[Possibili motivi:<br><br>• File danneggiato o manomesso<br><br>• Potrebbe contenere caratteri non validi<br><br>• Formato di file non supportato]]></string>
+
     <string name="error_message_subtitle">Messaggi dettagliati:</string>
     <string name="error_unknown">Errore sconosciuto</string>
     <string name="error_unavailable">Impossibile attestare</string>

@@ -63,6 +63,13 @@
     <string name="revocation_status_offline_cached">⚠️ Пристрій офлайн — використовується кешований CRL</string>
     <string name="revocation_status_offline_bundled">❌ Офлайн — CRL застарілий</string>
 
+	<string name="error_attest_rsa_key_ec_only">Немає ланцюжка сертифікатів RSA</string>
+    <string name="error_attest_rsa_key_ec_only_summary"><![CDATA[Файл містить лише ланцюжок сертифікатів EC.<br><br>Щоб переглянути, вимкніть Атестувати ключ RSA.]]></string>
+    <string name="error_attest_ec_key_rsa_only">Немає ланцюжка сертифікатів EC</string>
+    <string name="error_attest_ec_key_rsa_only_summary"><![CDATA[Файл містить лише ланцюжок сертифікатів RSA.<br><br>Щоб переглянути, увімкніть Атестувати ключ RSA.]]></string>
+    <string name="error_invalid_file">Не вдалося проаналізувати файл</string>
+    <string name="error_invalid_file_summary"><![CDATA[Можливі причини:<br><br>• Файл пошкоджено або змінено<br><br>• Може містити неприпустимі символи<br><br>• Формат файлу не підтримується]]></string>
+
     <string name="error_message_subtitle">Детальні повідомлення:</string>
     <string name="error_unknown">Невідома помилка</string>
     <string name="error_unavailable">Неможливо атестувати</string>

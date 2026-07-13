@@ -63,6 +63,13 @@
     <string name="revocation_status_offline_cached">⚠️ 裝置離線 - 使用快取的 CRL</string>
     <string name="revocation_status_offline_bundled">❌ 離線 - CRL 已過期</string>
 
+	<string name="error_attest_rsa_key_ec_only">無 RSA 憑證鍊</string>
+    <string name="error_attest_rsa_key_ec_only_summary"><![CDATA[該檔案僅包含 EC 憑證鍊。<br><br>若要顯示，請停用認證 RSA 金鑰。]]></string>
+    <string name="error_attest_ec_key_rsa_only">無 EC 憑證鍊</string>
+    <string name="error_attest_ec_key_rsa_only_summary"><![CDATA[該檔案僅包含 RSA 憑證鍊。<br><br>若要顯示，請啟用認證 RSA 金鑰。]]></string>
+    <string name="error_invalid_file">無法解析檔案</string>
+    <string name="error_invalid_file_summary"><![CDATA[可能的原因：<br><br>• 檔案已毀損或遭篡改<br><br>• 可能包含無效字元<br><br>• 不支援的檔案格式]]></string>
+
     <string name="error_message_subtitle">詳細資訊：</string>
     <string name="error_unknown">未知錯誤</string>
     <string name="error_unavailable">無法認證</string>

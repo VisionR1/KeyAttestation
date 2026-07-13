@@ -31,6 +31,7 @@ import java.util.List;
 import io.github.vvb2060.keyattestation.AppApplication;
 import io.github.vvb2060.keyattestation.keystore.AndroidKeyStore;
 import io.github.vvb2060.keyattestation.keystore.IAndroidKeyStore;
+import io.github.vvb2060.keyattestation.keystore.KeyBoxXmlParser;
 import io.github.vvb2060.keyattestation.keystore.KeyStoreManager;
 import io.github.vvb2060.keyattestation.lang.AttestationException;
 import io.github.vvb2060.keyattestation.util.Resource;
@@ -204,28 +205,199 @@ public class AttestationRepository {
         }
     }
 
-    public Resource<AttestationData> loadCerts(ParcelFileDescriptor pfd) {
+    /**
+     * Load certificates from file, supporting multiple formats (binary, XML, PEM).
+	 * Automatically filters to requested algorithm (RSA or EC).
+     */
+    public Resource<BaseData> loadCerts(ParcelFileDescriptor pfd, boolean preferRsa) {
         currentCerts.clear();
         try {
-            AttestationData data;
-            try (var in = new ParcelFileDescriptor.AutoCloseInputStream(pfd);
-                 var channel = in.getChannel()) {
-                try {
-                    generateCertificates(in);
-                    data = AttestationData.parseCertificateChain(currentCerts);
-                } catch (CertificateException e) {
-                    channel.position(0);
-                    generateCertPath(in);
-                    data = AttestationData.parseCertificateChain(currentCerts);
+            // 1. Read raw bytes from file
+            byte[] bytes;
+            try (var in = new ParcelFileDescriptor.AutoCloseInputStream(pfd)) {
+                java.io.ByteArrayOutputStream baos = new java.io.ByteArrayOutputStream();
+                byte[] buffer = new byte[8192];
+                int read;
+                while ((read = in.read(buffer)) != -1) {
+                    baos.write(buffer, 0, read);
+                }
+                bytes = baos.toByteArray();
+            }
+
+            // Strip a UTF-8 BOM if present -- it trips the plain-ASCII sanity check further down.
+            if (bytes.length >= 3 && (bytes[0] & 0xFF) == 0xEF && (bytes[1] & 0xFF) == 0xBB && (bytes[2] & 0xFF) == 0xBF) {
+                bytes = java.util.Arrays.copyOfRange(bytes, 3, bytes.length);
+            }
+
+            boolean parsedBinary = false;
+
+            // 1a. Skip binary cert parsing for XML input to avoid chain corruption.
+            int sniffLen = Math.min(bytes.length, 512);
+            String sniff = new String(bytes, 0, sniffLen, java.nio.charset.StandardCharsets.UTF_8).trim();
+            boolean looksLikeKeyboxXml = sniff.startsWith("<?xml") || sniff.contains("<AndroidAttestation");
+
+            // 2. Parse binary format (PKCS7, PkiPath)
+            if (!looksLikeKeyboxXml) {
+                try (var bis = new java.io.ByteArrayInputStream(bytes)) {
+                    java.security.cert.CertPath certPath = factory.generateCertPath(bis, "PkiPath");
+                    for (java.security.cert.Certificate cert : certPath.getCertificates()) {
+                        if (cert instanceof X509Certificate) {
+                            currentCerts.add((X509Certificate) cert);
+                        }
+                    }
+                    if (!currentCerts.isEmpty()) parsedBinary = true;
+                } catch (Exception e) {
+                    currentCerts.clear();
+                    try (var bis = new java.io.ByteArrayInputStream(bytes)) {
+                        java.util.Collection<? extends java.security.cert.Certificate> certsCollection = factory.generateCertificates(bis);
+                        for (java.security.cert.Certificate cert : certsCollection) {
+                            if (cert instanceof X509Certificate) {
+                                currentCerts.add((X509Certificate) cert);
+                            }
+                        }
+                        if (!currentCerts.isEmpty()) parsedBinary = true;
+                    } catch (Exception ignored) {}
                 }
             }
-            return Resource.Companion.success(data);
+
+            // 2a. Filter to RSA certs only
+            if (parsedBinary && preferRsa && !currentCerts.isEmpty()) {
+                List<X509Certificate> rsaCerts = new ArrayList<>();
+                for (X509Certificate cert : currentCerts) {
+                    if (cert.getPublicKey().getAlgorithm().equalsIgnoreCase("RSA")) {
+                        rsaCerts.add(cert);
+                    }
+                }
+                if (!rsaCerts.isEmpty()) {
+                    currentCerts.clear();
+                    currentCerts.addAll(rsaCerts);
+                }
+            }
+
+            // 3. Parse XML
+            if (!parsedBinary) {
+				String xmlContent = new String(bytes, java.nio.charset.StandardCharsets.UTF_8);
+                for (char c : xmlContent.toCharArray()) {
+                    if (c > 127 && !Character.isWhitespace(c)) {  // Non-ASCII except whitespace
+                        throw new AttestationException(CODE_INVALID_FILE, null);
+                    }
+                }
+				
+                boolean parsedViaXmlParser = false;
+                try (var bis = new java.io.ByteArrayInputStream(bytes)) {
+                    var xmlEntry = KeyBoxXmlParser.getInstance().parse(bis, preferRsa);
+                    java.security.cert.Certificate[] chain = xmlEntry.getCertificateChain();
+                    if (chain != null) {
+                        for (java.security.cert.Certificate cert : chain) {
+                            if (cert instanceof X509Certificate) {
+                                currentCerts.add((X509Certificate) cert);
+                            }
+                        }                        
+                        if (!currentCerts.isEmpty()) {
+                            parsedViaXmlParser = true;
+                        }
+                    }
+                } catch (Exception ignored) {}
+
+                // 3a: Lenient regex parser for unstructured XML/PEM
+                if (!parsedViaXmlParser) {
+                    String content = new String(bytes, java.nio.charset.StandardCharsets.UTF_8);
+                    List<String> rawBlocks = new ArrayList<>();
+
+                    java.util.regex.Pattern xmlPattern = java.util.regex.Pattern.compile(
+                        "<certificate[^>]*>(.*?)</certificate>",
+                        java.util.regex.Pattern.DOTALL | java.util.regex.Pattern.CASE_INSENSITIVE
+                    );
+                    java.util.regex.Matcher xmlMatcher = xmlPattern.matcher(content);
+                    while (xmlMatcher.find()) {
+                        String tagContent = xmlMatcher.group(1);
+                        if (tagContent != null) rawBlocks.add(tagContent);
+                    }
+
+                    if (rawBlocks.isEmpty()) {
+                        java.util.regex.Pattern pemPattern = java.util.regex.Pattern.compile(
+                            "-----BEGIN CERTIFICATE-----(.*?)-----END CERTIFICATE-----",
+                            java.util.regex.Pattern.DOTALL
+                        );
+                        java.util.regex.Matcher pemMatcher = pemPattern.matcher(content);
+                        while (pemMatcher.find()) {
+                            String pemContent = pemMatcher.group(1);
+                            if (pemContent != null) rawBlocks.add(pemContent);
+                        }
+                    }
+
+                    for (String block : rawBlocks) {
+                        String cleanBlock = block.replaceAll("<!\\[CDATA\\[", "").replaceAll("\\]\\]>", "");
+                        cleanBlock = cleanBlock.replaceAll("-----BEGIN CERTIFICATE-----", "")
+                                               .replaceAll("-----END CERTIFICATE-----", "");
+                        cleanBlock = cleanBlock.replaceAll("\\s+", "");
+
+                        if (!cleanBlock.isEmpty()) {
+                            try {
+                                byte[] decoded = android.util.Base64.decode(cleanBlock, android.util.Base64.DEFAULT);
+                                try (var bis = new java.io.ByteArrayInputStream(decoded)) {
+                                    java.security.cert.Certificate cert = factory.generateCertificate(bis);
+                                    if (cert instanceof X509Certificate) {
+                                        currentCerts.add((X509Certificate) cert);
+                                    }
+                                }
+                            } catch (Exception ignored) {}
+                        }
+                    }
+                }
+            }
+
+            if (currentCerts.isEmpty()) {
+                throw new AttestationException(CODE_INVALID_FILE, null);
+            }
+
+            // 4. Sort certs by attestation extension
+            String attestationOid = "1.3.6.1.4.1.11129.2.1.17";
+            X509Certificate leafCert = null;
+            for (X509Certificate cert : currentCerts) {
+                var criticalOids = cert.getCriticalExtensionOIDs();
+                var nonCriticalOids = cert.getNonCriticalExtensionOIDs();
+                if ((criticalOids != null && criticalOids.contains(attestationOid)) ||
+                    (nonCriticalOids != null && nonCriticalOids.contains(attestationOid))) {
+                    leafCert = cert;
+                    break;
+                }
+            }
+            if (leafCert != null) {
+                currentCerts.remove(leafCert);
+                currentCerts.add(0, leafCert);
+            }
+
+            // 5. Validate that requested key type matches the loaded leaf certificate
+            if (!currentCerts.isEmpty()) {
+                String firstCertAlgo = currentCerts.get(0).getPublicKey().getAlgorithm();
+                
+                if (preferRsa) {
+                    // If user wants RSA, but leaf is not RSA
+                    if (!firstCertAlgo.equalsIgnoreCase("RSA")) {
+                        throw new AttestationException(CODE_ATTEST_RSA_KEY_EC_ONLY, null);
+                    }
+                } else {
+                    // If user wants EC, but leaf is not EC/ECDSA
+                    if (!firstCertAlgo.equalsIgnoreCase("EC") && !firstCertAlgo.equalsIgnoreCase("ECDSA")) {
+                        throw new AttestationException(CODE_ATTEST_EC_KEY_RSA_ONLY, null);
+                    }
+                }
+            }
+
+            try {
+                AttestationData data = AttestationData.parseCertificateChain(currentCerts);
+                return Resource.Companion.success(data);
+            } catch (Exception originalError) {
+                return Resource.Companion.success(KeyboxData.fromCerts(currentCerts));
+            }
+
         } catch (Exception e) {
             var cause = e instanceof AttestationException ? e.getCause() : e;
             Log.w(AppApplication.TAG, "Load attestation error.", cause);
 
             if (e instanceof AttestationException) {
-                return Resource.Companion.error(e, null);
+                return Resource.Companion.error((AttestationException) e, null);
             } else if (e instanceof CertificateException) {
                 return Resource.Companion.error(new AttestationException(CODE_CANT_PARSE_CERT, e), null);
             } else {

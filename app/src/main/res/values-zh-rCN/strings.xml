@@ -63,6 +63,13 @@
     <string name="revocation_status_offline_cached">⚠️ 设备离线 - 使用缓存的 CRL</string>
     <string name="revocation_status_offline_bundled">❌ 离线 - CRL 已过期</string>
 
+	<string name="error_attest_rsa_key_ec_only">无 RSA 证书链</string>
+    <string name="error_attest_rsa_key_ec_only_summary"><![CDATA[该文件仅包含 EC 证书链。<br><br>要显示，请禁用认证 RSA 密钥。]]></string>
+    <string name="error_attest_ec_key_rsa_only">无 EC 证书链</string>
+    <string name="error_attest_ec_key_rsa_only_summary"><![CDATA[该文件仅包含 RSA 证书链。<br><br>要显示，请启用认证 RSA 密钥。]]></string>
+    <string name="error_invalid_file">无法解析文件</string>
+    <string name="error_invalid_file_summary"><![CDATA[可能的原因：<br><br>• 文件已损坏或被篡改<br><br>• 可能包含无效字符<br><br>• 不支持的文件格式]]></string>
+
     <string name="error_message_subtitle">详细信息：</string>
     <string name="error_unknown">未知错误</string>
     <string name="error_unavailable">无法认证</string>

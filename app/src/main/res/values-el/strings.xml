@@ -63,6 +63,13 @@
     <string name="revocation_status_offline_cached">⚠️ Συσκευή εκτός σύνδεσης - χρήση αποθηκευμένης CRL</string>
     <string name="revocation_status_offline_bundled">❌ Εκτός σύνδεσης - Μη ενημερωμένη CRL</string>
 
+    <string name="error_attest_rsa_key_ec_only">Δεν υπάρχει αλυσίδα πιστοποιητικών RSA</string>
+    <string name="error_attest_rsa_key_ec_only_summary"><![CDATA[Το αρχείο περιέχει μόνο την αλυσίδα πιστοποιητικών EC.<br><br>Για εμφάνιση, απενεργοποιήστε την Βεβαίωση κλειδιού RSA.]]></string>
+    <string name="error_attest_ec_key_rsa_only">Δεν υπάρχει αλυσίδα πιστοποιητικών EC</string>
+	<string name="error_attest_ec_key_rsa_only_summary"><![CDATA[Το αρχείο περιέχει μόνο την αλυσίδα πιστοποιητικών RSA.<br><br>Για εμφάνιση, ενεργοποιήστε την Βεβαίωση κλειδιού RSA.]]></string>
+	<string name="error_invalid_file">Μη δυνατή ανάλυση αρχείου</string>
+	<string name="error_invalid_file_summary"><![CDATA[Πιθανοί λόγοι:<br><br>• Το αρχείο έχει καταστραφεί ή παραποιηθεί<br><br>• Μπορεί να περιέχει μη έγκυρους χαρακτήρες<br><br>• Μη υποστηριζόμενη μορφή]]></string>
+
     <string name="error_message_subtitle">Αναλυτικά μηνύματα:</string>
     <string name="error_unknown">Άγνωστο σφάλμα</string>
     <string name="error_unavailable">Μη δυνατή βεβαίωση</string>

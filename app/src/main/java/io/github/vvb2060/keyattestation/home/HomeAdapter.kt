@@ -9,6 +9,7 @@ import io.github.vvb2060.keyattestation.lang.AttestationException
 import io.github.vvb2060.keyattestation.lang.AttestationException.Companion.CODE_RKP
 import io.github.vvb2060.keyattestation.repository.AttestationData
 import io.github.vvb2060.keyattestation.repository.BaseData
+import io.github.vvb2060.keyattestation.repository.KeyboxData
 import io.github.vvb2060.keyattestation.repository.RemoteProvisioningData
 import rikka.recyclerview.IdBasedRecyclerViewAdapter
 
@@ -90,8 +91,45 @@ class HomeAdapter(listener: Listener) : IdBasedRecyclerViewAdapter() {
         addItem(SubtitleViewHolder.CREATOR, CommonData(
                 R.string.cert_chain,
                 R.string.cert_chain_description), id++)
-        baseData.certs.forEach { certInfo ->
-            addItem(CommonItemViewHolder.CERT_INFO_CREATOR, certInfo, id++)
+
+        val certsList = baseData.certs
+        if (!certsList.isNullOrEmpty()) {
+            val containsEc = certsList.any { it.cert?.publicKey?.algorithm?.equals("EC", ignoreCase = true) == true || it.cert?.publicKey?.algorithm?.equals("ECDSA", ignoreCase = true) == true }
+
+            // Track unique serial numbers to block duplicates
+            val seenSerials = mutableSetOf<String>()
+
+            certsList.forEach { certInfo ->
+                val currentAlgo = certInfo.cert?.publicKey?.algorithm
+                val serialNumber = certInfo.cert?.serialNumber?.toString()
+                
+                // Identify the Root Certificate (A root is always self-signed: Subject == Issuer)
+                val subjectStr = certInfo.cert?.subjectDN?.toString()
+                val issuerStr = certInfo.cert?.issuerDN?.toString()
+                val isRoot = (subjectStr != null && subjectStr == issuerStr)
+
+                // Display only if serial number hasn't been seen before
+                if (serialNumber == null || !seenSerials.contains(serialNumber)) {
+                    
+                    if (serialNumber != null) {
+                        seenSerials.add(serialNumber) 
+                    }
+
+                    if (containsEc) {
+                        // 1. Show EC certificates and Root certificate (even if Root is RSA)
+                        if (currentAlgo.equals("EC", ignoreCase = true) || currentAlgo.equals("ECDSA", ignoreCase = true) || isRoot) {
+                            addItem(CommonItemViewHolder.CERT_INFO_CREATOR, certInfo, id++)
+                        }
+                    } else {
+                        // 2. Show RSA certificates (duplicates are blocked)
+                        addItem(CommonItemViewHolder.CERT_INFO_CREATOR, certInfo, id++)
+                    }
+                }
+            }
+        } else {
+            baseData.certs.forEach { certInfo ->
+                addItem(CommonItemViewHolder.CERT_INFO_CREATOR, certInfo, id++)
+            }
         }
 
         // Add revocation list information with source status
@@ -135,6 +173,7 @@ class HomeAdapter(listener: Listener) : IdBasedRecyclerViewAdapter() {
         when (baseData) {
             is AttestationData -> updateData(baseData)
             is RemoteProvisioningData -> updateData(baseData)
+			is KeyboxData -> {}
         }
 
         notifyDataSetChanged()
@@ -219,12 +258,12 @@ class HomeAdapter(listener: Listener) : IdBasedRecyclerViewAdapter() {
             addItem(CommonItemViewHolder.COMMON_CREATOR, CommonData(
                     R.string.knox_integrity,
                     R.string.knox_integrity_description,
-                    attestation.knoxIntegrity.toString()), id++)
+                    attestation.knoxIntegrity?.toString()), id++)
 
             addItem(CommonItemViewHolder.COMMON_CREATOR, CommonData(
                     R.string.knox_record_hash,
                     R.string.knox_record_hash_description,
-                    BaseEncoding.base16().lowerCase().encode(attestation.recordHash)), id++)
+                    attestation.recordHash?.let { BaseEncoding.base16().lowerCase().encode(it) }), id++)
         }
     }
 
@@ -250,12 +289,12 @@ class HomeAdapter(listener: Listener) : IdBasedRecyclerViewAdapter() {
         addItem(CommonItemViewHolder.COMMON_CREATOR, CommonData(
             R.string.rpc_version_number,
             R.string.rpc_version_number_description,
-            hardware.versionNumber.toString()), id++)
+            hardware.versionNumber?.toString()), id++)
 
         addItem(CommonItemViewHolder.COMMON_CREATOR, CommonData(
             R.string.rpc_author_name,
             R.string.rpc_author_name_description,
-            hardware.rpcAuthorName.toString()), id++)
+            hardware.rpcAuthorName?.toString()), id++)
 
         addItem(CommonItemViewHolder.COMMON_CREATOR, CommonData(
             R.string.rpc_unique_id,

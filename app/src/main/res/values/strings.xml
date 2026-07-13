@@ -63,6 +63,13 @@
     <string name="revocation_status_offline_cached">⚠️ Device offline - using cached CRL</string>
     <string name="revocation_status_offline_bundled">❌ Offline - CRL Out-of-date</string>
 
+    <string name="error_attest_rsa_key_ec_only">No RSA certificate chain</string>
+    <string name="error_attest_rsa_key_ec_only_summary"><![CDATA[The file contains only EC certificates chain.<br><br>To display, disable Attest RSA key.]]></string>
+	<string name="error_attest_ec_key_rsa_only">No EC certificate chain</string>
+	<string name="error_attest_ec_key_rsa_only_summary"><![CDATA[The file contains only RSA certificates chain.<br><br>To display, enable Attest RSA key.]]></string>
+	<string name="error_invalid_file">Unable to parse file</string>
+	<string name="error_invalid_file_summary"><![CDATA[Possible reasons:<br><br>• File corrupted or tampered<br><br>• May contain invalid characters<br><br>• Unsupported file format]]></string>
+
     <string name="error_message_subtitle">Detailed messages:</string>
     <string name="error_unknown">Unknown error</string>
     <string name="error_unavailable">Unable to attest</string>

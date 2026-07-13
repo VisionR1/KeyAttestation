@@ -50,38 +50,52 @@ public class KeyBoxXmlParser {
             throw new IOException(e);
         }
     }
+	
+	public KeyStore.PrivateKeyEntry parse(InputStream in) throws IOException {
+        return parse(in, false);
+    }
 
-    public KeyStore.PrivateKeyEntry parse(InputStream in) throws IOException {
+    public KeyStore.PrivateKeyEntry parse(InputStream in, boolean preferRsa) throws IOException {
         try {
             parser.setInput(in, StandardCharsets.UTF_8.name());
             chain.clear();
             privateKey = null;
-            readAndroidAttestation();
+            readAndroidAttestation(preferRsa);
         } catch (XmlPullParserException e) {
             throw new IOException(e);
         }
         if (privateKey == null || chain.isEmpty()) {
-            throw new IOException("No key found");
+            throw new IOException("No key found matching requested format");
         }
         return new KeyStore.PrivateKeyEntry(privateKey, chain.toArray(new Certificate[0]));
     }
 
-    private void readAndroidAttestation() throws XmlPullParserException, IOException {
+    private void readAndroidAttestation(boolean preferRsa) throws XmlPullParserException, IOException {
         while (parser.next() != XmlPullParser.END_DOCUMENT) {
             if (parser.getEventType() != XmlPullParser.START_TAG) {
                 continue;
             }
             var name = parser.getName();
             var algorithm = parser.getAttributeValue(null, "algorithm");
-            if ("Key".equals(name) && "ecdsa".equals(algorithm)) {
-                parser.nextTag();
-                readECKey();
-                break;
+			
+            if ("Key".equals(name)) {
+                if (preferRsa && "ecdsa".equalsIgnoreCase(algorithm)) {
+                    continue; 
+                }
+                if (!preferRsa && "rsa".equalsIgnoreCase(algorithm)) {
+                    continue;
+                }
+
+                if ("ecdsa".equalsIgnoreCase(algorithm) || "rsa".equalsIgnoreCase(algorithm)) {
+                    parser.nextTag();
+                    readKeyBlock(algorithm);
+                    break;
+                }
             }
         }
     }
 
-    private void readECKey() throws XmlPullParserException, IOException {
+    private void readKeyBlock(String algorithm) throws XmlPullParserException, IOException {
         while (!(parser.getEventType() == XmlPullParser.END_TAG && "Key".equals(parser.getName()))) {
             if (parser.getEventType() != XmlPullParser.START_TAG) {
                 parser.next();
@@ -92,7 +106,7 @@ public class KeyBoxXmlParser {
                 case "PrivateKey" -> {
                     if ("pem".equals(format)) {
                         parser.next();
-                        readPrivateKey(parser.getText());
+                        readPrivateKey(parser.getText(), algorithm);
                         parser.next();
                     } else {
                         return;
@@ -124,15 +138,26 @@ public class KeyBoxXmlParser {
         return Base64.decode(sb.toString(), 0);
     }
 
-    private void readPrivateKey(String text) throws IOException {
+    private void readPrivateKey(String text, String algorithm) throws IOException {
         try {
             var sequence = ASN1Sequence.getInstance(stringToBytes(text));
-            var ecKey = ECPrivateKey.getInstance(sequence);
-            var id = new AlgorithmIdentifier(X9ObjectIdentifiers.id_ecPublicKey,
-                    ecKey.getParametersObject());
-            var data = new PrivateKeyInfo(id, ecKey).getEncoded();
+            byte[] data;
+            String factoryAlgo;
+            
+            if ("rsa".equalsIgnoreCase(algorithm)) {
+                var rsaKey = org.bouncycastle.asn1.pkcs.RSAPrivateKey.getInstance(sequence);
+                var id = new AlgorithmIdentifier(org.bouncycastle.asn1.pkcs.PKCSObjectIdentifiers.rsaEncryption, org.bouncycastle.asn1.DERNull.INSTANCE);
+                data = new PrivateKeyInfo(id, rsaKey).getEncoded();
+                factoryAlgo = "RSA";
+            } else {
+                var ecKey = ECPrivateKey.getInstance(sequence);
+                var id = new AlgorithmIdentifier(X9ObjectIdentifiers.id_ecPublicKey, ecKey.getParametersObject());
+                data = new PrivateKeyInfo(id, ecKey).getEncoded();
+                factoryAlgo = "EC";
+            }
+            
             var keySpec = new PKCS8EncodedKeySpec(data);
-            var keyFactory = KeyFactory.getInstance("EC");
+            var keyFactory = KeyFactory.getInstance(factoryAlgo);
             privateKey = keyFactory.generatePrivate(keySpec);
         } catch (GeneralSecurityException e) {
             throw new IOException(e);

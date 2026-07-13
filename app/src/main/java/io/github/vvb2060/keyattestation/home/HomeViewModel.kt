@@ -175,7 +175,7 @@ class HomeViewModel(
         attestationData.postValue(Resource.loading(null))
 
         val result = cr.openFileDescriptor(uri, "r").use {
-            attestationRepository.loadCerts(it)
+            attestationRepository.loadCerts(it, preferAttestRsaKey)
         }
 
         attestationData.postValue(result)
