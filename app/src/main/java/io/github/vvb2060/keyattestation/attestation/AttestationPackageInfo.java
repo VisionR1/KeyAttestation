@@ -18,6 +18,7 @@ import org.bouncycastle.asn1.ASN1Encodable;
 import org.bouncycastle.asn1.ASN1Sequence;
 
 import java.security.cert.CertificateParsingException;
+import java.util.Objects;
 
 public class AttestationPackageInfo implements java.lang.Comparable<AttestationPackageInfo> {
     private static final int PACKAGE_NAME_INDEX = 0;
@@ -69,5 +70,10 @@ public class AttestationPackageInfo implements java.lang.Comparable<AttestationP
     public boolean equals(Object o) {
         return (o instanceof AttestationPackageInfo)
                 && (0 == compareTo((AttestationPackageInfo) o));
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(packageName, version);
     }
 }
