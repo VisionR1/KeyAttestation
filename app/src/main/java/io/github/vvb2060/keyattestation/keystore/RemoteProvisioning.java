@@ -253,6 +253,9 @@ class RemoteProvisioning {
             var deviceInfo = new DeviceInfo();
             var protectedData = new ProtectedData();
             var geekChain = eekResponse.getEekChain(hwInfo.supportedEekCurve);
+            if (geekChain == null) {
+                throw new IllegalStateException("No GEEK for supportedEekCurve=" + hwInfo.supportedEekCurve);
+            }
             var csrTag = binder.generateCertificateRequest(false, keysToSign, geekChain,
                     eekResponse.getChallenge(), deviceInfo, protectedData);
             var mac0Message = buildMac0MessageForV1Csr(keysToSign[0], csrTag);

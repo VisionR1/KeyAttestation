@@ -40,9 +40,9 @@ public record RevocationList(String status, String reason, DataSource source) {
     private static final String PREFS_NAME = "revocation_prefs";
     private static final String KEY_PUBLISH_TIME = "last_publish_time";
     
-    private static JSONObject data = null;
-    private static Date publishTime = null;
-    private static DataSource currentSource = DataSource.BUNDLED;
+    private static volatile JSONObject data = null;
+    private static volatile Date publishTime = null;
+    private static volatile DataSource currentSource = DataSource.BUNDLED;
 
     private static final ExecutorService asyncExecutor = Executors.newSingleThreadExecutor();
     private static final ExecutorService networkExecutor = Executors.newSingleThreadExecutor();
