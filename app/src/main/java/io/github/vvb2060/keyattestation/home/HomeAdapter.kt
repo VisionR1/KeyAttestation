@@ -490,8 +490,6 @@ class HomeAdapter(listener: Listener) : IdBasedRecyclerViewAdapter() {
                 list.model,
                 list.vendorPatchLevel?.let { AuthorizationList.patchLevelToString(it) },
                 list.bootPatchLevel?.let { AuthorizationList.patchLevelToString(it) },
-                list.vendorPatchLevel?.toString(),
-                list.bootPatchLevel?.toString(),
                 list.deviceUniqueAttestation?.toString(),
                 list.identityCredentialKey?.toString(),
                 list.moduleHash?.let { BaseEncoding.base16().lowerCase().encode(it) },
