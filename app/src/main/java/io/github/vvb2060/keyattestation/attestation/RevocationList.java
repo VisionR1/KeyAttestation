@@ -22,6 +22,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicReference;
 
 import io.github.vvb2060.keyattestation.AppApplication;
 import io.github.vvb2060.keyattestation.R;
@@ -89,11 +90,12 @@ public record RevocationList(String status, String reason, DataSource source) {
         }
     }
 
-    private static NetworkResult fetchFromNetwork(String statusUrl, long cachedTime) {
+    private static NetworkResult fetchFromNetwork(String statusUrl, long cachedTime, AtomicReference<HttpURLConnection> connRef) {
         HttpURLConnection connection = null;
         try {
             URL url = new URL(statusUrl);
             connection = (HttpURLConnection) url.openConnection();
+            connRef.set(connection);
             connection.setRequestMethod("GET");
             connection.setConnectTimeout(10_000);
             connection.setReadTimeout(20_000);
@@ -132,12 +134,15 @@ public record RevocationList(String status, String reason, DataSource source) {
     }
 
     private static NetworkResult fetchNetworkWithTimeout(String url, long cachedTime) {
-        Future<NetworkResult> future = networkExecutor.submit(() -> fetchFromNetwork(url, cachedTime));
+        var connRef = new AtomicReference<HttpURLConnection>();
+        Future<NetworkResult> future = networkExecutor.submit(() -> fetchFromNetwork(url, cachedTime, connRef));
         try {
             return future.get(3, TimeUnit.SECONDS);
         } catch (Exception e) {
             Log.w(TAG, "Network fetch dropped gracefully (Hard 3-second DNS/Connection Timeout)");
             future.cancel(true);
+            var connection = connRef.get();
+            if (connection != null) connection.disconnect();
             return null;
         }
     }
