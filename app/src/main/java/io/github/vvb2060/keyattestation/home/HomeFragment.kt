@@ -119,7 +119,7 @@ class HomeFragment : AppFragment(), HomeAdapter.Listener, MenuProvider {
     }
 
     override fun onAttestationInfoClick(data: Attestation) {
-        val result = viewModel.getAttestationData().value!!.data!! as AttestationData
+        val result = viewModel.getAttestationData().value?.data as? AttestationData ?: return
         result.showAttestation = data
         adapter.updateData(result)
     }
