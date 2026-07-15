@@ -20,8 +20,8 @@ import io.github.vvb2060.keyattestation.BuildConfig;
 import rikka.shizuku.Shizuku;
 
 public class KeyStoreManager {
-    private static IAndroidKeyStore remoteKeyStore;
-    private static boolean installed;
+    private static volatile IAndroidKeyStore remoteKeyStore;
+    private static volatile boolean installed;
 
     public static IAndroidKeyStore getRemoteKeyStore() {
         return remoteKeyStore;
