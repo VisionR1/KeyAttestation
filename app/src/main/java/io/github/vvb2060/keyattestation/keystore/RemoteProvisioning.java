@@ -217,28 +217,31 @@ class RemoteProvisioning {
         con.setDoOutput(true);
         con.setFixedLengthStreamingMode(input.length);
 
-        con.connect();
-        try (var os = con.getOutputStream()) {
-            os.write(input, 0, input.length);
-        }
-
-        var code = con.getResponseCode();
-        var body = new ByteArrayOutputStream(8192);
-        try (var in = code >= 400 ? con.getErrorStream() : con.getInputStream()) {
-            var buffer = new byte[8192];
-            int read;
-            while ((read = in.read(buffer, 0, buffer.length)) != -1) {
-                body.write(buffer, 0, read);
+        try {
+            con.connect();
+            try (var os = con.getOutputStream()) {
+                os.write(input, 0, input.length);
             }
-        }
-        con.disconnect();
 
-        if (code == 200) {
-            return decodeCbor(body.toByteArray());
-        } else if (code == 444) {
-            throw new RuntimeException("Device not registered.");
-        } else {
-            throw new RuntimeException(body.toString());
+            var code = con.getResponseCode();
+            var body = new ByteArrayOutputStream(8192);
+            try (var in = code >= 400 ? con.getErrorStream() : con.getInputStream()) {
+                var buffer = new byte[8192];
+                int read;
+                while ((read = in.read(buffer, 0, buffer.length)) != -1) {
+                    body.write(buffer, 0, read);
+                }
+            }
+
+            if (code == 200) {
+                return decodeCbor(body.toByteArray());
+            } else if (code == 444) {
+                throw new RuntimeException("Device not registered.");
+            } else {
+                throw new RuntimeException(body.toString());
+            }
+        } finally {
+            con.disconnect();
         }
     }
 
