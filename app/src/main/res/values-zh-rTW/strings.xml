@@ -56,6 +56,10 @@
     <string name="provisioning_info_manufacturer">製造商：</string>
     <string name="revocation_list_publish_time">撤銷清單發布時間</string>
     <string name="revocation_list_description">撤銷清單用於檢查憑證是否已被撤銷。此處顯示目前使用中的撤銷清單發布時間。</string>
+	<string name="revocation_list_save">儲存</string>
+    <string name="revocation_list_save_unavailable">請至少連線至網際網路一次，以便在儲存前下載 CRL 清單</string>
+	<string name="revocation_list_save_success">已儲存</string>
+    <string name="revocation_list_save_failed">未儲存</string>
 
     <string name="revocation_status_initial">⚙️ 已下載初始清單</string>
     <string name="revocation_status_new_fetch">✨ 已取得新清單!</string>

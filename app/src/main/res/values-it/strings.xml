@@ -56,6 +56,10 @@
     <string name="provisioning_info_manufacturer">produttore: </string>
     <string name="revocation_list_publish_time">Data di pubblicazione dell\'elenco di revoca</string>
     <string name="revocation_list_description">L\'elenco di revoca viene utilizzato per verificare se i certificati sono stati revocati. Mostra l\'ora di pubblicazione dell\'elenco di revoca attualmente in uso.</string>
+    <string name="revocation_list_save">Salva</string>
+    <string name="revocation_list_save_unavailable">Connettiti a Internet almeno una volta per scaricare l\'elenco CRL prima di salvare</string>
+    <string name="revocation_list_save_success">Salvato</string>
+    <string name="revocation_list_save_failed">Non salvato</string>
     
     <string name="revocation_status_initial">⚙️ Elenco iniziale scaricato</string>
     <string name="revocation_status_new_fetch">✨ Nuovo elenco scaricato!</string>

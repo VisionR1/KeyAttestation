@@ -56,6 +56,10 @@
     <string name="provisioning_info_manufacturer">виробник: </string>
     <string name="revocation_list_publish_time">Час публікації списку відкликань</string>
     <string name="revocation_list_description">Список відкликань використовується для перевірки, чи були сертифікати відкликані. Тут показано час публікації списку відкликань, який наразі використовується.</string>
+    <string name="revocation_list_save">Зберегти</string>
+    <string name="revocation_list_save_unavailable">Підключіться до Інтернету принаймні один раз, щоб завантажити список CRL перед збереженням</string>
+	<string name="revocation_list_save_success">Збережено</string>
+    <string name="revocation_list_save_failed">Не збережено</string>
 
     <string name="revocation_status_initial">⚙️ Початковий список завантажено</string>
     <string name="revocation_status_new_fetch">✨ Отримано новий список!</string>

@@ -78,7 +78,13 @@ public record RevocationList(String status, String reason, DataSource source) {
 
     private static void saveToCache(JSONObject fullJson) {
         try (var output = AppApplication.app.openFileOutput(CACHE_FILE, Context.MODE_PRIVATE)) {
-            output.write(fullJson.toString().getBytes(StandardCharsets.UTF_8));
+            String pretty;
+            try {
+                pretty = fullJson.toString(2);
+            } catch (JSONException e) {
+                pretty = fullJson.toString();
+            }
+            output.write(pretty.getBytes(StandardCharsets.UTF_8));
             if (publishTime != null) {
                 var prefs = AppApplication.app.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
                 prefs.edit().putLong(KEY_PUBLISH_TIME, publishTime.getTime()).apply();
@@ -254,6 +260,38 @@ public record RevocationList(String status, String reason, DataSource source) {
 
     public static DataSource getCurrentSource() {
         return currentSource;
+    }
+	
+	public static boolean hasCachedCrl() {
+        return AppApplication.app.getFileStreamPath(CACHE_FILE).exists();
+    }
+	
+	public static String suggestedExportFileName() {
+        var fmt = new java.text.SimpleDateFormat("yyyyMMdd-hhmma", Locale.US);
+        fmt.setTimeZone(java.util.TimeZone.getTimeZone("UTC"));
+        if (publishTime != null) {
+            return fmt.format(publishTime) + ".json";
+        }
+        return fmt.format(new Date()) + "-local.json";
+    }
+
+    /**
+     * Writes the currently cached CRL (as originally downloaded from Google, re-serialized) to the given stream. 
+	 * Callers should check hasCachedCrl() first; a false return here
+     * means the write itself failed (e.g. the cache was deleted between the check and this call), not that no cache exists.
+     */
+    public static boolean exportCachedCrl(java.io.OutputStream out) {
+        try (var fis = AppApplication.app.openFileInput(CACHE_FILE)) {
+            var buffer = new byte[8192];
+            int len;
+            while ((len = fis.read(buffer)) != -1) {
+                out.write(buffer, 0, len);
+            }
+            return true;
+        } catch (IOException e) {
+            Log.w(TAG, "exportCachedCrl: cache file missing or unreadable", e);
+            return false;
+        }
     }
 
     public static RevocationList get(BigInteger serialNumber) {

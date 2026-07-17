@@ -56,6 +56,10 @@
     <string name="provisioning_info_manufacturer">制造商：</string>
     <string name="revocation_list_publish_time">吊销列表发布时间</string>
     <string name="revocation_list_description">吊销列表用于检查证书是否被吊销。这里显示当前使用的吊销列表发布时间。</string>
+	<string name="revocation_list_save">保存</string>
+    <string name="revocation_list_save_unavailable">请至少连接一次互联网，以便在保存前下载 CRL 列表</string>
+	<string name="revocation_list_save_success">已保存</string>
+    <string name="revocation_list_save_failed">未保存</string>
 
     <string name="revocation_status_initial">⚙️ 已下载初始列表</string>
     <string name="revocation_status_new_fetch">✨ 已获取新列表!</string>

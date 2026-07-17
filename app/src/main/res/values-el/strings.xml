@@ -56,6 +56,10 @@
     <string name="provisioning_info_manufacturer">κατασκευαστής: </string>
     <string name="revocation_list_publish_time">Ώρα δημοσίευσης λίστας ανάκλησης</string>
     <string name="revocation_list_description">Η λίστα ανάκλησης χρησιμοποιείται για να ελεγχθεί εάν έχουν ανακληθεί πιστοποιητικά. Αυτή δείχνει την ώρα δημοσίευσης της λίστας ανάκλησης που χρησιμοποιείται αυτήν τη στιγμή.</string>
+	<string name="revocation_list_save">Αποθήκευση</string>
+	<string name="revocation_list_save_unavailable">Συνδεθείτε στο διαδίκτυο τουλάχιστον μία φορά για να ληφθεί η λίστα CRL πριν την αποθηκεύσετε</string>
+	<string name="revocation_list_save_success">Αποθηκεύτηκε</string>
+	<string name="revocation_list_save_failed">Δεν αποθηκεύτηκε</string>
 
     <string name="revocation_status_initial">⚙️ Αρχική λίστα ελήφθη</string>
     <string name="revocation_status_new_fetch">✨ Ελήφθη νέα λίστα!</string>

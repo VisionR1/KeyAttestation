@@ -56,6 +56,10 @@
     <string name="provisioning_info_manufacturer">fabricante: </string>
     <string name="revocation_list_publish_time">Hora de publicação da lista de revogação</string>
     <string name="revocation_list_description">A lista de revogação é usada para verificar se certificados foram revogados. Isto mostra a hora de publicação da lista de revogação atualmente utilizada.</string>
+    <string name="revocation_list_save">Salvar</string>
+    <string name="revocation_list_save_unavailable">Conecte-se à internet pelo menos uma vez para baixar a lista CRL antes de salvar</string>
+	<string name="revocation_list_save_success">Salvo</string>
+    <string name="revocation_list_save_failed">Não salvo</string>
 
     <string name="revocation_status_initial">⚙️ Lista inicial baixada</string>
     <string name="revocation_status_new_fetch">✨ Nova lista obtida!</string>

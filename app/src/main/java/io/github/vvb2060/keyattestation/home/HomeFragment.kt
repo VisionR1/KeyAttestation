@@ -4,6 +4,7 @@ import android.app.Dialog
 import android.os.Build
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -26,6 +27,7 @@ import io.github.vvb2060.keyattestation.R
 import io.github.vvb2060.keyattestation.app.AlertDialogFragment
 import io.github.vvb2060.keyattestation.app.AppFragment
 import io.github.vvb2060.keyattestation.attestation.Attestation
+import io.github.vvb2060.keyattestation.attestation.RevocationList
 import io.github.vvb2060.keyattestation.databinding.HomeBinding
 import io.github.vvb2060.keyattestation.keystore.KeyStoreManager
 import io.github.vvb2060.keyattestation.lang.AttestationException
@@ -38,6 +40,7 @@ import rikka.html.text.HtmlCompat
 import rikka.html.text.toHtml
 import rikka.shizuku.Shizuku
 import rikka.widget.borderview.BorderView
+import java.io.IOException
 
 class HomeFragment : AppFragment(), HomeAdapter.Listener, MenuProvider {
 
@@ -50,6 +53,25 @@ class HomeFragment : AppFragment(), HomeAdapter.Listener, MenuProvider {
     private val save =
         registerForActivityResult(CreateDocument("application/x-pkcs7-certificates")) {
             viewModel.save(it)
+        }
+		
+	private val saveCrl =
+        registerForActivityResult(CreateDocument("application/json")) { uri ->
+            uri?.let {
+                val context = requireContext()
+                try {
+                    val stream = context.contentResolver.openOutputStream(it)
+                        ?: throw IOException("openOutputStream returned null")
+                    val ok = stream.use { out -> RevocationList.exportCachedCrl(out) }
+                    if (!ok) throw IOException("exportCachedCrl returned false")
+					AppApplication.toast(getString(R.string.revocation_list_save_success))
+                } catch (e: Exception) {
+                    Log.e(AppApplication.TAG, "saveCrl: ", e)
+                    AppApplication.toast(getString(R.string.revocation_list_save_failed))
+                    context.contentResolver.delete(it, null, null)
+                    return@let
+                }
+            }
         }
 
     private val load = registerForActivityResult(GetContent()) {
@@ -146,6 +168,22 @@ class HomeFragment : AppFragment(), HomeAdapter.Listener, MenuProvider {
 
     override fun onCommonDataClick(data: Data) {
         val context = requireActivity()
+
+        if (data.title == R.string.revocation_list_publish_time) {
+            AlertDialog.Builder(context)
+                .setTitle(data.title)
+                .setMessage(data.getMessage(context))
+                .setNeutralButton(R.string.revocation_list_save) { _, _ ->
+                    if (RevocationList.hasCachedCrl()) {
+                        saveCrl.launch(RevocationList.suggestedExportFileName())
+                    } else {
+                        AppApplication.toast(getString(R.string.revocation_list_save_unavailable))
+                    }
+                }
+				.setPositiveButton(android.R.string.ok, null)
+                .show()
+            return
+        }
 
         AlertDialogFragment.Builder(context)
             .title(data.title)
