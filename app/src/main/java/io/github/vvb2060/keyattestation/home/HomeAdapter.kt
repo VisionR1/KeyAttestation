@@ -1,5 +1,7 @@
 package io.github.vvb2060.keyattestation.home
 
+import android.hardware.security.keymint.RpcHardwareInfo
+import android.os.Build
 import android.util.Base64
 import android.util.Pair
 import com.google.common.io.BaseEncoding
@@ -31,66 +33,66 @@ class HomeAdapter(listener: Listener) : IdBasedRecyclerViewAdapter() {
         when (baseData.status) {
             RootPublicKey.Status.NULL -> {
                 addItem(HeaderViewHolder.CREATOR, HeaderData(
-                        R.string.error_remote_key_provisioning,
-                        0,
-                        R.drawable.ic_error_outline_24,
-                        rikka.material.R.attr.colorInactive), ID_CERT_STATUS)
+                    R.string.error_remote_key_provisioning,
+                    0,
+                    R.drawable.ic_error_outline_24,
+                    rikka.material.R.attr.colorInactive), ID_CERT_STATUS)
             }
             RootPublicKey.Status.FAILED -> {
                 addItem(HeaderViewHolder.CREATOR, HeaderData(
-                        R.string.cert_chain_not_trusted,
-                        R.string.cert_chain_not_trusted_summary,
-                        R.drawable.ic_error_outline_24,
-                        rikka.material.R.attr.colorAlert), ID_CERT_STATUS)
+                    R.string.cert_chain_not_trusted,
+                    R.string.cert_chain_not_trusted_summary,
+                    R.drawable.ic_error_outline_24,
+                    rikka.material.R.attr.colorAlert), ID_CERT_STATUS)
             }
             RootPublicKey.Status.UNKNOWN -> {
                 addItem(HeaderViewHolder.CREATOR, HeaderData(
-                        R.string.unknown_root_cert,
-                        R.string.unknown_root_cert_summary,
-                        R.drawable.ic_error_outline_24,
-                        rikka.material.R.attr.colorWarning), ID_CERT_STATUS)
+                    R.string.unknown_root_cert,
+                    R.string.unknown_root_cert_summary,
+                    R.drawable.ic_error_outline_24,
+                    rikka.material.R.attr.colorWarning), ID_CERT_STATUS)
             }
             RootPublicKey.Status.AOSP -> {
                 addItem(HeaderViewHolder.CREATOR, HeaderData(
-                        R.string.aosp_root_cert,
-                        R.string.aosp_root_cert_summary,
-                        R.drawable.ic_error_outline_24,
-                        rikka.material.R.attr.colorWarning), ID_CERT_STATUS)
+                    R.string.aosp_root_cert,
+                    R.string.aosp_root_cert_summary,
+                    R.drawable.ic_error_outline_24,
+                    rikka.material.R.attr.colorWarning), ID_CERT_STATUS)
             }
             RootPublicKey.Status.GOOGLE -> {
                 addItem(HeaderViewHolder.CREATOR, HeaderData(
-                        R.string.google_root_cert,
-                        R.string.google_root_cert_summary,
-                        R.drawable.ic_trustworthy_24,
-                        rikka.material.R.attr.colorSafe), ID_CERT_STATUS)
+                    R.string.google_root_cert,
+                    R.string.google_root_cert_summary,
+                    R.drawable.ic_trustworthy_24,
+                    rikka.material.R.attr.colorSafe), ID_CERT_STATUS)
             }
             RootPublicKey.Status.GOOGLE_RKP -> {
                 addItem(HeaderViewHolder.CREATOR, HeaderData(
-                        R.string.google_root_cert_rkp,
-                        R.string.google_root_cert_rkp_summary,
-                        R.drawable.ic_trustworthy_24,
-                        rikka.material.R.attr.colorSafe), ID_CERT_STATUS)
+                    R.string.google_root_cert_rkp,
+                    R.string.google_root_cert_rkp_summary,
+                    R.drawable.ic_trustworthy_24,
+                    rikka.material.R.attr.colorSafe), ID_CERT_STATUS)
             }
             RootPublicKey.Status.KNOX -> {
                 addItem(HeaderViewHolder.CREATOR, HeaderData(
-                        R.string.knox_root_cert,
-                        R.string.knox_root_cert_summary,
-                        R.drawable.ic_trustworthy_24,
-                        rikka.material.R.attr.colorSafe), ID_CERT_STATUS)
+                    R.string.knox_root_cert,
+                    R.string.knox_root_cert_summary,
+                    R.drawable.ic_trustworthy_24,
+                    rikka.material.R.attr.colorSafe), ID_CERT_STATUS)
             }
             RootPublicKey.Status.OEM -> {
                 addItem(HeaderViewHolder.CREATOR, HeaderData(
-                        R.string.oem_root_cert,
-                        R.string.oem_root_cert_summary,
-                        R.drawable.ic_trustworthy_24,
-                        rikka.material.R.attr.colorSafe), ID_CERT_STATUS)
+                    R.string.oem_root_cert,
+                    R.string.oem_root_cert_summary,
+                    R.drawable.ic_trustworthy_24,
+                    rikka.material.R.attr.colorSafe), ID_CERT_STATUS)
             }
         }
 
         var id = ID_CERT_INFO_START
         addItem(SubtitleViewHolder.CREATOR, CommonData(
-                R.string.cert_chain,
-                R.string.cert_chain_description), id++)
+            R.string.cert_chain,
+            R.string.cert_chain_description), id++)
 
         val certsList = baseData.certs
         if (!certsList.isNullOrEmpty()) {
@@ -102,7 +104,7 @@ class HomeAdapter(listener: Listener) : IdBasedRecyclerViewAdapter() {
             certsList.forEach { certInfo ->
                 val currentAlgo = certInfo.cert?.publicKey?.algorithm
                 val serialNumber = certInfo.cert?.serialNumber?.toString()
-                
+
                 // Identify the Root Certificate (A root is always self-signed: Subject == Issuer)
                 val subjectStr = certInfo.cert?.subjectDN?.toString()
                 val issuerStr = certInfo.cert?.issuerDN?.toString()
@@ -110,9 +112,9 @@ class HomeAdapter(listener: Listener) : IdBasedRecyclerViewAdapter() {
 
                 // Display only if serial number hasn't been seen before
                 if (serialNumber == null || !seenSerials.contains(serialNumber)) {
-                    
+
                     if (serialNumber != null) {
-                        seenSerials.add(serialNumber) 
+                        seenSerials.add(serialNumber)
                     }
 
                     if (containsEc) {
@@ -140,16 +142,16 @@ class HomeAdapter(listener: Listener) : IdBasedRecyclerViewAdapter() {
         val dateStr = publishTime?.let {
             io.github.vvb2060.keyattestation.attestation.AuthorizationList.formatDate(it)
         } ?: ""
-        
+
         val locales = androidx.appcompat.app.AppCompatDelegate.getApplicationLocales()
         val context = if (!locales.isEmpty) {
-        val config = android.content.res.Configuration(app.resources.configuration)
+            val config = android.content.res.Configuration(app.resources.configuration)
             config.setLocale(locales[0])
             app.createConfigurationContext(config)
         } else {
             app
-        }       
-        
+        }
+
         val statusLine = when (source) {
             RevocationList.DataSource.NETWORK_INITIAL -> context.getString(R.string.revocation_status_initial)
             RevocationList.DataSource.NETWORK_UPDATE -> context.getString(R.string.revocation_status_new_fetch)
@@ -166,14 +168,14 @@ class HomeAdapter(listener: Listener) : IdBasedRecyclerViewAdapter() {
         }.trim().ifEmpty { null }
 
         addItem(CommonItemViewHolder.COMMON_CREATOR, CommonData(
-                R.string.revocation_list_publish_time,
-                R.string.revocation_list_description,
-                dateDisplay), ID_REVOCATION_INFO)
+            R.string.revocation_list_publish_time,
+            R.string.revocation_list_description,
+            dateDisplay), ID_REVOCATION_INFO)
 
         when (baseData) {
             is AttestationData -> updateData(baseData)
             is RemoteProvisioningData -> updateData(baseData)
-			is KeyboxData -> {}
+            is KeyboxData -> {}
         }
 
         notifyDataSetChanged()
@@ -184,38 +186,79 @@ class HomeAdapter(listener: Listener) : IdBasedRecyclerViewAdapter() {
 
         var id = ID_DESCRIPTION_START
         val attestation = attestationData.showAttestation ?: return
-        addItem(CommonItemViewHolder.SECURITY_LEVEL_CREATOR, SecurityLevelData(
-                R.string.attestation,
-                R.string.attestation_version_description,
-                R.string.security_level_description,
-                Attestation.attestationVersionToString(attestation.attestationVersion),
-                attestation.attestationSecurityLevel), id++)
+
+        if (attestationData.isSoftwareLevel) {
+            addItemAt(2, HeaderViewHolder.CREATOR, HeaderData(
+                R.string.software_attestation,
+                R.string.software_attestation_summary,
+                R.drawable.ic_error_outline_24,
+                rikka.material.R.attr.colorWarning), ID_SOFTWARE_STATUS)
+        }
+
+        if (attestationData.rootOfTrust?.isVerifiedBootKeySuspicious == true) {
+            addItemAt(2, HeaderViewHolder.CREATOR, HeaderData(
+                R.string.verified_boot_key_suspicious,
+                R.string.verified_boot_key_suspicious_summary,
+                R.drawable.ic_error_outline_24,
+                rikka.material.R.attr.colorAlert), ID_BOOT_KEY_STATUS)
+        }
+
+        if (attestation.teeEnforced.isPatchLevelOutdated) {
+            addItemAt(2, HeaderViewHolder.CREATOR, HeaderData(
+                R.string.patch_level_outdated,
+                R.string.patch_level_outdated_summary,
+                R.drawable.ic_error_outline_24,
+                rikka.material.R.attr.colorWarning,
+                attestation.teeEnforced.oldestPatchLevel,
+                Build.VERSION.SECURITY_PATCH.take(7)), ID_PATCH_STATUS)
+        }
+
+        if (attestationData.isVbmetaDigestMissing) {
+            addItemAt(2, HeaderViewHolder.CREATOR, HeaderData(
+                R.string.vbmeta_missing,
+                R.string.vbmeta_missing_summary,
+                R.drawable.ic_error_outline_24,
+                rikka.material.R.attr.colorWarning), ID_VBMETA_STATUS)
+        } else if (attestationData.isBootHashMismatch) {
+            addItemAt(2, HeaderViewHolder.CREATOR, HeaderData(
+                R.string.vbmeta_mismatch,
+                R.string.vbmeta_mismatch_summary,
+                R.drawable.ic_error_outline_24,
+                rikka.material.R.attr.colorAlert), ID_VBMETA_STATUS)
+        }
 
         addItem(CommonItemViewHolder.SECURITY_LEVEL_CREATOR, SecurityLevelData(
-                R.string.keymaster,
-                R.string.keymaster_version_description,
-                R.string.security_level_description,
-                Attestation.keymasterVersionToString(attestation.keymasterVersion),
-                attestation.keymasterSecurityLevel), id++)
+            R.string.attestation,
+            R.string.attestation_version_description,
+            R.string.security_level_description,
+            Attestation.attestationVersionToString(attestation.attestationVersion),
+            attestation.attestationSecurityLevel), id++)
+
+        addItem(CommonItemViewHolder.SECURITY_LEVEL_CREATOR, SecurityLevelData(
+            R.string.keymaster,
+            R.string.keymaster_version_description,
+            R.string.security_level_description,
+            Attestation.keymasterVersionToString(attestation.keymasterVersion),
+            attestation.keymasterSecurityLevel), id++)
 
         addItem(CommonItemViewHolder.COMMON_CREATOR, CommonData(
-                R.string.attestation_challenge,
-                R.string.attestation_challenge_description,
-                attestation.attestationChallenge?.let {
-                    val stringChallenge = String(it)
-                    if (stringChallenge.toByteArray().contentEquals(it)) stringChallenge
-                    else Base64.encodeToString(it, 0) + " (base64)"
-                }), id++)
+            R.string.attestation_challenge,
+            R.string.attestation_challenge_description,
+            attestation.attestationChallenge?.let {
+                val stringChallenge = String(it)
+                if (stringChallenge.toByteArray().contentEquals(it)) stringChallenge
+                else Base64.encodeToString(it, 0) + " (base64)"
+            }), id++)
 
         addItem(CommonItemViewHolder.COMMON_CREATOR, CommonData(
-                R.string.unique_id,
-                R.string.unique_id_description,
-                attestation.uniqueId?.let { BaseEncoding.base16().lowerCase().encode(it) }), id)
+            R.string.unique_id,
+            R.string.unique_id_description,
+            attestation.uniqueId?.let { BaseEncoding.base16().lowerCase().encode(it) }), id)
 
         id = ID_AUTHORIZATION_LIST_START
         addItem(SubtitleViewHolder.CREATOR, CommonData(
-                R.string.authorization_list,
-                R.string.authorization_list_description), id++)
+            R.string.authorization_list,
+            R.string.authorization_list_description), id++)
 
         val tee = createAuthorizationItems(attestation.teeEnforced)
         val sw = createAuthorizationItems(attestation.softwareEnforced)
@@ -227,28 +270,28 @@ class HomeAdapter(listener: Listener) : IdBasedRecyclerViewAdapter() {
             }
 
             addItem(CommonItemViewHolder.AUTHORIZATION_ITEM_CREATOR, AuthorizationItemData(
-                    authorizationItemTitles[i],
-                    authorizationItemDescriptions[i],
-                    h, s), id++)
+                authorizationItemTitles[i],
+                authorizationItemDescriptions[i],
+                h, s), id++)
 
             if (h != null && s != null) {
                 addItem(CommonItemViewHolder.AUTHORIZATION_ITEM_CREATOR, AuthorizationItemData(
-                        authorizationItemTitles[i],
-                        authorizationItemDescriptions[i],
-                        s, false), id++)
+                    authorizationItemTitles[i],
+                    authorizationItemDescriptions[i],
+                    s, false), id++)
             }
         }
 
         if (attestation is KnoxAttestation) {
             id = ID_KNOX_START
             addItem(SubtitleViewHolder.CREATOR, CommonData(
-                    R.string.knox,
-                    R.string.knox_description), id++)
+                R.string.knox,
+                R.string.knox_description), id++)
 
             addItem(CommonItemViewHolder.COMMON_CREATOR, CommonData(
-                    R.string.knox_challenge,
-                    R.string.knox_challenge_description,
-                    attestation.knoxChallenge), id++)
+                R.string.knox_challenge,
+                R.string.knox_challenge_description,
+                attestation.knoxChallenge), id++)
 
             addItem(CommonItemViewHolder.COMMON_CREATOR, CommonData(
                 R.string.knox_id_attest,
@@ -256,14 +299,14 @@ class HomeAdapter(listener: Listener) : IdBasedRecyclerViewAdapter() {
                 attestation.idAttest), id++)
 
             addItem(CommonItemViewHolder.COMMON_CREATOR, CommonData(
-                    R.string.knox_integrity,
-                    R.string.knox_integrity_description,
-                    attestation.knoxIntegrity?.toString()), id++)
+                R.string.knox_integrity,
+                R.string.knox_integrity_description,
+                attestation.knoxIntegrity?.toString()), id++)
 
             addItem(CommonItemViewHolder.COMMON_CREATOR, CommonData(
-                    R.string.knox_record_hash,
-                    R.string.knox_record_hash_description,
-                    attestation.recordHash?.let { BaseEncoding.base16().lowerCase().encode(it) }), id++)
+                R.string.knox_record_hash,
+                R.string.knox_record_hash_description,
+                attestation.recordHash?.let { BaseEncoding.base16().lowerCase().encode(it) }), id++)
         }
     }
 
@@ -301,6 +344,11 @@ class HomeAdapter(listener: Listener) : IdBasedRecyclerViewAdapter() {
             R.string.rpc_unique_id_description,
             hardware.uniqueId), id++)
 
+        addItem(CommonItemViewHolder.COMMON_CREATOR, CommonData(
+            R.string.rpc_eek_curve,
+            R.string.rpc_eek_curve_description,
+            eekCurveToString(hardware.supportedEekCurve)), id)
+
         id = ID_AUTHORIZATION_LIST_START
         addItem(SubtitleViewHolder.CREATOR, CommonData(
             R.string.rkp_device_info,
@@ -309,15 +357,45 @@ class HomeAdapter(listener: Listener) : IdBasedRecyclerViewAdapter() {
         rkpData.deviceInfo.forEach { key, value ->
             addItem(CommonItemViewHolder.SIMPLE_CREATOR, Pair(key, value), id++)
         }
+
+        if (rkpData.diceChain.isNotEmpty()) {
+            val header = when {
+                !rkpData.isDiceChainValid -> HeaderData(
+                    R.string.dice_chain_invalid,
+                    R.string.dice_chain_invalid_summary,
+                    R.drawable.ic_error_outline_24,
+                    rikka.material.R.attr.colorAlert)
+                rkpData.isDiceDegenerate -> HeaderData(
+                    R.string.dice_chain_degenerate,
+                    R.string.dice_chain_degenerate_summary,
+                    R.drawable.ic_error_outline_24,
+                    rikka.material.R.attr.colorWarning)
+                else -> HeaderData(
+                    R.string.dice_chain_valid,
+                    R.string.dice_chain_valid_summary,
+                    R.drawable.ic_trustworthy_24,
+                    rikka.material.R.attr.colorSafe)
+            }
+            addItemAt(1, HeaderViewHolder.CREATOR, header, ID_DICE_STATUS)
+
+            id = ID_RKP_DICE_START
+            addItem(SubtitleViewHolder.CREATOR, CommonData(
+                R.string.rkp_dice_chain,
+                R.string.rkp_dice_chain_description), id++)
+
+            rkpData.diceChain.forEach {
+                addItem(CommonItemViewHolder.SIMPLE_CREATOR, it, id++)
+            }
+        }
     }
 
     fun updateData(e: AttestationException) {
         clear()
         addItem(HeaderViewHolder.CREATOR, HeaderData(
-                e.titleResId,
-                0,
-                R.drawable.ic_error_outline_24,
-                rikka.material.R.attr.colorInactive), ID_ERROR)
+            e.titleResId,
+            0,
+            R.drawable.ic_error_outline_24,
+            rikka.material.R.attr.colorInactive), ID_ERROR)
 
         addItem(ErrorViewHolder.CREATOR, e, ID_ERROR_MESSAGE)
         notifyDataSetChanged()
@@ -347,155 +425,169 @@ class HomeAdapter(listener: Listener) : IdBasedRecyclerViewAdapter() {
         private const val ID_ERROR = 0L
         private const val ID_CERT_STATUS = 1L
         private const val ID_BOOT_STATUS = 2L
+        private const val ID_PATCH_STATUS = 3L
+        private const val ID_VBMETA_STATUS = 4L
+        private const val ID_SOFTWARE_STATUS = 5L
+        private const val ID_DICE_STATUS = 6L
+        private const val ID_BOOT_KEY_STATUS = 7L
         private const val ID_CERT_INFO_START = 1000L
         private const val ID_REVOCATION_INFO = 1900L
         private const val ID_RKP_HOSTNAME = 2000L
         private const val ID_DESCRIPTION_START = 3000L
         private const val ID_AUTHORIZATION_LIST_START = 4000L
         private const val ID_KNOX_START = 5000L
+        private const val ID_RKP_DICE_START = 6000L
         private const val ID_ERROR_MESSAGE = 100000L
+
+        private fun eekCurveToString(curve: Int): String {
+            return when (curve) {
+                RpcHardwareInfo.CURVE_P256 -> "P-256"
+                RpcHardwareInfo.CURVE_25519 -> "Ed25519"
+                else -> "None"
+            }
+        }
 
         private fun createAuthorizationItems(list: AuthorizationList): Array<String?> {
             return arrayOf(
-                    list.purposes?.let { AuthorizationList.purposesToString(it) },
-                    list.algorithm?.let { AuthorizationList.algorithmToString(it) },
-                    list.keySize?.toString(),
-                    list.digests?.let { AuthorizationList.digestsToString(it) },
-                    list.paddingModes?.let { AuthorizationList.paddingModesToString(it) },
-                    list.ecCurve?.let { AuthorizationList.ecCurveAsString(it) },
-                    list.rsaPublicExponent?.toString(),
-                    list.mgfDigests?.let { AuthorizationList.digestsToString(it) },
-                    list.rollbackResistance?.toString(),
-                    list.earlyBootOnly?.toString(),
-                    list.activeDateTime?.let { AuthorizationList.formatDate(it) },
-                    list.originationExpireDateTime?.let { AuthorizationList.formatDate(it) },
-                    list.usageExpireDateTime?.let { AuthorizationList.formatDate(it) },
-                    list.usageCountLimit?.toString(),
-                    list.noAuthRequired?.toString(),
-                    list.userAuthType?.let { AuthorizationList.userAuthTypeToString(it) },
-                    list.authTimeout?.toString(),
-                    list.allowWhileOnBody?.toString(),
-                    list.trustedUserPresenceReq?.toString(),
-                    list.trustedConfirmationReq?.toString(),
-                    list.unlockedDeviceReq?.toString(),
-                    list.allApplications?.toString(),
-                    list.applicationId,
-                    list.creationDateTime?.let { AuthorizationList.formatDate(it) },
-                    list.origin?.let { AuthorizationList.originToString(it) },
-                    list.rollbackResistant?.toString(),
-                    list.rootOfTrust?.toString(),
-                    list.osVersion?.toString(),
-                    list.osPatchLevel?.toString(),
-                    list.attestationApplicationId?.toString()?.trim(),
-                    list.brand,
-                    list.device,
-                    list.product,
-                    list.serialNumber,
-                    list.imei,
-                    list.secondImei,
-                    list.meid,
-                    list.manufacturer,
-                    list.model,
-                    list.vendorPatchLevel?.toString(),
-                    list.bootPatchLevel?.toString(),
-                    list.deviceUniqueAttestation?.toString(),
-                    list.identityCredentialKey?.toString(),
-                    list.moduleHash?.let { BaseEncoding.base16().lowerCase().encode(it) },
+                list.purposes?.let { AuthorizationList.purposesToString(it) },
+                list.algorithm?.let { AuthorizationList.algorithmToString(it) },
+                list.keySize?.toString(),
+                list.digests?.let { AuthorizationList.digestsToString(it) },
+                list.paddingModes?.let { AuthorizationList.paddingModesToString(it) },
+                list.ecCurve?.let { AuthorizationList.ecCurveAsString(it) },
+                list.rsaPublicExponent?.toString(),
+                list.mgfDigests?.let { AuthorizationList.digestsToString(it) },
+                list.rollbackResistance?.toString(),
+                list.earlyBootOnly?.toString(),
+                list.activeDateTime?.let { AuthorizationList.formatDate(it) },
+                list.originationExpireDateTime?.let { AuthorizationList.formatDate(it) },
+                list.usageExpireDateTime?.let { AuthorizationList.formatDate(it) },
+                list.usageCountLimit?.toString(),
+                list.noAuthRequired?.toString(),
+                list.userAuthType?.let { AuthorizationList.userAuthTypeToString(it) },
+                list.authTimeout?.toString(),
+                list.allowWhileOnBody?.toString(),
+                list.trustedUserPresenceReq?.toString(),
+                list.trustedConfirmationReq?.toString(),
+                list.unlockedDeviceReq?.toString(),
+                list.allApplications?.toString(),
+                list.applicationId,
+                list.creationDateTime?.let { AuthorizationList.formatDate(it) },
+                list.origin?.let { AuthorizationList.originToString(it) },
+                list.rollbackResistant?.toString(),
+                list.rootOfTrust?.toString(),
+                list.osVersion?.let { AuthorizationList.osVersionToString(it) },
+                list.osPatchLevel?.let { AuthorizationList.patchLevelToString(it) },
+                list.attestationApplicationId?.toString()?.trim(),
+                list.brand,
+                list.device,
+                list.product,
+                list.serialNumber,
+                list.imei,
+                list.secondImei,
+                list.meid,
+                list.manufacturer,
+                list.model,
+                list.vendorPatchLevel?.let { AuthorizationList.patchLevelToString(it) },
+                list.bootPatchLevel?.let { AuthorizationList.patchLevelToString(it) },
+                list.deviceUniqueAttestation?.toString(),
+                list.identityCredentialKey?.toString(),
+                list.moduleHash?.let { BaseEncoding.base16().lowerCase().encode(it) },
             )
         }
 
         private val authorizationItemTitles = arrayOf(
-                R.string.authorization_list_purpose,
-                R.string.authorization_list_algorithm,
-                R.string.authorization_list_keySize,
-                R.string.authorization_list_digest,
-                R.string.authorization_list_padding,
-                R.string.authorization_list_ecCurve,
-                R.string.authorization_list_rsaPublicExponent,
-                R.string.authorization_list_mgfDigest,
-                R.string.authorization_list_rollbackResistance,
-                R.string.authorization_list_earlyBootOnly,
-                R.string.authorization_list_activeDateTime,
-                R.string.authorization_list_originationExpireDateTime,
-                R.string.authorization_list_usageExpireDateTime,
-                R.string.authorization_list_usageCountLimit,
-                R.string.authorization_list_noAuthRequired,
-                R.string.authorization_list_userAuthType,
-                R.string.authorization_list_authTimeout,
-                R.string.authorization_list_allowWhileOnBody,
-                R.string.authorization_list_trustedUserPresenceRequired,
-                R.string.authorization_list_trustedConfirmationRequired,
-                R.string.authorization_list_unlockedDeviceRequired,
-                R.string.authorization_list_allApplications,
-                R.string.authorization_list_applicationId,
-                R.string.authorization_list_creationDateTime,
-                R.string.authorization_list_origin,
-                R.string.authorization_list_rollbackResistant,
-                R.string.authorization_list_rootOfTrust,
-                R.string.authorization_list_osVersion,
-                R.string.authorization_list_osPatchLevel,
-                R.string.authorization_list_attestationApplicationId,
-                R.string.authorization_list_attestationIdBrand,
-                R.string.authorization_list_attestationIdDevice,
-                R.string.authorization_list_attestationIdProduct,
-                R.string.authorization_list_attestationIdSerial,
-                R.string.authorization_list_attestationIdImei,
-                R.string.authorization_list_attestationIdSecondImei,
-                R.string.authorization_list_attestationIdMeid,
-                R.string.authorization_list_attestationIdManufacturer,
-                R.string.authorization_list_attestationIdModel,
-                R.string.authorization_list_vendorPatchLevel,
-                R.string.authorization_list_bootPatchLevel,
-                R.string.authorization_list_deviceUniqueAttestation,
-                R.string.authorization_list_identityCredentialKey,
-                R.string.authorization_list_moduleHash,
+            R.string.authorization_list_purpose,
+            R.string.authorization_list_algorithm,
+            R.string.authorization_list_keySize,
+            R.string.authorization_list_digest,
+            R.string.authorization_list_padding,
+            R.string.authorization_list_ecCurve,
+            R.string.authorization_list_rsaPublicExponent,
+            R.string.authorization_list_mgfDigest,
+            R.string.authorization_list_rollbackResistance,
+            R.string.authorization_list_earlyBootOnly,
+            R.string.authorization_list_activeDateTime,
+            R.string.authorization_list_originationExpireDateTime,
+            R.string.authorization_list_usageExpireDateTime,
+            R.string.authorization_list_usageCountLimit,
+            R.string.authorization_list_noAuthRequired,
+            R.string.authorization_list_userAuthType,
+            R.string.authorization_list_authTimeout,
+            R.string.authorization_list_allowWhileOnBody,
+            R.string.authorization_list_trustedUserPresenceRequired,
+            R.string.authorization_list_trustedConfirmationRequired,
+            R.string.authorization_list_unlockedDeviceRequired,
+            R.string.authorization_list_allApplications,
+            R.string.authorization_list_applicationId,
+            R.string.authorization_list_creationDateTime,
+            R.string.authorization_list_origin,
+            R.string.authorization_list_rollbackResistant,
+            R.string.authorization_list_rootOfTrust,
+            R.string.authorization_list_osVersion,
+            R.string.authorization_list_osPatchLevel,
+            R.string.authorization_list_attestationApplicationId,
+            R.string.authorization_list_attestationIdBrand,
+            R.string.authorization_list_attestationIdDevice,
+            R.string.authorization_list_attestationIdProduct,
+            R.string.authorization_list_attestationIdSerial,
+            R.string.authorization_list_attestationIdImei,
+            R.string.authorization_list_attestationIdSecondImei,
+            R.string.authorization_list_attestationIdMeid,
+            R.string.authorization_list_attestationIdManufacturer,
+            R.string.authorization_list_attestationIdModel,
+            R.string.authorization_list_vendorPatchLevel,
+            R.string.authorization_list_bootPatchLevel,
+            R.string.authorization_list_deviceUniqueAttestation,
+            R.string.authorization_list_identityCredentialKey,
+            R.string.authorization_list_moduleHash,
         )
 
         private val authorizationItemDescriptions = arrayOf(
-                R.string.authorization_list_purpose_description,
-                R.string.authorization_list_algorithm_description,
-                R.string.authorization_list_keySize_description,
-                R.string.authorization_list_digest_description,
-                R.string.authorization_list_padding_description,
-                R.string.authorization_list_ecCurve_description,
-                R.string.authorization_list_rsaPublicExponent_description,
-                R.string.authorization_list_mgfDigest_description,
-                R.string.authorization_list_rollbackResistance_description,
-                R.string.authorization_list_earlyBootOnly_description,
-                R.string.authorization_list_activeDateTime_description,
-                R.string.authorization_list_originationExpireDateTime_description,
-                R.string.authorization_list_usageExpireDateTime_description,
-                R.string.authorization_list_usageCountLimit_description,
-                R.string.authorization_list_noAuthRequired_description,
-                R.string.authorization_list_userAuthType_description,
-                R.string.authorization_list_authTimeout_description,
-                R.string.authorization_list_allowWhileOnBody_description,
-                R.string.authorization_list_trustedUserPresenceRequired_description,
-                R.string.authorization_list_trustedConfirmationRequired_description,
-                R.string.authorization_list_unlockedDeviceRequired_description,
-                R.string.authorization_list_allApplications_description,
-                R.string.authorization_list_applicationId_description,
-                R.string.authorization_list_creationDateTime_description,
-                R.string.authorization_list_origin_description,
-                R.string.authorization_list_rollbackResistant_description,
-                R.string.authorization_list_rootOfTrust_description,
-                R.string.authorization_list_osVersion_description,
-                R.string.authorization_list_osPatchLevel_description,
-                R.string.authorization_list_attestationApplicationId_description,
-                R.string.authorization_list_attestationIdBrand_description,
-                R.string.authorization_list_attestationIdDevice_description,
-                R.string.authorization_list_attestationIdProduct_description,
-                R.string.authorization_list_attestationIdSerial_description,
-                R.string.authorization_list_attestationIdImei_description,
-                R.string.authorization_list_attestationIdSecondImei_description,
-                R.string.authorization_list_attestationIdMeid_description,
-                R.string.authorization_list_attestationIdManufacturer_description,
-                R.string.authorization_list_attestationIdModel_description,
-                R.string.authorization_list_vendorPatchLevel_description,
-                R.string.authorization_list_bootPatchLevel_description,
-                R.string.authorization_list_deviceUniqueAttestation_description,
-                R.string.authorization_list_identityCredentialKey_description,
-                R.string.authorization_list_moduleHash_description,
+            R.string.authorization_list_purpose_description,
+            R.string.authorization_list_algorithm_description,
+            R.string.authorization_list_keySize_description,
+            R.string.authorization_list_digest_description,
+            R.string.authorization_list_padding_description,
+            R.string.authorization_list_ecCurve_description,
+            R.string.authorization_list_rsaPublicExponent_description,
+            R.string.authorization_list_mgfDigest_description,
+            R.string.authorization_list_rollbackResistance_description,
+            R.string.authorization_list_earlyBootOnly_description,
+            R.string.authorization_list_activeDateTime_description,
+            R.string.authorization_list_originationExpireDateTime_description,
+            R.string.authorization_list_usageExpireDateTime_description,
+            R.string.authorization_list_usageCountLimit_description,
+            R.string.authorization_list_noAuthRequired_description,
+            R.string.authorization_list_userAuthType_description,
+            R.string.authorization_list_authTimeout_description,
+            R.string.authorization_list_allowWhileOnBody_description,
+            R.string.authorization_list_trustedUserPresenceRequired_description,
+            R.string.authorization_list_trustedConfirmationRequired_description,
+            R.string.authorization_list_unlockedDeviceRequired_description,
+            R.string.authorization_list_allApplications_description,
+            R.string.authorization_list_applicationId_description,
+            R.string.authorization_list_creationDateTime_description,
+            R.string.authorization_list_origin_description,
+            R.string.authorization_list_rollbackResistant_description,
+            R.string.authorization_list_rootOfTrust_description,
+            R.string.authorization_list_osVersion_description,
+            R.string.authorization_list_osPatchLevel_description,
+            R.string.authorization_list_attestationApplicationId_description,
+            R.string.authorization_list_attestationIdBrand_description,
+            R.string.authorization_list_attestationIdDevice_description,
+            R.string.authorization_list_attestationIdProduct_description,
+            R.string.authorization_list_attestationIdSerial_description,
+            R.string.authorization_list_attestationIdImei_description,
+            R.string.authorization_list_attestationIdSecondImei_description,
+            R.string.authorization_list_attestationIdMeid_description,
+            R.string.authorization_list_attestationIdManufacturer_description,
+            R.string.authorization_list_attestationIdModel_description,
+            R.string.authorization_list_vendorPatchLevel_description,
+            R.string.authorization_list_bootPatchLevel_description,
+            R.string.authorization_list_deviceUniqueAttestation_description,
+            R.string.authorization_list_identityCredentialKey_description,
+            R.string.authorization_list_moduleHash_description,
         )
     }
 }

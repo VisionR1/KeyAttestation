@@ -67,11 +67,13 @@ public class KnoxAttestation extends Asn1Attestation {
 
     @Override
     public String toString() {
+        String hash = recordHash == null ? "unknown" : BaseEncoding.base16().lowerCase().encode(recordHash);
+
         return super.toString() +
                 "\n\nExtension type: " + getClass().getSimpleName() +
                 "\nID attestation: " + idAttest +
                 "\nChallenge: " + challenge +
                 "\nIntegrity status: " + knoxIntegrity +
-                "\nAttestation record hash: " + BaseEncoding.base16().lowerCase().encode(recordHash);
+                "\nAttestation record hash: " + hash;
     }
 }

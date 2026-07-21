@@ -4,7 +4,6 @@ import android.view.View
 import androidx.core.view.isVisible
 import io.github.vvb2060.keyattestation.databinding.HomeHeaderBinding
 import rikka.core.res.resolveColorStateList
-import rikka.recyclerview.BaseViewHolder.Creator
 
 class HeaderViewHolder(itemView: View, binding: HomeHeaderBinding) : HomeViewHolder<HeaderData, HomeHeaderBinding>(itemView, binding) {
 
@@ -23,7 +22,7 @@ class HeaderViewHolder(itemView: View, binding: HomeHeaderBinding) : HomeViewHol
             icon.setImageDrawable(context.getDrawable(data.icon))
             title.setText(data.title)
             if (data.description != 0) {
-                summary.setText(data.description)
+                summary.text = context.getString(data.description, *data.formatArgs)
                 summary.isVisible = true
             } else {
                 summary.isVisible = false

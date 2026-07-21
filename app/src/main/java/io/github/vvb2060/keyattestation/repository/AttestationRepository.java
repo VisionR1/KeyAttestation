@@ -192,7 +192,14 @@ public class AttestationRepository {
             if (reset) keyStore.deleteAllEntry();
             doAttestation(useAttestKey, useStrongBox, includeProps,
                     uniqueIdIncluded, idFlags, keyStoreKeyType, useSak);
-            return Resource.Companion.success(AttestationData.parseCertificateChain(currentCerts));
+            var data = AttestationData.parseCertificateChain(currentCerts);
+            try {
+                data.vbmetaDigest = keyStore.getVbmetaDigest();
+            } catch (Exception e) {
+                var cause = e instanceof AttestationException ? e.getCause() : e;
+                Log.w(AppApplication.TAG, "Get vbmeta digest error.", cause);
+            }
+            return Resource.Companion.success(data);
         } catch (Exception e) {
             var cause = e instanceof AttestationException ? e.getCause() : e;
             Log.w(AppApplication.TAG, "Do attestation error.", cause);
@@ -344,6 +351,25 @@ public class AttestationRepository {
                             } catch (Exception ignored) {}
                         }
                     }
+
+                    // Same algorithm filter as the binary path (2a)
+                    // the parser doesn't distinguish key blocks, so a mixed-algorithm keybox would
+                    // otherwise concatenate two unrelated chains into one list
+                    if (!currentCerts.isEmpty()) {
+                        List<X509Certificate> matching = new ArrayList<>();
+                        for (X509Certificate cert : currentCerts) {
+                            var algo = cert.getPublicKey().getAlgorithm();
+                            if (algo.equalsIgnoreCase(preferRsa ? "RSA" : "EC") ||
+                               (!preferRsa && algo.equalsIgnoreCase("ECDSA"))
+                            ) {
+                                matching.add(cert);
+                            }
+                        }
+                        if (!matching.isEmpty()) {
+                            currentCerts.clear();
+                            currentCerts.addAll(matching);
+                        }
+                    }
                 }
             }
 
@@ -389,6 +415,7 @@ public class AttestationRepository {
                 AttestationData data = AttestationData.parseCertificateChain(currentCerts);
                 return Resource.Companion.success(data);
             } catch (Exception originalError) {
+                Log.w(AppApplication.TAG, "No attestation extension, falling back to KeyboxData.", originalError);
                 return Resource.Companion.success(KeyboxData.fromCerts(currentCerts));
             }
 
@@ -435,7 +462,8 @@ public class AttestationRepository {
                     ? keyStore.getRkpHostname() : null;
             var deviceInfo = new DeviceInfo();
             var hw = keyStore.getHardwareInfo(useStrongBox, deviceInfo);
-            var info = new RemoteProvisioningData(name, hw, deviceInfo);
+            var diceChain = keyStore.getDiceChain(useStrongBox);
+            var info = new RemoteProvisioningData(name, hw, deviceInfo, diceChain);
             try {
                 var data = keyStore.checkRemoteProvisioning(useStrongBox);
                 info.setCerts(factory.generateCertificates(new ByteArrayInputStream(data)));

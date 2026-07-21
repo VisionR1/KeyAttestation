@@ -40,9 +40,10 @@ public record RevocationList(String status, String reason, DataSource source) {
     private static final String PREFS_NAME = "revocation_prefs";
     private static final String KEY_PUBLISH_TIME = "last_publish_time";
     
-    private static JSONObject data = null;
-    private static Date publishTime = null;
-    private static DataSource currentSource = DataSource.BUNDLED;
+    private static volatile JSONObject data = null;
+    private static volatile Date publishTime = null;
+    private static volatile DataSource currentSource = DataSource.BUNDLED;
+    private static volatile Future<NetworkResult> pendingFetch;
 
     private static final ExecutorService asyncExecutor = Executors.newSingleThreadExecutor();
     private static final ExecutorService networkExecutor = Executors.newSingleThreadExecutor();
@@ -101,8 +102,8 @@ public record RevocationList(String status, String reason, DataSource source) {
             URL url = new URL(statusUrl);
             connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
-            connection.setConnectTimeout(3000); 
-            connection.setReadTimeout(3000);    
+            connection.setConnectTimeout(10_000);
+            connection.setReadTimeout(20_000);
             connection.setRequestProperty("User-Agent", "KeyAttestation");
             
             double rand = Math.round(Math.random() * 1000.0) / 1000.0;
@@ -138,12 +139,17 @@ public record RevocationList(String status, String reason, DataSource source) {
     }
 
     private static NetworkResult fetchNetworkWithTimeout(String url, long cachedTime) {
-        Future<NetworkResult> future = networkExecutor.submit(() -> fetchFromNetwork(url, cachedTime));
+        var future = pendingFetch;
+        if (future == null || future.isDone()) {
+            future = networkExecutor.submit(() -> fetchFromNetwork(url, cachedTime));
+            pendingFetch = future;
+        } else {
+            Log.i(TAG, "Network fetch already in progress; reusing it instead of queuing another.");
+        }
         try {
             return future.get(3, TimeUnit.SECONDS);
         } catch (Exception e) {
             Log.w(TAG, "Network fetch dropped gracefully (Hard 3-second DNS/Connection Timeout)");
-            future.cancel(true);
             return null;
         }
     }

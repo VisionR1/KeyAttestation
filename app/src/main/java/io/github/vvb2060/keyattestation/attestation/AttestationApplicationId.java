@@ -30,6 +30,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateParsingException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class AttestationApplicationId implements java.lang.Comparable<AttestationApplicationId> {
@@ -135,6 +136,16 @@ public class AttestationApplicationId implements java.lang.Comparable<Attestatio
     public boolean equals(Object o) {
         return (o instanceof AttestationApplicationId)
                 && (0 == compareTo((AttestationApplicationId) o));
+    }
+
+    @Override
+    public int hashCode() {
+        // byte[] has identity hashCode, so combine by content to stay consistent with equals().
+        int sigHash = 0;
+        for (byte[] digest : signatureDigests) {
+            sigHash = 31 * sigHash + Arrays.hashCode(digest);
+        }
+        return 31 * packageInfos.hashCode() + sigHash;
     }
 
     private List<AttestationPackageInfo> parseAttestationPackageInfos(ASN1Encodable asn1Encodable)

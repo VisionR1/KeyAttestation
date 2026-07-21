@@ -67,6 +67,7 @@ class RemoteProvisioning {
     private final String requestId = UUID.randomUUID().toString();
     private final IRemotelyProvisionedComponent binder;
     private byte[] deviceInfoData;
+    private byte[] diceChainData;
 
     private static class EekResponse {
         private final byte[] challenge;
@@ -134,6 +135,10 @@ class RemoteProvisioning {
 
     public byte[] getDeviceInfo() {
         return deviceInfoData;
+    }
+
+    public byte[] getDiceChain() {
+        return diceChainData;
     }
 
     public byte[] check() throws RuntimeException {
@@ -207,33 +212,36 @@ class RemoteProvisioning {
         uri = uri.buildUpon().appendQueryParameter("requestId", requestId).build();
         var con = (HttpsURLConnection) new URL(uri.toString()).openConnection();
         con.setRequestMethod("POST");
-        con.setConnectTimeout(2_000);
+        con.setConnectTimeout(10_000);
         con.setReadTimeout(20_000);
         con.setDoOutput(true);
         con.setFixedLengthStreamingMode(input.length);
 
-        con.connect();
-        try (var os = con.getOutputStream()) {
-            os.write(input, 0, input.length);
-        }
-
-        var code = con.getResponseCode();
-        var body = new ByteArrayOutputStream(8192);
-        try (var in = code >= 400 ? con.getErrorStream() : con.getInputStream()) {
-            var buffer = new byte[8192];
-            int read;
-            while ((read = in.read(buffer, 0, buffer.length)) != -1) {
-                body.write(buffer, 0, read);
+        try {
+            con.connect();
+            try (var os = con.getOutputStream()) {
+                os.write(input, 0, input.length);
             }
-        }
-        con.disconnect();
 
-        if (code == 200) {
-            return decodeCbor(body.toByteArray());
-        } else if (code == 444) {
-            throw new RuntimeException("Device not registered.");
-        } else {
-            throw new RuntimeException(body.toString());
+            var code = con.getResponseCode();
+            var body = new ByteArrayOutputStream(8192);
+            try (var in = code >= 400 ? con.getErrorStream() : con.getInputStream()) {
+                var buffer = new byte[8192];
+                int read;
+                while ((read = in.read(buffer, 0, buffer.length)) != -1) {
+                    body.write(buffer, 0, read);
+                }
+            }
+
+            if (code == 200) {
+                return decodeCbor(body.toByteArray());
+            } else if (code == 444) {
+                throw new RuntimeException("Device not registered.");
+            } else {
+                throw new RuntimeException(body.toString());
+            }
+        } finally {
+            con.disconnect();
         }
     }
 
@@ -248,6 +256,9 @@ class RemoteProvisioning {
             var deviceInfo = new DeviceInfo();
             var protectedData = new ProtectedData();
             var geekChain = eekResponse.getEekChain(hwInfo.supportedEekCurve);
+            if (geekChain == null) {
+                throw new IllegalStateException("No GEEK for supportedEekCurve=" + hwInfo.supportedEekCurve);
+            }
             var csrTag = binder.generateCertificateRequest(false, keysToSign, geekChain,
                     eekResponse.getChallenge(), deviceInfo, protectedData);
             var mac0Message = buildMac0MessageForV1Csr(keysToSign[0], csrTag);
@@ -269,6 +280,7 @@ class RemoteProvisioning {
             var array = (Array) decodeCbor(csrBytes);
             var deviceInfo = extractDeviceInfoFromV3Csr(array);
             deviceInfoData = encodeCbor(deviceInfo);
+            diceChainData = encodeCbor(array.getDataItems().get(2));
             return encodeCbor(array.add(unverifiedDeviceInfo));
         }
     }

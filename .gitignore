@@ -8,3 +8,4 @@
 .externalNativeBuild
 .cxx
 /*.jks
+/.kotlin/sessions/kotlin-compiler-*.salive

@@ -42,6 +42,16 @@
     <string name="knox_root_cert_summary">Knox attestation is signed using Samsung attestation key (SAK).</string>
     <string name="oem_root_cert">OEM root certificate</string>
     <string name="oem_root_cert_summary">This device trusts this root certificate, but it may not be trusted by others.</string>
+    <string name="patch_level_outdated">Attestation patch level outdated</string>
+    <string name="patch_level_outdated_summary">The attested patch level is older than the patch level of the running system. This is a common sign of tampering. (attestation: %1$s, system: %2$s)</string>
+    <string name="vbmeta_mismatch">Verified boot hash mismatch</string>
+    <string name="vbmeta_mismatch_summary">The attested verified boot hash does not match the running system\'s vbmeta digest. This is a strong sign of a spoofed or replayed attestation.</string>
+    <string name="vbmeta_missing">Verified boot hash missing</string>
+    <string name="vbmeta_missing_summary">The device reports an empty or all-zero vbmeta digest, so the boot state was never attested.</string>
+    <string name="software_attestation">Software attestation</string>
+    <string name="software_attestation_summary">This key is not hardware-backed. The attestation was produced in software with no hardware root of trust.</string>
+    <string name="verified_boot_key_suspicious">Verified boot key is invalid</string>
+    <string name="verified_boot_key_suspicious_summary">The verified boot key is only zeros, which is only expected on an unlocked or unverified bootloader. This is a strong sign of tampering.</string>
 
     <string name="cert_chain">Certificate chain</string>
     <string name="cert_chain_description">Certificate chain is a list of certificates used to authenticate a key. The chain starts with the certificate associated with that key, and each certificate is signed by the next in the chain. The chain ends with a root certificate, and the trustworthiness of the attestation depends on the root certificate of the chain.</string>
@@ -135,6 +145,11 @@
     An opaque identifier for this IRemotelyProvisionedComponent implementation.
     Each implementation must have a distinct identifier from all other implementations, and it must be consistent across all devices.
     </string>
+    <string name="rpc_eek_curve">EEK curve</string>
+    <string name="rpc_eek_curve_description">
+    The curve used to validate the Endpoint Encryption Key (EEK) certificate chain and negotiate the GEEK for encrypting ProtectedData.
+    Only used by the V1/V2 CSR flow; V3 removed the EEK entirely.
+    </string>
     <string name="rkp_device_info">Device info</string>
     <string name="rkp_device_info_description">
     Device info contains information about the device that is signed by the IRemotelyProvisionedComponent HAL.
@@ -142,6 +157,18 @@
     crafted by an IRemotelyProvisionedComponent HAL instance is coming from the expected device
     based on values initially uploaded during device\'s manufacture at the factory.
     </string>
+    <string name="rkp_dice_chain">DICE certificate chain</string>
+    <string name="rkp_dice_chain_description">
+    The DICE chain mirrors the boot stages of the device.
+    Each entry measures the code and configuration of a boot stage and is signed by a key derived by the previous stage.
+    A degenerate chain contains only a single self-signed entry and carries no boot measurements.
+    </string>
+    <string name="dice_chain_valid">DICE chain verified</string>
+    <string name="dice_chain_valid_summary">Every entry in the DICE chain is correctly signed by the key of the previous boot stage.</string>
+    <string name="dice_chain_degenerate">Degenerate DICE chain</string>
+    <string name="dice_chain_degenerate_summary">The DICE chain is a single self-signed entry. Its signature is valid but it carries no boot stage measurements.</string>
+    <string name="dice_chain_invalid">DICE chain signature invalid</string>
+    <string name="dice_chain_invalid_summary">A signature in the DICE chain failed to verify against the previous stage key. The chain may be forged or corrupt.</string>
     <string name="rkp_hostname">Remote provisioning hostname</string>
     <string name="rkp_hostname_empty">Remote key provisioning disabled</string>
 
@@ -191,7 +218,7 @@
     <string name="authorization_list_origin">Origin</string>
     <string name="authorization_list_rollbackResistant">Rollback resistant</string>
     <string name="authorization_list_rootOfTrust">Root of trust</string>
-    <string name="copied_verifiedBootHash_to_clipboard">Copied verifiedBootHash to clipboard!</string>
+    <string name="copied_to_clipboard">Copied to clipboard!</string>
     <string name="authorization_list_osVersion">OS version</string>
     <string name="authorization_list_osPatchLevel">OS patch level</string>
     <string name="authorization_list_attestationApplicationId">App ID</string>

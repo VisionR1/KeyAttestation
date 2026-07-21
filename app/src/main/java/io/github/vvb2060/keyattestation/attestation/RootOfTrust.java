@@ -50,9 +50,12 @@ public class RootOfTrust {
         deviceLocked = Asn1Utils.getBooleanFromAsn1(sequence.getObjectAt(DEVICE_LOCKED_INDEX));
         verifiedBootState =
                 Asn1Utils.getIntegerFromAsn1(sequence.getObjectAt(VERIFIED_BOOT_STATE_INDEX));
-        if (sequence.size() == 3) verifiedBootHash = null;
-        else verifiedBootHash =
-                Asn1Utils.getByteArrayFromAsn1(sequence.getObjectAt(VERIFIED_BOOT_HASH_INDEX));
+        if (sequence.size() == 3) {
+            verifiedBootHash = null;
+        } else {
+            var hash = Asn1Utils.getByteArrayFromAsn1(sequence.getObjectAt(VERIFIED_BOOT_HASH_INDEX));
+            verifiedBootHash = hash.length == 0 ? null : hash;
+        }
     }
 
     RootOfTrust(byte[] verifiedBootKey, boolean deviceLocked,
@@ -92,6 +95,20 @@ public class RootOfTrust {
 
     public byte[] getVerifiedBootHash() {
         return verifiedBootHash;
+    }
+
+    private static boolean isAllZero(byte[] data) {
+        for (var b : data) {
+            if (b != 0) return false;
+        }
+        return true;
+    }
+
+    public boolean isVerifiedBootKeySuspicious() {
+        if (verifiedBootKey == null || !isAllZero(verifiedBootKey)) {
+            return false;
+        }
+        return deviceLocked || verifiedBootState == KM_VERIFIED_BOOT_VERIFIED;
     }
 
     @Override

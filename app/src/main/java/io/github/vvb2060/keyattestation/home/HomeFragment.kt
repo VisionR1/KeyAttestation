@@ -32,10 +32,10 @@ import io.github.vvb2060.keyattestation.databinding.HomeBinding
 import io.github.vvb2060.keyattestation.keystore.KeyStoreManager
 import io.github.vvb2060.keyattestation.lang.AttestationException
 import io.github.vvb2060.keyattestation.repository.AttestationData
-import io.github.vvb2060.keyattestation.util.Status
 import io.github.vvb2060.keyattestation.util.ColorManager
 import io.github.vvb2060.keyattestation.util.CrlManager
 import io.github.vvb2060.keyattestation.util.LocaleManager
+import io.github.vvb2060.keyattestation.util.Status
 import rikka.html.text.HtmlCompat
 import rikka.html.text.toHtml
 import rikka.shizuku.Shizuku
@@ -141,7 +141,7 @@ class HomeFragment : AppFragment(), HomeAdapter.Listener, MenuProvider {
     }
 
     override fun onAttestationInfoClick(data: Attestation) {
-        val result = viewModel.getAttestationData().value!!.data!! as AttestationData
+        val result = viewModel.getAttestationData().value?.data as? AttestationData ?: return
         result.showAttestation = data
         adapter.updateData(result)
     }

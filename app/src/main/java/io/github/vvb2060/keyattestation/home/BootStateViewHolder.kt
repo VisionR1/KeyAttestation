@@ -4,9 +4,9 @@ import android.content.res.ColorStateList
 import android.view.View
 import androidx.core.view.isVisible
 import io.github.vvb2060.keyattestation.R
-import io.github.vvb2060.keyattestation.repository.AttestationData
 import io.github.vvb2060.keyattestation.attestation.RootOfTrust
 import io.github.vvb2060.keyattestation.databinding.HomeHeaderBinding
+import io.github.vvb2060.keyattestation.repository.AttestationData
 import rikka.core.res.resolveColor
 
 class BootStateViewHolder(itemView: View, binding: HomeHeaderBinding) :

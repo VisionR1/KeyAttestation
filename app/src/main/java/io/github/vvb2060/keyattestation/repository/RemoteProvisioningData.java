@@ -3,29 +3,61 @@ package io.github.vvb2060.keyattestation.repository;
 import android.hardware.security.keymint.DeviceInfo;
 import android.hardware.security.keymint.RpcHardwareInfo;
 import android.util.ArrayMap;
+import android.util.Log;
+import android.util.Pair;
 
 import com.google.common.io.BaseEncoding;
 
+import org.bouncycastle.asn1.x9.ECNamedCurveTable;
+import org.bouncycastle.crypto.params.ECDomainParameters;
+import org.bouncycastle.crypto.params.ECPublicKeyParameters;
+import org.bouncycastle.crypto.params.Ed25519PublicKeyParameters;
+import org.bouncycastle.crypto.signers.ECDSASigner;
+import org.bouncycastle.crypto.signers.Ed25519Signer;
+
+import java.io.ByteArrayOutputStream;
+import java.math.BigInteger;
+import java.security.MessageDigest;
 import java.security.cert.Certificate;
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
 import co.nstant.in.cbor.CborDecoder;
+import co.nstant.in.cbor.CborEncoder;
 import co.nstant.in.cbor.CborException;
+import co.nstant.in.cbor.model.Array;
 import co.nstant.in.cbor.model.ByteString;
+import co.nstant.in.cbor.model.DataItem;
 import co.nstant.in.cbor.model.Map;
+import co.nstant.in.cbor.model.NegativeInteger;
+import co.nstant.in.cbor.model.Number;
+import co.nstant.in.cbor.model.UnicodeString;
+import co.nstant.in.cbor.model.UnsignedInteger;
+import io.github.vvb2060.keyattestation.AppApplication;
 import io.github.vvb2060.keyattestation.attestation.CertificateInfo;
 
 public class RemoteProvisioningData extends BaseData {
+    private static final int SUB = 2;
+    private static final int SUBJECT_PUBLIC_KEY = -4670552;
+    private static final int CONFIG_DESCRIPTOR = -4670548;
+    private static final int MODE = -4670551;
+    private static final int COMPONENT_NAME = -70002;
+    private static final int COMPONENT_VERSION = -70003;
+    private static final int SECURITY_VERSION = -70005;
+
     private final String rkpHostname;
     private final RpcHardwareInfo hardwareInfo;
     private final java.util.Map<String, String> deviceInfo = new ArrayMap<>();
+    private final List<Pair<String, String>> diceChain = new ArrayList<>();
+    private boolean diceChainValid;
+    private boolean diceDegenerate;
     private Throwable error;
 
     public RemoteProvisioningData(String rkpHostname, RpcHardwareInfo hardwareInfo,
-                                  DeviceInfo deviceInfoData) throws CborException {
+                                  DeviceInfo deviceInfoData, byte[] diceChainData) throws CborException {
         this.rkpHostname = rkpHostname;
         this.hardwareInfo = hardwareInfo;
         var deviceInfo = (Map) CborDecoder.decode(deviceInfoData.deviceInfo).get(0);
@@ -39,6 +71,131 @@ public class RemoteProvisioningData extends BaseData {
             }
             this.deviceInfo.put(key.toString(), valueString);
         }
+        if (diceChainData != null) {
+            try {
+                parseDiceChain(diceChainData);
+            } catch (Exception e) {
+                Log.w(AppApplication.TAG, "Parse dice chain error.", e);
+                diceChain.clear();
+            }
+        }
+    }
+
+    private void parseDiceChain(byte[] data) throws CborException {
+        var entries = ((Array) CborDecoder.decode(data).get(0)).getDataItems();
+        diceDegenerate = entries.size() <= 2;
+        diceChainValid = verifyDiceChain(entries);
+        for (var i = 1; i < entries.size(); i++) {
+            var payloadData = (ByteString) ((Array) entries.get(i)).getDataItems().get(2);
+            var payload = (Map) CborDecoder.decode(payloadData.getBytes()).get(0);
+            String name = null;
+            var details = "";
+            var mode = payload.get(new NegativeInteger(MODE));
+            if (mode instanceof ByteString bytes && bytes.getBytes().length == 1) {
+                details = "mode: " + diceModeToString(bytes.getBytes()[0]);
+            } else if (mode instanceof Number number) {
+                details = "mode: " + diceModeToString(number.getValue().intValue());
+            }
+            if (payload.get(new NegativeInteger(CONFIG_DESCRIPTOR)) instanceof ByteString config) {
+                var descriptor = (Map) CborDecoder.decode(config.getBytes()).get(0);
+                if (descriptor.get(new NegativeInteger(COMPONENT_NAME)) instanceof UnicodeString s) {
+                    name = s.getString();
+                }
+                details = appendItem(details, "securityVersion: ", descriptor.get(new NegativeInteger(SECURITY_VERSION)));
+                details = appendItem(details, "componentVersion: ", descriptor.get(new NegativeInteger(COMPONENT_VERSION)));
+            }
+            if (name == null && payload.get(new UnsignedInteger(SUB)) instanceof UnicodeString s) {
+                name = s.getString();
+            }
+            diceChain.add(new Pair<>(name != null ? name : "layer " + i, details));
+        }
+    }
+
+    private static String appendItem(String details, String label, DataItem value) {
+        if (value == null) return details;
+        if (details.isEmpty()) return label + value;
+        return details + '\n' + label + value;
+    }
+
+    private static String diceModeToString(int mode) {
+        return switch (mode) {
+            case 1 -> "normal";
+            case 2 -> "debug";
+            case 3 -> "recovery";
+            default -> "not configured";
+        };
+    }
+
+    // Each entry is a COSE_Sign1 signed by the key of the previous layer (UDS_Pub for the first)
+    private static boolean verifyDiceChain(List<DataItem> entries) {
+        try {
+            var signingKey = (Map) entries.get(0);
+            for (var i = 1; i < entries.size(); i++) {
+                var entry = ((Array) entries.get(i)).getDataItems();
+                var protectedHeader = ((ByteString) entry.get(0)).getBytes();
+                var payloadData = ((ByteString) entry.get(2)).getBytes();
+                var signature = ((ByteString) entry.get(3)).getBytes();
+                var sigStructure = encodeCbor(new Array()
+                        .add(new UnicodeString("Signature1"))
+                        .add(new ByteString(protectedHeader))
+                        .add(new ByteString(new byte[0]))
+                        .add(new ByteString(payloadData)));
+                if (!verifyCoseSign1(signingKey, sigStructure, signature)) {
+                    return false;
+                }
+                var payload = (Map) CborDecoder.decode(payloadData).get(0);
+                if (payload.get(new NegativeInteger(SUBJECT_PUBLIC_KEY)) instanceof ByteString key) {
+                    signingKey = (Map) CborDecoder.decode(key.getBytes()).get(0);
+                }
+            }
+            return true;
+        } catch (Exception e) {
+            Log.w(AppApplication.TAG, "Verify dice chain error.", e);
+            return false;
+        }
+    }
+
+    private static boolean verifyCoseSign1(Map coseKey, byte[] message, byte[] signature)
+            throws Exception {
+        var keyType = ((Number) coseKey.get(new UnsignedInteger(1))).getValue().intValue();
+        var curve = ((Number) coseKey.get(new NegativeInteger(-1))).getValue().intValue();
+        var x = ((ByteString) coseKey.get(new NegativeInteger(-2))).getBytes();
+        if (keyType == 1) {
+            var signer = new Ed25519Signer();
+            signer.init(false, new Ed25519PublicKeyParameters(x, 0));
+            signer.update(message, 0, message.length);
+            return signer.verifySignature(signature);
+        } else if (keyType == 2) {
+            var y = ((ByteString) coseKey.get(new NegativeInteger(-3))).getBytes();
+            var name = switch (curve) {
+                case 2 -> "P-384";
+                case 3 -> "P-521";
+                default -> "P-256";
+            };
+            var hash = switch (curve) {
+                case 2 -> "SHA-384";
+                case 3 -> "SHA-512";
+                default -> "SHA-256";
+            };
+            var params = ECNamedCurveTable.getByName(name);
+            var domain = new ECDomainParameters(
+                    params.getCurve(), params.getG(), params.getN(), params.getH());
+            var point = params.getCurve().createPoint(new BigInteger(1, x), new BigInteger(1, y));
+            var digest = MessageDigest.getInstance(hash).digest(message);
+            var signer = new ECDSASigner();
+            signer.init(false, new ECPublicKeyParameters(point, domain));
+            var half = signature.length / 2;
+            var r = new BigInteger(1, Arrays.copyOfRange(signature, 0, half));
+            var s = new BigInteger(1, Arrays.copyOfRange(signature, half, signature.length));
+            return signer.verifySignature(digest, r, s);
+        }
+        return false;
+    }
+
+    private static byte[] encodeCbor(DataItem item) throws CborException {
+        var buf = new ByteArrayOutputStream();
+        new CborEncoder(buf).encode(item);
+        return buf.toByteArray();
     }
 
     @SuppressWarnings("unchecked")
@@ -63,6 +220,18 @@ public class RemoteProvisioningData extends BaseData {
 
     public java.util.Map<String, String> getDeviceInfo() {
         return deviceInfo;
+    }
+
+    public List<Pair<String, String>> getDiceChain() {
+        return diceChain;
+    }
+
+    public boolean isDiceChainValid() {
+        return diceChainValid;
+    }
+
+    public boolean isDiceDegenerate() {
+        return diceDegenerate;
     }
 
     public Throwable getError() {

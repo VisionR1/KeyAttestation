@@ -3,7 +3,7 @@ package io.github.vvb2060.keyattestation.util
 import android.app.Activity
 import android.content.Context
 import android.content.SharedPreferences
-import androidx.annotation.ColorRes
+import android.os.Build
 import androidx.annotation.StyleRes
 import androidx.appcompat.app.AlertDialog
 import io.github.vvb2060.keyattestation.R
@@ -14,37 +14,30 @@ object ColorManager {
     private const val KEY_THEME = "theme_id"
 
     fun showColorPickerDialog(activity: Activity) {
-        val colors = arrayOf(
-            activity.getString(R.string.color_default_gray),
-		    activity.getString(R.string.color_original),
-			activity.getString(R.string.color_pure_black),
-			activity.getString(R.string.color_blue),
-            activity.getString(R.string.color_green),
-			activity.getString(R.string.color_orange),
-            activity.getString(R.string.color_pink),              			
-		    activity.getString(R.string.color_purple),
-            activity.getString(R.string.color_red)
-        )
-        val themeResIds = intArrayOf(
-            R.style.Theme_Default_Gray,
-		    R.style.Theme_Original,
-			R.style.Theme_Pure_Black,
-			R.style.Theme_Blue,
-            R.style.Theme_Green,
-			R.style.Theme_Orange,
-			R.style.Theme_Pink,
-		    R.style.Theme_Purple,
-            R.style.Theme_Red
-        )
+        val entries = buildList {
+            add(R.string.color_default_gray to R.style.Theme_Default_Gray)
+            add(R.string.color_original to R.style.Theme_Original)
+            add(R.string.color_pure_black to R.style.Theme_Pure_Black)
+            add(R.string.color_blue to R.style.Theme_Blue)
+            add(R.string.color_green to R.style.Theme_Green)
+            add(R.string.color_orange to R.style.Theme_Orange)
+            add(R.string.color_pink to R.style.Theme_Pink)
+            add(R.string.color_purple to R.style.Theme_Purple)
+            add(R.string.color_red to R.style.Theme_Red)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                add(R.string.color_dynamic to R.style.Theme_Dynamic)
+            }
+        }
+        val colors = Array(entries.size) { activity.getString(entries[it].first) }
 
         val prefs = getSharedPreferences(activity)
         val savedThemeId = prefs.getInt(KEY_THEME, R.style.Theme_Default_Gray)
-        val savedColorIndex = themeResIds.indexOf(savedThemeId)
+        val savedColorIndex = entries.indexOfFirst { it.second == savedThemeId }
 
         AlertDialog.Builder(activity)
             .setTitle(R.string.menu_color)
             .setSingleChoiceItems(colors, savedColorIndex) { dialog, which ->
-                saveTheme(activity, themeResIds[which])
+                saveTheme(activity, entries[which].second)
                 dialog.dismiss()
                 activity.recreate()
             }
