@@ -269,15 +269,26 @@ public class AttestationRepository {
 
             // 2a. Filter to RSA certs only
             if (parsedBinary && preferRsa && !currentCerts.isEmpty()) {
-                List<X509Certificate> rsaCerts = new ArrayList<>();
+                int leafCount = 0;
                 for (X509Certificate cert : currentCerts) {
-                    if (cert.getPublicKey().getAlgorithm().equalsIgnoreCase("RSA")) {
-                        rsaCerts.add(cert);
-                    }
+                    if (cert.getBasicConstraints() == -1) leafCount++;
                 }
-                if (!rsaCerts.isEmpty()) {
-                    currentCerts.clear();
-                    currentCerts.addAll(rsaCerts);
+                // A single end-entity cert == single chain, which may legitimately mix
+                // algorithms (EC leaf under the RSA root)
+                // Leave it intact and let the key type check below report any mismatch
+                if (leafCount > 1) {
+                    List<X509Certificate> rsaCerts = new ArrayList<>();
+                    boolean hasLeaf = false;
+                    for (X509Certificate cert : currentCerts) {
+                        if (cert.getPublicKey().getAlgorithm().equalsIgnoreCase("RSA")) {
+                            rsaCerts.add(cert);
+                            if (cert.getBasicConstraints() == -1) hasLeaf = true;
+                        }
+                    }
+                    if (hasLeaf) {
+                        currentCerts.clear();
+                        currentCerts.addAll(rsaCerts);
+                    }
                 }
             }
 
@@ -355,17 +366,26 @@ public class AttestationRepository {
                     // Same algorithm filter as the binary path (2a)
                     // the parser doesn't distinguish key blocks, so a mixed-algorithm keybox would
                     // otherwise concatenate two unrelated chains into one list
-                    if (!currentCerts.isEmpty()) {
+                    int leafCount = 0;
+                    for (X509Certificate cert : currentCerts) {
+                        if (cert.getBasicConstraints() == -1) leafCount++;
+                    }
+                    // A single end-entity cert == single chain, which may legitimately mix
+                    // algorithms (EC leaf under the RSA root)
+                    // Leave it intact and let the key type check below report any mismatch
+                    if (leafCount > 1) {
                         List<X509Certificate> matching = new ArrayList<>();
+                        boolean hasLeaf = false;
                         for (X509Certificate cert : currentCerts) {
                             var algo = cert.getPublicKey().getAlgorithm();
                             if (algo.equalsIgnoreCase(preferRsa ? "RSA" : "EC") ||
                                (!preferRsa && algo.equalsIgnoreCase("ECDSA"))
                             ) {
                                 matching.add(cert);
+                                if (cert.getBasicConstraints() == -1) hasLeaf = true;
                             }
                         }
-                        if (!matching.isEmpty()) {
+                        if (hasLeaf) {
                             currentCerts.clear();
                             currentCerts.addAll(matching);
                         }
