@@ -106,6 +106,7 @@ public abstract class Attestation {
             case 200 -> "KeyMint 2.0";
             case 300 -> "KeyMint 3.0";
             case 400 -> "KeyMint 4.0";
+            case 500 -> "KeyMint 5.0";
             default -> "Unknown (" + version + ")";
         };
     }
@@ -122,6 +123,7 @@ public abstract class Attestation {
             case 200 -> "KeyMint 2.0";
             case 300 -> "KeyMint 3.0";
             case 400 -> "KeyMint 4.0";
+            case 500 -> "KeyMint 5.0";
             default -> "Unknown (" + version + ")";
         };
     }

@@ -56,6 +56,10 @@ public class AuthorizationList {
     public static final int KM_EC_CURVE_P384 = 2;
     public static final int KM_EC_CURVE_P521 = 3;
     public static final int KM_EC_CURVE_25519 = 4;
+	
+    // ML-DSA Variants
+    public static final int KM_ML_DSA_VARIANT_65 = 1;
+    public static final int KM_ML_DSA_VARIANT_87 = 2;
 
     // Padding modes.
     public static final int KM_PAD_NONE = 1;
@@ -119,6 +123,7 @@ public class AuthorizationList {
     public static final int KM_TAG_MIN_MAC_LENGTH = KM_UINT | 8;
     public static final int KM_TAG_KDF = KM_ENUM_REP | 9;
     public static final int KM_TAG_EC_CURVE = KM_ENUM | 10;
+    public static final int KM_TAG_ML_DSA_VARIANT = KM_ENUM | 11;
     public static final int KM_TAG_RSA_PUBLIC_EXPONENT = KM_ULONG | 200;
     public static final int KM_TAG_RSA_OAEP_MGF_DIGEST = KM_ENUM_REP | 203;
     public static final int KM_TAG_ROLLBACK_RESISTANCE = KM_BOOL | 303;
@@ -200,6 +205,7 @@ public class AuthorizationList {
     private Set<Integer> digests;
     private Set<Integer> paddingModes;
     private Integer ecCurve;
+    private Integer mlDsaVariant;
     private Long rsaPublicExponent;
     private Set<Integer> mgfDigests;
     private Boolean rollbackResistance;
@@ -273,6 +279,9 @@ public class AuthorizationList {
                     break;
                 case KM_TAG_EC_CURVE & KEYMASTER_TAG_TYPE_MASK:
                     ecCurve = Asn1Utils.getIntegerFromAsn1(value);
+                    break;
+                case KM_TAG_ML_DSA_VARIANT & KEYMASTER_TAG_TYPE_MASK:
+                    mlDsaVariant = Asn1Utils.getIntegerFromAsn1(value);
                     break;
                 case KM_TAG_RSA_PUBLIC_EXPONENT & KEYMASTER_TAG_TYPE_MASK:
                     rsaPublicExponent = Asn1Utils.getLongFromAsn1(value);
@@ -590,6 +599,14 @@ public class AuthorizationList {
             default -> "unknown (" + ecCurve + ")";
         };
     }
+	
+    public static String mlDsaVariantAsString(Integer mlDsaVariant) {
+        return switch (mlDsaVariant) {
+            case KM_ML_DSA_VARIANT_65 -> "ML-DSA-65";
+            case KM_ML_DSA_VARIANT_87 -> "ML-DSA-87";
+            default -> "Unknown (" + mlDsaVariant + ")";
+        };
+    }
 
     public static String osVersionToString(int osVersion) {
         int major = osVersion / 10000;
@@ -633,6 +650,10 @@ public class AuthorizationList {
 
     public Integer getEcCurve() {
         return ecCurve;
+    }
+	
+    public Integer getMlDsaVariant() {
+        return mlDsaVariant;
     }
 
     public Long getRsaPublicExponent() {
@@ -846,6 +867,10 @@ public class AuthorizationList {
 
         if (ecCurve != null) {
             s.append("\nEC Curve: ").append(ecCurveAsString(ecCurve));
+        }
+		
+        if (mlDsaVariant != null) {
+            s.append("\nML-DSA variant: ").append(mlDsaVariantAsString(mlDsaVariant));
         }
 
         if (rsaPublicExponent != null) {
