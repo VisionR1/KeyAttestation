@@ -42,6 +42,16 @@
     <string name="knox_root_cert_summary">Атестація Knox підписується за допомогою атестаційного ключа Samsung (SAK).</string>
     <string name="oem_root_cert">Кореневий сертифікат OEM</string>
     <string name="oem_root_cert_summary">Цей пристрій довіряє цьому кореневому сертифікату, але інші можуть йому не довіряти.</string>
+    <string name="patch_level_outdated">Застарілий рівень виправлень атестації</string>
+    <string name="patch_level_outdated_summary">Підтверджений рівень виправлень старіший за рівень виправлень поточної системи. Це поширена ознака втручання. (атестація: %1$s, система: %2$s)</string>
+    <string name="vbmeta_mismatch">Невідповідність хешу Verified Boot</string>
+    <string name="vbmeta_mismatch_summary">Підтверджений хеш Verified Boot не збігається з vbmeta digest поточної системи. Це вагома ознака підробленої або повторно використаної атестації.</string>
+    <string name="vbmeta_missing">Хеш Verified Boot відсутній</string>
+    <string name="vbmeta_missing_summary">Пристрій повідомляє про порожній або повністю нульовий vbmeta digest, тому стан завантаження ніколи не був підтверджений.</string>
+    <string name="software_attestation">Програмна атестація</string>
+    <string name="software_attestation_summary">Цей ключ не захищений апаратно. Атестацію було створено програмним способом без апаратного кореня довіри.</string>
+    <string name="verified_boot_key_suspicious">Недійсний ключ Verified Boot</string>
+    <string name="verified_boot_key_suspicious_summary">Ключ Verified Boot складається лише з нулів, що очікується лише для розблокованого або неперевіреного завантажувача. Це вагома ознака втручання.</string>
 
     <string name="cert_chain">Ланцюжок сертифікатів</string>
     <string name="cert_chain_description">Ланцюжок сертифікатів — це список сертифікатів, що використовуються для автентифікації ключа. Ланцюжок починається з сертифіката, пов\'язаного з цим ключем, і кожен сертифікат підписаний наступним у ланцюжку. Ланцюжок закінчується кореневим сертифікатом, і довіра до атестації залежить від кореневого сертифіката ланцюжка.</string>
@@ -135,6 +145,11 @@
     Непрозорий ідентифікатор для цієї реалізації IRemotelyProvisionedComponent.
     Кожна реалізація повинна мати відмінний ідентифікатор від усіх інших реалізацій, і він має бути узгодженим на всіх пристроях.
     </string>
+    <string name="rpc_eek_curve">Крива EEK</string>
+    <string name="rpc_eek_curve_description">
+    Крива, що використовується для перевірки ланцюжка сертифікатів Endpoint Encryption Key (EEK) і узгодження GEEK для шифрування ProtectedData.
+    Використовується лише у потоці CSR V1/V2; у V3 EEK повністю вилучено.
+    </string>
     <string name="rkp_device_info">Інформація про пристрій</string>
     <string name="rkp_device_info_description">
     Інформація про пристрій містить дані про пристрій, підписані IRemotelyProvisionedComponent HAL.
@@ -142,12 +157,23 @@
     створений екземпляром IRemotelyProvisionedComponent HAL, надходить від очікуваного пристрою
     на основі значень, спочатку завантажених під час виготовлення пристрою на заводі.
     </string>
+    <string name="rkp_dice_chain">Ланцюжок сертифікатів DICE</string>
+    <string name="rkp_dice_chain_description">
+    Ланцюжок DICE відображає етапи завантаження пристрою.
+    Кожен запис вимірює код і конфігурацію етапу завантаження та підписується ключем, похідним від попереднього етапу.
+    Дегенеративний ланцюжок містить лише один самопідписаний запис і не містить вимірювань етапів завантаження.
+    </string>
+    <string name="dice_chain_valid">Ланцюжок DICE перевірено</string>
+    <string name="dice_chain_valid_summary">Кожен запис у ланцюжку DICE правильно підписаний ключем попереднього етапу завантаження.</string>
+    <string name="dice_chain_degenerate">Дегенеративний ланцюжок DICE</string>
+    <string name="dice_chain_degenerate_summary">Ланцюжок DICE складається з одного самопідписаного запису. Підпис є дійсним, але вимірювання етапів завантаження відсутні.</string>
+    <string name="dice_chain_invalid">Недійсний підпис ланцюжка DICE</string>
+    <string name="dice_chain_invalid_summary">Не вдалося перевірити підпис у ланцюжку DICE за ключем попереднього етапу. Ланцюжок може бути підробленим або пошкодженим.</string>
     <string name="rkp_hostname">Ім\'я хоста віддаленого надання</string>
     <string name="rkp_hostname_empty">Віддалене надання ключів вимкнено</string>
 
     <string name="attestation">Атестація</string>
     <string name="attestation_version_description"><![CDATA[<font face="sans-serif-medium">Версія:</font><br>Версія функції атестації ключів.]]></string>
-    <string name="keymaster" translatable="false">Keymaster / KeyMint</string>
     <string name="keymaster_version_description"><![CDATA[<font face="sans-serif-medium">Версія:</font><br>Версія рівня апаратної абстракції (HAL) Keymaster або KeyMint.]]></string>
     <string name="security_level_description"><![CDATA[<font face="sans-serif-medium">Рівень безпеки:</font><br>Ця структура даних вказує на ступінь захисту програмної функції, такої як пара ключів, залежно від її розташування на пристрої.<p><ul><li gap="8sp"><font face="sans-serif-medium">Програмне забезпечення</font><br>Логіка створення та керування функцією реалізована в системі Android. Для цілей створення та зберігання пар ключів це розташування є менш безпечним, ніж TEE, але більш безпечним, ніж простір процесів вашого додатка.</li><li gap="8sp"><font face="sans-serif-medium">Довірене середовище</font><br>Логіка створення та керування функцією реалізована в захищеному апаратному забезпеченні, такому як TEE. Для цілей створення та зберігання пар ключів це розташування є більш безпечним, оскільки захищене апаратне забезпечення є дуже стійким до віддаленого злому.</li><li gap="8sp"><font face="sans-serif-medium">StrongBox</font><br>Логіка створення та керування функцією реалізована у спеціальному <a href="https://developer.android.com/training/articles/keystore#HardwareSecurityModule">апаратному модулі безпеки</a>. Для цілей створення та зберігання пар ключів це розташування є більш безпечним, оскільки воно дуже стійке до віддаленого злому та апаратних атак на модуль.</li></ul>]]></string>
     <string name="attestation_summary_format">Версія: %1$s\nРівень безпеки: %2$s</string>
@@ -161,9 +187,7 @@
     <string name="security_level_trusted_environment">Довірене середовище</string>
     <string name="security_level_strongbox">StrongBox</string>
 
-    <string name="sw_enforced" translatable="false">SW</string>
     <string name="sw_enforced_description"><![CDATA[Цей елемент застосовується системою Android, а не апаратним забезпеченням пристрою.]]></string>
-    <string name="tee_enforced" translatable="false">HW</string>
     <string name="tee_enforced_description"><![CDATA[Цей елемент застосовується апаратною частиною пристрою.]]></string>
 
     <string name="authorization_list">Список авторизації</string>

@@ -5,4 +5,7 @@
     <string name="github_url" translatable="false">https://github.com/vvb2060/KeyAttestation</string>
     <string name="shizuku_url" translatable="false">https://shizuku.rikka.app</string>
     <string name="license" translatable="false">Apache License 2.0</string>
+	<string name="keymaster" translatable="false">Keymaster / KeyMint</string>
+	<string name="sw_enforced" translatable="false">SW</string>
+	<string name="tee_enforced" translatable="false">HW</string>
 </resources>

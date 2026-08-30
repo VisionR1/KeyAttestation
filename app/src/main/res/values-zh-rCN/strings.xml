@@ -42,6 +42,16 @@
     <string name="knox_root_cert_summary">Knox 认证使用三星认证密钥（SAK）签名。</string>
     <string name="oem_root_cert">设备制造商的根证书</string>
     <string name="oem_root_cert_summary">此设备信任该根证书，但它可能不被其它人信任。</string>
+    <string name="patch_level_outdated">证明补丁级别已过期</string>
+    <string name="patch_level_outdated_summary">证明中的补丁级别早于当前运行系统的补丁级别。这通常表明设备已被篡改。（证明：%1$s，系统：%2$s）</string>
+    <string name="vbmeta_mismatch">Verified Boot 哈希不匹配</string>
+    <string name="vbmeta_mismatch_summary">证明中的 Verified Boot 哈希与当前系统的 vbmeta 摘要不匹配。这强烈表明证明可能被伪造或重放。</string>
+    <string name="vbmeta_missing">缺少 Verified Boot 哈希</string>
+    <string name="vbmeta_missing_summary">设备报告的 vbmeta 摘要为空或全为零，因此启动状态从未经过证明。</string>
+    <string name="software_attestation">软件证明</string>
+    <string name="software_attestation_summary">此密钥并非由硬件支持。该证明完全由软件生成，没有硬件信任根。</string>
+    <string name="verified_boot_key_suspicious">Verified Boot 密钥无效</string>
+    <string name="verified_boot_key_suspicious_summary">Verified Boot 密钥全部由零组成，这通常只会出现在引导加载程序已解锁或未验证的情况下。这强烈表明设备可能已被篡改。</string>
 
     <string name="cert_chain">证书链</string>
     <string name="cert_chain_description">证书链是用于验证密钥的证书列表。从该密钥的证书开始，每个证书均由链中下一个证书签名，到根证书为止。认证的可信度取决于证书链的根证书。</string>
@@ -135,6 +145,11 @@
     远程配置组件实现的不透明标识符。
     每个实现必须具有与所有其他实现不同的标识符，并且在所有设备上保持一致。
     </string>
+    <string name="rpc_eek_curve">EEK 曲线</string>
+    <string name="rpc_eek_curve_description">
+    用于验证 Endpoint Encryption Key（EEK）证书链并协商 GEEK 以加密 ProtectedData 的曲线。
+    仅用于 V1/V2 CSR 流程；V3 已完全移除 EEK。
+    </string>
     <string name="rkp_device_info">设备信息</string>
     <string name="rkp_device_info_description">
     由远程配置组件签名的设备相关信息。
@@ -142,6 +157,18 @@
     与工厂制造设备时上传的值对比，
     来验证远程配置组件实例生成的证书签名请求是否来自预期的设备。
     </string>
+    <string name="rkp_dice_chain">DICE 证书链</string>
+    <string name="rkp_dice_chain_description">
+    DICE 链反映了设备的启动阶段。
+    每个条目都会测量某个启动阶段的代码和配置，并由上一阶段派生的密钥签名。
+    退化链仅包含一个自签名条目，不包含任何启动阶段测量信息。
+    </string>
+    <string name="dice_chain_valid">DICE 链已验证</string>
+    <string name="dice_chain_valid_summary">DICE 链中的每个条目均已由上一启动阶段的密钥正确签名。</string>
+    <string name="dice_chain_degenerate">退化的 DICE 链</string>
+    <string name="dice_chain_degenerate_summary">DICE 链仅包含一个自签名条目。其签名有效，但不包含任何启动阶段测量信息。</string>
+    <string name="dice_chain_invalid">DICE 链签名无效</string>
+    <string name="dice_chain_invalid_summary">DICE 链中的某个签名无法通过上一阶段的密钥验证。该链可能已被伪造或损坏。</string>
     <string name="rkp_hostname">远程配置服务器主机名</string>
     <string name="rkp_hostname_empty">远程密钥配置已禁用</string>
 
@@ -188,6 +215,7 @@
     <string name="authorization_list_origin">来源</string>
     <string name="authorization_list_rollbackResistant">抗回滚</string>
     <string name="authorization_list_rootOfTrust">信任根</string>
+	<string name="copied_to_clipboard">已复制到剪贴板！</string>
     <string name="authorization_list_osVersion">系统版本</string>
     <string name="authorization_list_osPatchLevel">系统补丁版本</string>
     <string name="authorization_list_attestationApplicationId">应用 ID</string>

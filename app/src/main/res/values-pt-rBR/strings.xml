@@ -42,6 +42,16 @@
     <string name="knox_root_cert_summary">O atestado Knox é assinado usando a chave de atestado Samsung (SAK).</string>
     <string name="oem_root_cert">Certificado root OEM</string>
     <string name="oem_root_cert_summary">Este dispositivo confia neste certificado root, mas pode não ser confiável para outras pessoas.</string>
+    <string name="patch_level_outdated">Nível de patch da atestação desatualizado</string>
+    <string name="patch_level_outdated_summary">O nível de patch atestado é mais antigo que o nível de patch do sistema em execução. Este é um sinal comum de adulteração. (atestação: %1$s, sistema: %2$s)</string>
+    <string name="vbmeta_mismatch">Hash do Verified Boot incompatível</string>
+    <string name="vbmeta_mismatch_summary">O hash do Verified Boot atestado não corresponde ao resumo (digest) vbmeta do sistema em execução. Este é um forte sinal de uma atestação falsificada ou reproduzida.</string>
+    <string name="vbmeta_missing">Hash do Verified Boot ausente</string>
+    <string name="vbmeta_missing_summary">O dispositivo informa um digest vbmeta vazio ou composto apenas por zeros; portanto, o estado de inicialização nunca foi atestado.</string>
+    <string name="software_attestation">Atestação por software</string>
+    <string name="software_attestation_summary">Esta chave não é protegida por hardware. A atestação foi produzida por software, sem uma raiz de confiança em hardware.</string>
+    <string name="verified_boot_key_suspicious">Chave do Verified Boot inválida</string>
+    <string name="verified_boot_key_suspicious_summary">A chave do Verified Boot contém apenas zeros, algo esperado apenas quando o bootloader está desbloqueado ou não verificado. Este é um forte sinal de adulteração.</string>
 
     <string name="cert_chain">Cadeia de certificados</string>
     <string name="cert_chain_description">A cadeia de certificados é uma lista de certificados usados para autenticar uma chave. A cadeia começa com o certificado associado a essa chave, e cada certificado é assinado pelo próximo na cadeia. A cadeia termina com um certificado root, e a confiabilidade do atestado depende do certificado root da cadeia.</string>
@@ -135,6 +145,11 @@
     Um identificador opaco para esta implementação de IRemotelyProvisionedComponent.
     Cada implementação deve ter um identificador distinto de todas as outras implementações, e deve ser consistente em todos os dispositivos.
     </string>
+    <string name="rpc_eek_curve">Curva EEK</string>
+    <string name="rpc_eek_curve_description">
+    A curva usada para validar a cadeia de certificados da Endpoint Encryption Key (EEK) e negociar a GEEK para criptografar os ProtectedData.
+    Usada apenas pelo fluxo CSR V1/V2; a V3 removeu completamente a EEK.
+    </string>
     <string name="rkp_device_info">Informações do dispositivo</string>
     <string name="rkp_device_info_description">
     As informações do dispositivo contêm informações sobre o dispositivo assinado pelo HAL IRemotelyProvisionedComponent.
@@ -142,6 +157,18 @@
     criada por uma instância HAL IRemotelyProvisionedComponent, vem do dispositivo esperado
     com base nos valores carregados inicialmente durante a fabricação do dispositivo na fábrica.
     </string>
+    <string name="rkp_dice_chain">Cadeia de certificados DICE</string>
+    <string name="rkp_dice_chain_description">
+    A cadeia DICE reflete os estágios de inicialização do dispositivo.
+    Cada entrada mede o código e a configuração de um estágio de inicialização e é assinada por uma chave derivada do estágio anterior.
+    Uma cadeia degenerada contém apenas uma entrada autoassinada e não inclui medições dos estágios de inicialização.
+    </string>
+    <string name="dice_chain_valid">Cadeia DICE verificada</string>
+    <string name="dice_chain_valid_summary">Todas as entradas da cadeia DICE estão corretamente assinadas pela chave do estágio de inicialização anterior.</string>
+    <string name="dice_chain_degenerate">Cadeia DICE degenerada</string>
+    <string name="dice_chain_degenerate_summary">A cadeia DICE contém apenas uma entrada autoassinada. Sua assinatura é válida, mas não inclui medições dos estágios de inicialização.</string>
+    <string name="dice_chain_invalid">Assinatura da cadeia DICE inválida</string>
+    <string name="dice_chain_invalid_summary">Uma assinatura na cadeia DICE falhou na verificação em relação à chave do estágio anterior. A cadeia pode ter sido falsificada ou corrompida.</string>
     <string name="rkp_hostname">Nome do host de provisionamento remoto</string>
     <string name="rkp_hostname_empty">Provisionamento remoto de chave desativado</string>
 
@@ -188,6 +215,7 @@
     <string name="authorization_list_origin">Origem</string>
     <string name="authorization_list_rollbackResistant">Resistente à rollback</string>
     <string name="authorization_list_rootOfTrust">Root de confiança</string>
+	<string name="copied_to_clipboard">Copiado para a área de transferência!</string>
     <string name="authorization_list_osVersion">Versão do OS</string>
     <string name="authorization_list_osPatchLevel">Nível de patch do OS</string>
     <string name="authorization_list_attestationApplicationId">ID do app</string>

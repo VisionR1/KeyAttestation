@@ -42,6 +42,16 @@
     <string name="knox_root_cert_summary">Knox 認證使用三星認證金鑰（SAK）簽章。</string>
     <string name="oem_root_cert">裝置製造商的根憑證</string>
     <string name="oem_root_cert_summary">此裝置信任此根憑證，但它可能不被其它人信任。</string>
+    <string name="patch_level_outdated">證明修補程式層級已過期</string>
+    <string name="patch_level_outdated_summary">證明中的修補程式層級早於目前執行系統的修補程式層級。這通常表示裝置可能已遭到竄改。（證明：%1$s，系統：%2$s）</string>
+    <string name="vbmeta_mismatch">Verified Boot 雜湊不符</string>
+    <string name="vbmeta_mismatch_summary">證明中的 Verified Boot 雜湊與目前系統的 vbmeta 摘要不符。這是偽造或重放證明的強烈跡象。</string>
+    <string name="vbmeta_missing">缺少 Verified Boot 雜湊</string>
+    <string name="vbmeta_missing_summary">裝置回報的 vbmeta 摘要為空或全部為零，因此開機狀態從未經過證明。</string>
+    <string name="software_attestation">軟體證明</string>
+    <string name="software_attestation_summary">此金鑰並非由硬體支援。此證明完全由軟體產生，沒有硬體信任根。</string>
+    <string name="verified_boot_key_suspicious">Verified Boot 金鑰無效</string>
+    <string name="verified_boot_key_suspicious_summary">Verified Boot 金鑰全部為零，這通常只會出現在開機載入程式已解除鎖定或未驗證的情況下。這是裝置遭到竄改的強烈跡象。</string>
 
     <string name="cert_chain">憑證鏈</string>
     <string name="cert_chain_description">憑證鏈是用於驗證金鑰的憑證列表。從這個金鑰的憑證開始，每個憑證均由鏈中下一個憑證簽章，到根憑證為止。認證的可信度取決於憑證鏈的根憑證。</string>
@@ -135,6 +145,11 @@
     遠端配置組件實作的不透明識別碼。
     每個實作必須具有與所有其他實作不同的識別碼，並且在所有裝置上保持一致。
     </string>
+    <string name="rpc_eek_curve">EEK 曲線</string>
+    <string name="rpc_eek_curve_description">
+    用於驗證 Endpoint Encryption Key（EEK）憑證鏈並協商 GEEK 以加密 ProtectedData 的曲線。
+    僅用於 V1/V2 CSR 流程；V3 已完全移除 EEK。
+    </string>
     <string name="rkp_device_info">裝置資訊</string>
     <string name="rkp_device_info_description">
     由遠端配置組件簽章的裝置相關資訊。
@@ -142,6 +157,18 @@
     與出廠製造裝置時上傳的值對比，
     來驗證遠端配置組件實例產生的憑證簽章請求是否來自預期的裝置。
     </string>
+    <string name="rkp_dice_chain">DICE 憑證鏈</string>
+    <string name="rkp_dice_chain_description">
+    DICE 鏈反映裝置的開機階段。
+    每個項目都會測量某個開機階段的程式碼與設定，並由前一階段衍生的金鑰簽署。
+    退化鏈僅包含一個自我簽署的項目，不包含任何開機階段測量資訊。
+    </string>
+    <string name="dice_chain_valid">DICE 鏈已驗證</string>
+    <string name="dice_chain_valid_summary">DICE 鏈中的每個項目均已由前一開機階段的金鑰正確簽署。</string>
+    <string name="dice_chain_degenerate">退化的 DICE 鏈</string>
+    <string name="dice_chain_degenerate_summary">DICE 鏈僅包含一個自我簽署的項目。其簽章有效，但不包含任何開機階段測量資訊。</string>
+    <string name="dice_chain_invalid">DICE 鏈簽章無效</string>
+    <string name="dice_chain_invalid_summary">DICE 鏈中的某個簽章無法通過前一階段金鑰驗證。該鏈可能已遭偽造或損毀。</string>
     <string name="rkp_hostname">遠端配置伺服器主機名</string>
     <string name="rkp_hostname_empty">遠端金鑰配置已停用</string>
 
@@ -188,6 +215,7 @@
     <string name="authorization_list_origin">來源</string>
     <string name="authorization_list_rollbackResistant">抗回滾</string>
     <string name="authorization_list_rootOfTrust">信任根</string>
+	<string name="copied_to_clipboard">已複製到剪貼簿！</string>
     <string name="authorization_list_osVersion">系統版本</string>
     <string name="authorization_list_osPatchLevel">系統安全性修補版本</string>
     <string name="authorization_list_attestationApplicationId">應用識別碼</string>

@@ -9,4 +9,5 @@
     <string name="color_pink">Ροζ</string>
     <string name="color_purple">Μωβ</string>
     <string name="color_red">Κόκκινο</string>
+    <string name="color_dynamic">Δυναμικό (Material You)</string>
 </resources>

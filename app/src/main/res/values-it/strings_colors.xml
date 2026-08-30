@@ -9,4 +9,5 @@
     <string name="color_pink">Rosa</string>
     <string name="color_purple">Viola</string>
     <string name="color_red">Rosso</string>
+    <string name="color_dynamic">Dinamico (Material You)</string>
 </resources>

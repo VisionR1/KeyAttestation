@@ -42,6 +42,16 @@
     <string name="knox_root_cert_summary">L\'attestazione Knox è firmata utilizzando la chiave di attestazione Samsung (SAK).</string>
     <string name="oem_root_cert">Certificato radice OEM</string>
     <string name="oem_root_cert_summary">Questo dispositivo si fida di questo certificato radice, ma potrebbe non essere considerato attendibile da altri.</string>
+    <string name="patch_level_outdated">Livello patch di attestazione obsoleto</string>
+    <string name="patch_level_outdated_summary">Il livello della patch attestato è inferiore a quello del sistema in uso. È un segno comune di manomissione. (attestazione: %1$s, sistema: %2$s)</string>
+    <string name="vbmeta_mismatch">Mancata corrispondenza hash Verified Boot</string>
+    <string name="vbmeta_mismatch_summary">L\'hash Verified Boot attestato non corrisponde al digest vbmeta del sistema in uso. È un chiaro segnale di un\'attestazione contraffatta o replicata.</string>
+    <string name="vbmeta_missing">Hash Verified Boot mancante</string>
+    <string name="vbmeta_missing_summary">Il dispositivo riporta un digest vbmeta vuoto o composto solo da zeri, pertanto lo stato del boot non è mai stato attestato.</string>
+    <string name="software_attestation">Attestazione software</string>
+    <string name="software_attestation_summary">Questa chiave non è basata su hardware. L\'attestazione è stata generata via software senza una radice di attendibilità hardware (root of trust).</string>
+    <string name="verified_boot_key_suspicious">Chiave Verified Boot non valida</string>
+    <string name="verified_boot_key_suspicious_summary">La chiave Verified Boot è composta solo da zeri, condizione prevista solo in caso di bootloader sbloccato o non verificato. È un chiaro segnale di manomissione.</string>
 
     <string name="cert_chain">Catena di certificati</string>
     <string name="cert_chain_description">La catena di certificati è un elenco di certificati utilizzati per autenticare una chiave. La catena inizia con il certificato associato a quella chiave e ogni certificato è firmato dal successivo nella catena. La catena termina con un certificato radice e l\'affidabilità dell\'attestazione dipende dal certificato radice della catena.</string>
@@ -67,12 +77,12 @@
     <string name="revocation_status_offline_cached">⚠️ Dispositivo offline - CRL in cache</string>
     <string name="revocation_status_offline_bundled">❌ Offline - CRL non aggiornata</string>
 
-	<string name="error_attest_rsa_key_ec_only">Nessuna catena di certificati RSA</string>
-    <string name="error_attest_rsa_key_ec_only_summary"><![CDATA[Il file contiene solo la catena di certificati EC.<br><br>Per visualizzarla, disabilita Attesta chiave RSA.]]></string>
+    <string name="error_attest_rsa_key_ec_only">Nessuna catena di certificati RSA</string>
+    <string name="error_attest_rsa_key_ec_only_summary"><![CDATA[Il file contiene solo una catena di certificati EC.<br><br>Per visualizzare, disabilita Attesta chiave RSA.]]></string>
     <string name="error_attest_ec_key_rsa_only">Nessuna catena di certificati EC</string>
-    <string name="error_attest_ec_key_rsa_only_summary"><![CDATA[Il file contiene solo la catena di certificati RSA.<br><br>Per visualizzarla, abilita Attesta chiave RSA.]]></string>
+    <string name="error_attest_ec_key_rsa_only_summary"><![CDATA[Il file contiene solo una catena di certificati RSA.<br><br>Per visualizzare, abilita Attesta chiave RSA.]]></string>
     <string name="error_invalid_file">Impossibile analizzare il file</string>
-    <string name="error_invalid_file_summary"><![CDATA[Possibili motivi:<br><br>• File danneggiato o manomesso<br><br>• Potrebbe contenere caratteri non validi<br><br>• Formato di file non supportato]]></string>
+    <string name="error_invalid_file_summary"><![CDATA[Possibili cause:<br><br>• File corrotto o manomesso<br><br>• Può contenere caratteri non validi<br><br>• Formato file non supportato]]></string>
 
     <string name="error_message_subtitle">Messaggi dettagliati:</string>
     <string name="error_unknown">Errore sconosciuto</string>
@@ -135,6 +145,11 @@
     Un identificatore opaco per questa implementazione IRemotelyProvisionedComponent.
     Ogni implementazione deve avere un identificatore distinto da tutte le altre implementazioni e deve essere coerente su tutti i dispositivi.
     </string>
+    <string name="rpc_eek_curve">Curva EEK</string>
+    <string name="rpc_eek_curve_description">
+	La curva utilizzata per convalidare la catena di certificati della chiave di crittografia dell\'endpoint (EEK) e negoziare la GEEK per la crittografia di ProtectedData. 
+    Utilizzata solo dal flusso CSR V1/V2; la versione V3 ha rimosso completamente l\'EEK.
+    </string>
     <string name="rkp_device_info">Informazioni dispositivo</string>
     <string name="rkp_device_info_description">
     Le informazioni sul dispositivo contengono dati sul dispositivo firmati dall\'HAL IRemotelyProvisionedComponent.
@@ -142,12 +157,23 @@
     creata da un\'istanza HAL IRemotelyProvisionedComponent, proviene dal dispositivo previsto
     in base ai valori caricati inizialmente durante la produzione del dispositivo in fabbrica.
     </string>
+    <string name="rkp_dice_chain">Catena di certificati DICE</string>
+    <string name="rkp_dice_chain_description">
+    La catena DICE rispecchia le fasi di avvio del dispositivo. 
+    Ogni voce misura il codice e la configurazione di una fase di avvio ed è firmata da una chiave derivata dalla fase precedente. 
+	Una catena degenerata contiene solo una singola voce auto-firmata e non trasporta misurazioni di avvio.
+	</string>
+    <string name="dice_chain_valid">Catena DICE verificata</string>
+    <string name="dice_chain_valid_summary">Ogni voce nella catena DICE è firmata correttamente dalla chiave della fase di avvio precedente.</string>
+    <string name="dice_chain_degenerate">Catena DICE degenerata</string>
+    <string name="dice_chain_degenerate_summary">La catena DICE consiste in una singola voce auto-firmata. La sua firma è valida ma non trasporta alcuna misurazione della fase di avvio.</string>
+    <string name="dice_chain_invalid">Firma catena DICE non valida</string>
+    <string name="dice_chain_invalid_summary">Impossibile verificare una firma nella catena DICE rispetto alla chiave della fase precedente. La catena potrebbe essere contraffatta o corrotta.</string>
     <string name="rkp_hostname">Hostname provisioning remoto</string>
     <string name="rkp_hostname_empty">Provisioning remoto delle chiavi disabilitato</string>
 
     <string name="attestation">Attestazione</string>
     <string name="attestation_version_description"><![CDATA[<font face="sans-serif-medium">Versione:</font><br>La versione della funzionalità di attestazione delle chiavi.]]></string>
-    <string name="keymaster" translatable="false">Keymaster / KeyMint</string>
     <string name="keymaster_version_description"><![CDATA[<font face="sans-serif-medium">Versione:</font><br>La versione del livello di astrazione hardware (HAL) Keymaster o KeyMint.]]></string>
     <string name="security_level_description"><![CDATA[<font face="sans-serif-medium">Livello di sicurezza:</font><br>Questa struttura dati indica il grado di protezione di una funzionalità software, come una coppia di chiavi, in base alla sua posizione sul dispositivo.<p><ul><li gap="8sp"><font face="sans-serif-medium">Software</font><br>La logica per creare e gestire la funzionalità è implementata nel sistema Android. Ai fini della creazione e dell\'archiviazione delle coppie di chiavi, questa posizione è meno sicura del TEE ma è più sicura dello spazio del processo dell\'app.</li><li gap="8sp"><font face="sans-serif-medium">TrustedEnvironment</font><br>La logica per creare e gestire la funzionalità è implementata in hardware sicuro, come un TEE. Ai fini della creazione e dell\'archiviazione delle coppie di chiavi, questa posizione è più sicura perché l\'hardware sicuro è altamente resistente ai compromessi remoti.</li><li gap="8sp"><font face="sans-serif-medium">StrongBox</font><br>La logica per creare e gestire la funzionalità è implementata in un <a href="https://developer.android.com/training/articles/keystore#HardwareSecurityModule">modulo di sicurezza hardware</a> dedicato. Ai fini della creazione e dell\'archiviazione delle coppie di chiavi, questa posizione è più sicura perché è altamente resistente ai compromessi remoti e agli attacchi hardware contro il modulo.</li></ul>]]></string>
     <string name="attestation_summary_format">Versione: %1$s\nLivello di sicurezza: %2$s</string>
@@ -161,9 +187,7 @@
     <string name="security_level_trusted_environment">TrustedEnvironment</string>
     <string name="security_level_strongbox">StrongBox</string>
 
-    <string name="sw_enforced" translatable="false">SW</string>
     <string name="sw_enforced_description"><![CDATA[Questo elemento è applicato dal sistema Android, non dall\'hardware del dispositivo.]]></string>
-    <string name="tee_enforced" translatable="false">HW</string>
     <string name="tee_enforced_description"><![CDATA[Questo elemento è applicato dall\'hardware del dispositivo.]]></string>
 
     <string name="authorization_list">Elenco autorizzazioni</string>

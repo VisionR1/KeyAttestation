@@ -9,4 +9,5 @@
     <string name="color_pink">Рожевий</string>
     <string name="color_purple">Фіолетовий</string>
     <string name="color_red">Червоний</string>
+    <string name="color_dynamic">Динамічна (Material You)</string>
 </resources>

@@ -42,6 +42,16 @@
     <string name="knox_root_cert_summary">Η βεβαίωση Knox υπογράφεται χρησιμοποιώντας το κλειδί βεβαίωσης Samsung (SAK).</string>
     <string name="oem_root_cert">Πιστοποιητικό ρίζας OEM</string>
     <string name="oem_root_cert_summary">Αυτή η συσκευή εμπιστεύεται αυτό το πιστοποιητικό ρίζας, αλλά ενδέχεται να μην είναι αξιόπιστο από άλλους.</string>
+	<string name="patch_level_outdated">Μη ενημερωμένο επίπεδο ενημέρωσης βεβαίωσης</string>
+    <string name="patch_level_outdated_summary">Το επίπεδο ενημέρωσης της βεβαίωσης είναι παλαιότερο από το επίπεδο ενημέρωσης του τρέχοντος συστήματος. Αυτό αποτελεί συχνή ένδειξη παραποίησης. (βεβαίωση: %1$s, σύστημα: %2$s)</string>
+    <string name="vbmeta_mismatch">Ασυμφωνία hash Verified Boot</string>
+    <string name="vbmeta_mismatch_summary">Ο κατακερματισμός Verified Boot της βεβαίωσης δεν ταιριάζει με το vbmeta digest του τρέχοντος συστήματος. Αυτό αποτελεί ισχυρή ένδειξη πλαστογραφημένης ή επαναχρησιμοποιημένης βεβαίωσης.</string>
+    <string name="vbmeta_missing">Απουσία κατακερματισμού Verified Boot</string>
+    <string name="vbmeta_missing_summary">Η συσκευή αναφέρει κενό ή μηδενικό vbmeta digest, επομένως η κατάσταση εκκίνησης δεν βεβαιώθηκε ποτέ.</string>
+    <string name="software_attestation">Βεβαίωση λογισμικού</string>
+    <string name="software_attestation_summary">Αυτό το κλειδί δεν υποστηρίζεται από υλικό. Η βεβαίωση δημιουργήθηκε μέσω λογισμικού χωρίς υλική ρίζα εμπιστοσύνης.</string>
+    <string name="verified_boot_key_suspicious">Μη έγκυρο κλειδί Verified Boot</string>
+    <string name="verified_boot_key_suspicious_summary">Το κλειδί Verified Boot αποτελείται μόνο από μηδενικά, κάτι που αναμένεται μόνο όταν ο bootloader είναι ξεκλείδωτος ή μη επαληθευμένος. Αυτό αποτελεί ισχυρή ένδειξη παραποίησης.</string>
 
     <string name="cert_chain">Αλυσίδα πιστοποιητικών</string>
     <string name="cert_chain_description">Η αλυσίδα πιστοποιητικών είναι μια λίστα πιστοποιητικών που χρησιμοποιούνται για τον έλεγχο ταυτότητας ενός κλειδιού. Η αλυσίδα ξεκινά με το πιστοποιητικό που σχετίζεται με αυτό το κλειδί και κάθε πιστοποιητικό υπογράφεται από τον επόμενο στην αλυσίδα. Η αλυσίδα τελειώνει με πιστοποιητικό ρίζας και η αξιοπιστία της βεβαίωσης εξαρτάται από το πιστοποιητικό ρίζας της αλυσίδας.</string>
@@ -135,6 +145,11 @@
     Ένα αδιαφανές αναγνωριστικό για αυτήν την υλοποίηση IRemotelyProvisionedComponent.
     Κάθε υλοποίηση πρέπει να έχει ένα ξεχωριστό αναγνωριστικό από όλες τις άλλες υλοποιήσεις και πρέπει να είναι συνεπές σε όλες τις συσκευές.
     </string>
+	<string name="rpc_eek_curve">Καμπύλη EEK</string>
+    <string name="rpc_eek_curve_description">
+    Η καμπύλη που χρησιμοποιείται για την επικύρωση της αλυσίδας πιστοποιητικών του Endpoint Encryption Key (EEK) και τη διαπραγμάτευση του GEEK για την κρυπτογράφηση των ProtectedData.
+    Χρησιμοποιείται μόνο στη ροή CSR V1/V2· η V3 κατάργησε πλήρως το EEK.
+    </string>
     <string name="rkp_device_info">Πληροφορίες συσκευής</string>
     <string name="rkp_device_info_description">
     Οι πληροφορίες συσκευής περιέχουν πληροφορίες σχετικά με τη συσκευή που είναι υπογεγραμμένες από το IRemotelyProvisionedComponent HAL.
@@ -142,12 +157,23 @@
     που δημιουργήθηκε από μια παρουσία IRemotelyProvisionedComponent HAL προέρχεται από την αναμενόμενη συσκευή,
     με βάση τις τιμές που ανέβηκαν αρχικά κατά την κατασκευή της συσκευής στο εργοστάσιο.
     </string>
+	<string name="rkp_dice_chain">Αλυσίδα πιστοποιητικών DICE</string>
+    <string name="rkp_dice_chain_description">
+    Η αλυσίδα DICE αντικατοπτρίζει τα στάδια εκκίνησης της συσκευής.
+    Κάθε καταχώρηση μετρά τον κώδικα και τη διαμόρφωση ενός σταδίου εκκίνησης και υπογράφεται από κλειδί που προέρχεται από το προηγούμενο στάδιο.
+    Μια εκφυλισμένη αλυσίδα περιέχει μόνο μία αυτοϋπογεγραμμένη καταχώρηση και δεν περιλαμβάνει μετρήσεις των σταδίων εκκίνησης.
+    </string>
+    <string name="dice_chain_valid">Η αλυσίδα DICE επαληθεύτηκε</string>
+    <string name="dice_chain_valid_summary">Κάθε καταχώρηση στην αλυσίδα DICE έχει υπογραφεί σωστά με το κλειδί του προηγούμενου σταδίου εκκίνησης.</string>
+    <string name="dice_chain_degenerate">Εκφυλισμένη αλυσίδα DICE</string>
+    <string name="dice_chain_degenerate_summary">Η αλυσίδα DICE αποτελείται από μία μόνο αυτοϋπογεγραμμένη καταχώρηση. Η υπογραφή της είναι έγκυρη, αλλά δεν περιλαμβάνει μετρήσεις σταδίων εκκίνησης.</string>
+    <string name="dice_chain_invalid">Μη έγκυρη υπογραφή αλυσίδας DICE</string>
+    <string name="dice_chain_invalid_summary">Η επαλήθευση μίας υπογραφής στην αλυσίδα DICE απέτυχε σε σχέση με το κλειδί του προηγούμενου σταδίου. Η αλυσίδα ενδέχεται να είναι πλαστή ή αλλοιωμένη.</string>
     <string name="rkp_hostname">Όνομα κεντρικού υπολογιστή απομακρυσμένης παροχής</string>
     <string name="rkp_hostname_empty">Η απομακρυσμένη παροχή κλειδιού απενεργοποιήθηκε</string>
 
     <string name="attestation">Βεβαίωση</string>
     <string name="attestation_version_description"><![CDATA[<font face="sans-serif-medium">Έκδοση:</font><br>Η έκδοση της βασικής λειτουργίας πιστοποίησης.]]></string>
-    <string name="keymaster" translatable="false">Keymaster / KeyMint</string>
     <string name="keymaster_version_description"><![CDATA[<font face="sans-serif-medium">Έκδοση:</font><br>Η έκδοση επιπέδου αφαίρεσης υλικού του Keymaster ή KeyMintr (HAL).]]></string>
     <string name="security_level_description"><![CDATA[<font face="sans-serif-medium">Επίπεδο ασφαλείας:</font><br>Αυτή η δομή δεδομένων υποδεικνύει τον βαθμό στον οποίο ένα χαρακτηριστικό λογισμικού, όπως ένα ζεύγος κλειδιών, προστατεύεται με βάση τη θέση του στη συσκευή.<p><ul><li gap="8sp"><font face="sans-serif-medium">Λογισμικό</font><br>Η λογική δημιουργίας και διαχείρισης της δυνατότητας υλοποιείται στο σύστημα Android. Για τους σκοπούς της δημιουργίας και αποθήκευσης ζευγών κλειδιών, αυτή η τοποθεσία είναι λιγότερο ασφαλής από το TEE, αλλά είναι πιο ασφαλής από τον χώρο διεργασιών της εφαρμογής σας.</li><li gap="8sp"><font face="sans-serif-medium">Αξιόπιστο Περιβάλλον</font><br>Η λογική για τη δημιουργία και τη διαχείριση της δυνατότητας υλοποιείται σε ασφαλές υλικό, όπως ένα TEE. Για τους σκοπούς της δημιουργίας και αποθήκευσης ζευγών κλειδιών, αυτή η τοποθεσία είναι πιο ασφαλής, επειδή το ασφαλές υλικό είναι εξαιρετικά ανθεκτικό σε απομακρυσμένο συμβιβασμό.</li><li gap="8sp"><font face="sans-serif-medium">StrongBox</font><br>Η λογική για τη δημιουργία και τη διαχείριση της δυνατότητας υλοποιείται σε μια ειδική <a href="https://developer.android.com/training/articles/keystore#HardwareSecurityModule">Μονάδα ασφαλείας υλικού</a>. Για τους σκοπούς της δημιουργίας και αποθήκευσης ζευγών κλειδιών, αυτή η τοποθεσία είναι πιο ασφαλής, επειδή είναι εξαιρετικά ανθεκτική σε απομακρυσμένους παραβιασμούς και επιθέσεις υλικού κατά της μονάδας.</li></ul>]]></string>
     <string name="attestation_summary_format">Έκδοση: %1$s\nΕπίπεδο ασφαλείας: %2$s</string>
@@ -161,9 +187,7 @@
     <string name="security_level_trusted_environment">Αξιόπιστο Περιβάλλον</string>
     <string name="security_level_strongbox">StrongBox</string>
 
-    <string name="sw_enforced" translatable="false">SW</string>
     <string name="sw_enforced_description"><![CDATA[Αυτό το στοιχείο επιβάλλεται από το σύστημα Android και όχι από το υλικό της συσκευής.]]></string>
-    <string name="tee_enforced" translatable="false">HW</string>
     <string name="tee_enforced_description"><![CDATA[Αυτό το στοιχείο επιβάλλεται από το υλικό της συσκευής.]]></string>
 
     <string name="authorization_list">Λίστα εξουσιοδοτήσεων</string>

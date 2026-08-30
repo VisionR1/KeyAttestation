@@ -174,7 +174,6 @@
 
     <string name="attestation">Attestation</string>
     <string name="attestation_version_description"><![CDATA[<font face="sans-serif-medium">Version:</font><br>The version of the key attestation feature.]]></string>
-    <string name="keymaster" translatable="false">Keymaster / KeyMint</string>
     <string name="keymaster_version_description"><![CDATA[<font face="sans-serif-medium">Version:</font><br>The version of the Keymaster or KeyMint hardware abstraction layer (HAL).]]></string>
     <string name="security_level_description"><![CDATA[<font face="sans-serif-medium">Security level:</font><br>This data structure indicates the extent to which a software feature, such as a key pair, is protected based on its location on the device.<p><ul><li gap="8sp"><font face="sans-serif-medium">Software</font><br>The logic for creating and managing the feature is implemented in the Android system. For the purposes of creating and storing key pairs, this location is less secure than the TEE but is more secure than your app\'s process space.</li><li gap="8sp"><font face="sans-serif-medium">TrustedEnvironment</font><br>The logic for creating and managing the feature is implemented in secure hardware, such as a TEE. For the purposes of creating and storing key pairs, this location is more secure because secure hardware is highly resistant to remote compromise.</li><li gap="8sp"><font face="sans-serif-medium">StrongBox</font><br>The logic for creating and managing the feature is implemented in a dedicated <a href="https://developer.android.com/training/articles/keystore#HardwareSecurityModule">Hardware security module</a>. For the purposes of creating and storing key pairs, this location is more secure because it is highly resistant to remote compromise and hardware attacks against the module.</li></ul>]]></string>
     <string name="attestation_summary_format">Version: %1$s\nSecurity level: %2$s</string>
@@ -188,9 +187,7 @@
     <string name="security_level_trusted_environment">TrustedEnvironment</string>
     <string name="security_level_strongbox">StrongBox</string>
 
-    <string name="sw_enforced" translatable="false">SW</string>
     <string name="sw_enforced_description"><![CDATA[This item is enforced by the Android system, not by the device\'s hardware.]]></string>
-    <string name="tee_enforced" translatable="false">HW</string>
     <string name="tee_enforced_description"><![CDATA[This item is enforced by the device\'s hardware.]]></string>
 
     <string name="authorization_list">Authorization list</string>
