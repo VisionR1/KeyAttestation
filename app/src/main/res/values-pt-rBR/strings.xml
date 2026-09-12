@@ -215,7 +215,7 @@
     <string name="authorization_list_origin">Origem</string>
     <string name="authorization_list_rollbackResistant">Resistente à rollback</string>
     <string name="authorization_list_rootOfTrust">Root de confiança</string>
-	<string name="copied_to_clipboard">Copiado para a área de transferência!</string>
+	<string name="copied_verifiedBootHash_to_clipboard">verifiedBootHash copiado para a área de transferência!</string>
     <string name="authorization_list_osVersion">Versão do OS</string>
     <string name="authorization_list_osPatchLevel">Nível de patch do OS</string>
     <string name="authorization_list_attestationApplicationId">ID do app</string>

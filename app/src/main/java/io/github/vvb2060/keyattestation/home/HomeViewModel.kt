@@ -182,6 +182,9 @@ class HomeViewModel(
     }
 
     fun load(reset: Boolean = false, showLoading: Boolean = true) = AppApplication.executor.execute {
+	    if (reset) {
+            io.github.vvb2060.keyattestation.util.CrlManager.forceSync()
+        }
         if (showLoading) {
             attestationData.postValue(Resource.loading(null))
         }

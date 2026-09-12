@@ -62,4 +62,8 @@ object CrlManager {
             }
         }
     }
+    fun forceSync() {
+        lastObservedSource = null
+        sync()
+    }
 }
