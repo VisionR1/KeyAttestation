@@ -215,6 +215,7 @@
     <string name="authorization_list_origin">來源</string>
     <string name="authorization_list_rollbackResistant">抗回滾</string>
     <string name="authorization_list_rootOfTrust">信任根</string>
+	<string name="copy_verifiedBootHash">複製 verifiedBootHash</string>
 	<string name="copied_verifiedBootHash_to_clipboard">verifiedBootHash 已複製到剪貼簿！</string>
     <string name="authorization_list_osVersion">系統版本</string>
     <string name="authorization_list_osPatchLevel">系統安全性修補版本</string>

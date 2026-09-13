@@ -215,6 +215,7 @@
     <string name="authorization_list_origin">Origine</string>
     <string name="authorization_list_rollbackResistant">Resistente al rollback</string>
     <string name="authorization_list_rootOfTrust">Root of trust</string>
+	<string name="copy_verifiedBootHash">Copia verifiedBootHash</string>
     <string name="copied_verifiedBootHash_to_clipboard">verifiedBootHash copiato negli appunti!</string>
     <string name="authorization_list_osVersion">Versione OS</string>
     <string name="authorization_list_osPatchLevel">Livello patch OS</string>

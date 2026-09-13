@@ -184,6 +184,42 @@ class HomeFragment : AppFragment(), HomeAdapter.Listener, MenuProvider {
                 .show()
             return
         }
+		
+		if (data is AuthorizationItemData && data.data.contains("verifiedBootHash:")) {
+            val dialog = AlertDialog.Builder(context)
+                .setTitle(data.title)
+                .setMessage(data.getMessage(context))
+                .setNeutralButton(R.string.copy_verifiedBootHash) { _, _ ->
+                    val lines = data.data.lines()
+                    for (line in lines) {
+                        if (line.startsWith("verifiedBootHash:")) {
+                            val verifiedBootHash = line.substringAfter(":").trim()
+                            val clipboardManager =
+                                context.getSystemService(android.content.Context.CLIPBOARD_SERVICE) as android.content.ClipboardManager
+                            clipboardManager.setPrimaryClip(
+                                android.content.ClipData.newPlainText(
+                                    "verifiedBootHash",
+                                    verifiedBootHash
+                                )
+                            )
+                            AppApplication.toast(getString(R.string.copied_verifiedBootHash_to_clipboard))
+                            break
+                        }
+                    }
+                }
+                .setPositiveButton(android.R.string.ok, null)
+                .show()
+
+            dialog.getButton(AlertDialog.BUTTON_NEUTRAL)?.apply {
+                isAllCaps = false
+                textSize = 13f
+            }
+            dialog.getButton(AlertDialog.BUTTON_POSITIVE)?.apply {
+                isAllCaps = false
+                textSize = 13f
+            }
+            return
+        }
 
         AlertDialogFragment.Builder(context)
             .title(data.title)
