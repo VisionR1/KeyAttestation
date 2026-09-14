@@ -30,8 +30,7 @@ class HeaderData(
     override val title: Int,
     override val description: Int,
     val icon: Int,
-    val color: Int,
-    vararg val formatArgs: Any
+    val color: Int
 ) : Data()
 
 class AuthorizationItemData(

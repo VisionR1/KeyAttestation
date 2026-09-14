@@ -42,12 +42,6 @@
     <string name="knox_root_cert_summary">Η βεβαίωση Knox υπογράφεται χρησιμοποιώντας το κλειδί βεβαίωσης Samsung (SAK).</string>
     <string name="oem_root_cert">Πιστοποιητικό ρίζας OEM</string>
     <string name="oem_root_cert_summary">Αυτή η συσκευή εμπιστεύεται αυτό το πιστοποιητικό ρίζας, αλλά ενδέχεται να μην είναι αξιόπιστο από άλλους.</string>
-	<string name="patch_level_outdated">Μη ενημερωμένο επίπεδο ενημέρωσης βεβαίωσης</string>
-    <string name="patch_level_outdated_summary">Το επίπεδο ενημέρωσης της βεβαίωσης είναι παλαιότερο από το επίπεδο ενημέρωσης του τρέχοντος συστήματος. Αυτό αποτελεί συχνή ένδειξη παραποίησης. (βεβαίωση: %1$s, σύστημα: %2$s)</string>
-    <string name="vbmeta_mismatch">Ασυμφωνία hash Verified Boot</string>
-    <string name="vbmeta_mismatch_summary">Ο κατακερματισμός Verified Boot της βεβαίωσης δεν ταιριάζει με το vbmeta digest του τρέχοντος συστήματος. Αυτό αποτελεί ισχυρή ένδειξη πλαστογραφημένης ή επαναχρησιμοποιημένης βεβαίωσης.</string>
-    <string name="vbmeta_missing">Απουσία κατακερματισμού Verified Boot</string>
-    <string name="vbmeta_missing_summary">Η συσκευή αναφέρει κενό ή μηδενικό vbmeta digest, επομένως η κατάσταση εκκίνησης δεν βεβαιώθηκε ποτέ.</string>
     <string name="software_attestation">Βεβαίωση λογισμικού</string>
     <string name="software_attestation_summary">Αυτό το κλειδί δεν υποστηρίζεται από υλικό. Η βεβαίωση δημιουργήθηκε μέσω λογισμικού χωρίς υλική ρίζα εμπιστοσύνης.</string>
     <string name="verified_boot_key_suspicious">Μη έγκυρο κλειδί Verified Boot</string>

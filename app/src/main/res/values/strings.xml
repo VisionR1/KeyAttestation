@@ -42,12 +42,6 @@
     <string name="knox_root_cert_summary">Knox attestation is signed using Samsung attestation key (SAK).</string>
     <string name="oem_root_cert">OEM root certificate</string>
     <string name="oem_root_cert_summary">This device trusts this root certificate, but it may not be trusted by others.</string>
-    <string name="patch_level_outdated">Attestation patch level outdated</string>
-    <string name="patch_level_outdated_summary">The attested patch level is older than the patch level of the running system. This is a common sign of tampering. (attestation: %1$s, system: %2$s)</string>
-    <string name="vbmeta_mismatch">Verified boot hash mismatch</string>
-    <string name="vbmeta_mismatch_summary">The attested verified boot hash does not match the running system\'s vbmeta digest. This is a strong sign of a spoofed or replayed attestation.</string>
-    <string name="vbmeta_missing">Verified boot hash missing</string>
-    <string name="vbmeta_missing_summary">The device reports an empty or all-zero vbmeta digest, so the boot state was never attested.</string>
     <string name="software_attestation">Software attestation</string>
     <string name="software_attestation_summary">This key is not hardware-backed. The attestation was produced in software with no hardware root of trust.</string>
     <string name="verified_boot_key_suspicious">Verified boot key is invalid</string>

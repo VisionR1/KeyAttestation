@@ -42,12 +42,6 @@
     <string name="knox_root_cert_summary">Knox 認證使用三星認證金鑰（SAK）簽章。</string>
     <string name="oem_root_cert">裝置製造商的根憑證</string>
     <string name="oem_root_cert_summary">此裝置信任此根憑證，但它可能不被其它人信任。</string>
-    <string name="patch_level_outdated">證明修補程式層級已過期</string>
-    <string name="patch_level_outdated_summary">證明中的修補程式層級早於目前執行系統的修補程式層級。這通常表示裝置可能已遭到竄改。（證明：%1$s，系統：%2$s）</string>
-    <string name="vbmeta_mismatch">Verified Boot 雜湊不符</string>
-    <string name="vbmeta_mismatch_summary">證明中的 Verified Boot 雜湊與目前系統的 vbmeta 摘要不符。這是偽造或重放證明的強烈跡象。</string>
-    <string name="vbmeta_missing">缺少 Verified Boot 雜湊</string>
-    <string name="vbmeta_missing_summary">裝置回報的 vbmeta 摘要為空或全部為零，因此開機狀態從未經過證明。</string>
     <string name="software_attestation">軟體證明</string>
     <string name="software_attestation_summary">此金鑰並非由硬體支援。此證明完全由軟體產生，沒有硬體信任根。</string>
     <string name="verified_boot_key_suspicious">Verified Boot 金鑰無效</string>

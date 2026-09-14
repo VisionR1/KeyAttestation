@@ -42,12 +42,6 @@
     <string name="knox_root_cert_summary">Атестація Knox підписується за допомогою атестаційного ключа Samsung (SAK).</string>
     <string name="oem_root_cert">Кореневий сертифікат OEM</string>
     <string name="oem_root_cert_summary">Цей пристрій довіряє цьому кореневому сертифікату, але інші можуть йому не довіряти.</string>
-    <string name="patch_level_outdated">Застарілий рівень виправлень атестації</string>
-    <string name="patch_level_outdated_summary">Підтверджений рівень виправлень старіший за рівень виправлень поточної системи. Це поширена ознака втручання. (атестація: %1$s, система: %2$s)</string>
-    <string name="vbmeta_mismatch">Невідповідність хешу Verified Boot</string>
-    <string name="vbmeta_mismatch_summary">Підтверджений хеш Verified Boot не збігається з vbmeta digest поточної системи. Це вагома ознака підробленої або повторно використаної атестації.</string>
-    <string name="vbmeta_missing">Хеш Verified Boot відсутній</string>
-    <string name="vbmeta_missing_summary">Пристрій повідомляє про порожній або повністю нульовий vbmeta digest, тому стан завантаження ніколи не був підтверджений.</string>
     <string name="software_attestation">Програмна атестація</string>
     <string name="software_attestation_summary">Цей ключ не захищений апаратно. Атестацію було створено програмним способом без апаратного кореня довіри.</string>
     <string name="verified_boot_key_suspicious">Недійсний ключ Verified Boot</string>

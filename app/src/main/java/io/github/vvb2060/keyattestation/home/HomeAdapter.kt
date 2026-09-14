@@ -1,7 +1,6 @@
 package io.github.vvb2060.keyattestation.home
 
 import android.hardware.security.keymint.RpcHardwareInfo
-import android.os.Build
 import android.util.Base64
 import android.util.Pair
 import com.google.common.io.BaseEncoding
@@ -203,30 +202,6 @@ class HomeAdapter(listener: Listener) : IdBasedRecyclerViewAdapter() {
                 rikka.material.R.attr.colorAlert), ID_BOOT_KEY_STATUS)
         }
 
-        if (attestation.teeEnforced.isPatchLevelOutdated) {
-            addItemAt(2, HeaderViewHolder.CREATOR, HeaderData(
-                R.string.patch_level_outdated,
-                R.string.patch_level_outdated_summary,
-                R.drawable.ic_error_outline_24,
-                rikka.material.R.attr.colorWarning,
-                attestation.teeEnforced.oldestPatchLevel,
-                Build.VERSION.SECURITY_PATCH.take(7)), ID_PATCH_STATUS)
-        }
-
-        if (attestationData.isVbmetaDigestMissing) {
-            addItemAt(2, HeaderViewHolder.CREATOR, HeaderData(
-                R.string.vbmeta_missing,
-                R.string.vbmeta_missing_summary,
-                R.drawable.ic_error_outline_24,
-                rikka.material.R.attr.colorWarning), ID_VBMETA_STATUS)
-        } else if (attestationData.isBootHashMismatch) {
-            addItemAt(2, HeaderViewHolder.CREATOR, HeaderData(
-                R.string.vbmeta_mismatch,
-                R.string.vbmeta_mismatch_summary,
-                R.drawable.ic_error_outline_24,
-                rikka.material.R.attr.colorAlert), ID_VBMETA_STATUS)
-        }
-
         addItem(CommonItemViewHolder.SECURITY_LEVEL_CREATOR, SecurityLevelData(
             R.string.attestation,
             R.string.attestation_version_description,
@@ -425,11 +400,9 @@ class HomeAdapter(listener: Listener) : IdBasedRecyclerViewAdapter() {
         private const val ID_ERROR = 0L
         private const val ID_CERT_STATUS = 1L
         private const val ID_BOOT_STATUS = 2L
-        private const val ID_PATCH_STATUS = 3L
-        private const val ID_VBMETA_STATUS = 4L
-        private const val ID_SOFTWARE_STATUS = 5L
-        private const val ID_DICE_STATUS = 6L
-        private const val ID_BOOT_KEY_STATUS = 7L
+        private const val ID_SOFTWARE_STATUS = 3L
+        private const val ID_DICE_STATUS = 4L
+        private const val ID_BOOT_KEY_STATUS = 5L
         private const val ID_CERT_INFO_START = 1000L
         private const val ID_REVOCATION_INFO = 1900L
         private const val ID_RKP_HOSTNAME = 2000L

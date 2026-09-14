@@ -19,7 +19,6 @@ package io.github.vvb2060.keyattestation.attestation;
 import static com.google.common.base.Functions.forMap;
 import static com.google.common.collect.Collections2.transform;
 
-import android.os.Build;
 import android.security.keystore.KeyProperties;
 import android.util.Log;
 
@@ -746,39 +745,6 @@ public class AuthorizationList {
 
     public Integer getOsPatchLevel() {
         return osPatchLevel;
-    }
-
-    public boolean isPatchLevelOutdated() {
-        try {
-            int device = Integer.parseInt(
-                    Build.VERSION.SECURITY_PATCH.substring(0, 7).replace("-", ""));
-            return isOlder(osPatchLevel, device)
-                    || isOlder(vendorPatchLevel, device)
-                    || isOlder(bootPatchLevel, device);
-        } catch (RuntimeException e) {
-            return false;
-        }
-    }
-
-    // Normalize YYYYMMDD to YYYYMM
-    private static int toMonth(int patchLevel) {
-        return patchLevel > 999999 ? patchLevel / 100 : patchLevel;
-    }
-
-    private static boolean isOlder(Integer patchLevel, int device) {
-        return patchLevel != null && toMonth(patchLevel) < device;
-    }
-
-    public String getOldestPatchLevel() {
-        Integer oldest = null;
-        for (var patchLevel : new Integer[]{osPatchLevel, vendorPatchLevel, bootPatchLevel}) {
-            if (patchLevel == null) continue;
-            int month = toMonth(patchLevel);
-            if (oldest == null || month < oldest) oldest = month;
-        }
-        if (oldest == null) return null;
-        var s = oldest.toString();
-        return s.length() == 6 ? s.substring(0, 4) + "-" + s.substring(4) : s;
     }
 
     public AttestationApplicationId getAttestationApplicationId() {

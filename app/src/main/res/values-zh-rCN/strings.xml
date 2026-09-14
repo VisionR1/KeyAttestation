@@ -42,12 +42,6 @@
     <string name="knox_root_cert_summary">Knox 认证使用三星认证密钥（SAK）签名。</string>
     <string name="oem_root_cert">设备制造商的根证书</string>
     <string name="oem_root_cert_summary">此设备信任该根证书，但它可能不被其它人信任。</string>
-    <string name="patch_level_outdated">证明补丁级别已过期</string>
-    <string name="patch_level_outdated_summary">证明中的补丁级别早于当前运行系统的补丁级别。这通常表明设备已被篡改。（证明：%1$s，系统：%2$s）</string>
-    <string name="vbmeta_mismatch">Verified Boot 哈希不匹配</string>
-    <string name="vbmeta_mismatch_summary">证明中的 Verified Boot 哈希与当前系统的 vbmeta 摘要不匹配。这强烈表明证明可能被伪造或重放。</string>
-    <string name="vbmeta_missing">缺少 Verified Boot 哈希</string>
-    <string name="vbmeta_missing_summary">设备报告的 vbmeta 摘要为空或全为零，因此启动状态从未经过证明。</string>
     <string name="software_attestation">软件证明</string>
     <string name="software_attestation_summary">此密钥并非由硬件支持。该证明完全由软件生成，没有硬件信任根。</string>
     <string name="verified_boot_key_suspicious">Verified Boot 密钥无效</string>

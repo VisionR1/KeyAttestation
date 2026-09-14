@@ -373,11 +373,6 @@ public class AndroidKeyStore extends IAndroidKeyStore.Stub {
     }
 
     @Override
-    public String getVbmetaDigest() {
-        return SystemProperties.get("ro.boot.vbmeta.digest");
-    }
-
-    @Override
     public byte[] getDiceChain(boolean useStrongBox) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
             throw new IllegalStateException();

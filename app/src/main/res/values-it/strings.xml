@@ -42,12 +42,6 @@
     <string name="knox_root_cert_summary">L\'attestazione Knox è firmata utilizzando la chiave di attestazione Samsung (SAK).</string>
     <string name="oem_root_cert">Certificato radice OEM</string>
     <string name="oem_root_cert_summary">Questo dispositivo si fida di questo certificato radice, ma potrebbe non essere considerato attendibile da altri.</string>
-    <string name="patch_level_outdated">Livello patch di attestazione obsoleto</string>
-    <string name="patch_level_outdated_summary">Il livello della patch attestato è inferiore a quello del sistema in uso. È un segno comune di manomissione. (attestazione: %1$s, sistema: %2$s)</string>
-    <string name="vbmeta_mismatch">Mancata corrispondenza hash Verified Boot</string>
-    <string name="vbmeta_mismatch_summary">L\'hash Verified Boot attestato non corrisponde al digest vbmeta del sistema in uso. È un chiaro segnale di un\'attestazione contraffatta o replicata.</string>
-    <string name="vbmeta_missing">Hash Verified Boot mancante</string>
-    <string name="vbmeta_missing_summary">Il dispositivo riporta un digest vbmeta vuoto o composto solo da zeri, pertanto lo stato del boot non è mai stato attestato.</string>
     <string name="software_attestation">Attestazione software</string>
     <string name="software_attestation_summary">Questa chiave non è basata su hardware. L\'attestazione è stata generata via software senza una radice di attendibilità hardware (root of trust).</string>
     <string name="verified_boot_key_suspicious">Chiave Verified Boot non valida</string>
