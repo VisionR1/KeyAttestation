@@ -15,6 +15,7 @@ object LocaleManager {
         Locale("en"),
         Locale("el"),
 		Locale("it"),
+        Locale("iw"),
         Locale("pt", "BR"),
         Locale("uk", "UA"),
         Locale("zh", "CN"),
