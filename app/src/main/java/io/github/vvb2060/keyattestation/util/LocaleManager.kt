@@ -1,8 +1,10 @@
 package io.github.vvb2060.keyattestation.util
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.res.Resources
+import android.os.Build
 import android.os.Handler
 import android.os.Looper
 import androidx.appcompat.app.AlertDialog
@@ -61,12 +63,17 @@ object LocaleManager {
             .setSingleChoiceItems(languages.toTypedArray(), currentIndex) { dialog, which ->
                 updateLocale(context, languageCodes[which])
                 dialog.dismiss()
-                Handler(Looper.getMainLooper()).post {
-                    val pm = context.packageManager
-                    val intent = pm.getLaunchIntentForPackage(context.packageName)
-                    intent?.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-                    context.startActivity(intent)
-                    Runtime.getRuntime().exit(0)
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    Handler(Looper.getMainLooper()).post {
+                        val pm = context.packageManager
+                        val intent = pm.getLaunchIntentForPackage(context.packageName)
+                        intent?.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+                        context.startActivity(intent)
+                        Runtime.getRuntime().exit(0)
+                    }
+                } else {
+                    if (context is Activity) context.recreate()
                 }
             }
             .show()

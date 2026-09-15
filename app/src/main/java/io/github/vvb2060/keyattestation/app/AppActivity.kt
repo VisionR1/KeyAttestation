@@ -12,12 +12,16 @@ import rikka.material.app.MaterialActivity
 open class AppActivity : MaterialActivity() {
 
     override fun attachBaseContext(newBase: Context) {
-        val locales = AppCompatDelegate.getApplicationLocales()
-        if (locales.size() > 0) {
-            val locale = locales[0]!!
-            val config = Configuration(newBase.resources.configuration)
-            config.setLocale(locale)
-            super.attachBaseContext(newBase.createConfigurationContext(config))
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            val locales = AppCompatDelegate.getApplicationLocales()
+            if (locales.size() > 0) {
+                val locale = locales[0]!!
+                val config = Configuration(newBase.resources.configuration)
+                config.setLocale(locale)
+                super.attachBaseContext(newBase.createConfigurationContext(config))
+            } else {
+                super.attachBaseContext(newBase)
+            }
         } else {
             super.attachBaseContext(newBase)
         }
