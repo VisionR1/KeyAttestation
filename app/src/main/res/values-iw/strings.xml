@@ -97,7 +97,7 @@
     <string name="error_out_of_keys">אין מפתחות אימות שסופקו מרחוק</string>
     <string name="error_out_of_keys_summary">מכשיר זה לא רשום בשרת אספקת המפתחות, או שהשרת מסרב באופן קבוע להנפיק מפתחות.</string>
     <string name="error_out_of_keys_transient">כרגע אין מפתחות אימות שסופקו מרחוק</string>
-    <string name="error_out_of_keys_transient_summary">מאגר המפתחות מוצהר. נסה שוב עם חיבור לאינטרנט. אם השרת מסרב זמנית להנפיק מפתחות, בדוק עדכוני מערכת.</string>
+    <string name="error_out_of_keys_transient_summary">מאגר המפתחות אזל. נסה שוב עם חיבור לאינטרנט. אם השרת מסרב זמנית להנפיק מפתחות, בדוק עדכוני מערכת.</string>
     <string name="error_unavailable_transient">כרגע לא ניתן לבצע אימות</string>
     <string name="error_unavailable_transient_summary">הבעיה זמנית. התאם את האפשרויות בתפריט ונסה שוב.</string>
     <string name="error_keys_not_provisioned">אין מפתחות אימות</string>
