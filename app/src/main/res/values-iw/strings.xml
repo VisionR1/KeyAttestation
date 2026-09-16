@@ -1,0 +1,359 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="menu_language">שפה</string>
+    <string name="menu_color">צבע</string>
+    <string name="secret_mode">מצב סודי</string>
+    <string name="use_shizuku">השתמש ב-Shizuku</string>
+    <string name="use_sak">השתמש באימות Knox</string>
+    <string name="use_strongbox">השתמש ב-StrongBox</string>
+    <string name="use_attest_key">השתמש במפתח אימות</string>
+    <string name="import_attest_key">ייבא מפתח אימות</string>
+    <string name="attest_device_props">אמת מאפייני מכשיר</string>
+    <string name="attest_rsa_key">אמת מפתח RSA</string>
+    <string name="id_type_serial">אמת סיריאל של המכשיר</string>
+    <string name="id_type_imei">אמת IMEI של המכשיר</string>
+    <string name="id_type_meid">אמת MEID של המכשיר</string>
+    <string name="include_unique_id">כלול מזהה ייחודי</string>
+    <string name="rkp_test">בדיקת RKP</string>
+    <string name="reset">איפוס</string>
+    <string name="load_certs">טען מקובץ</string>
+    <string name="save_certs">שמור לקובץ</string>
+    <string name="about">אודות</string>
+    <string name="open_source_info">תוכנה זו היא קוד פתוח תחת %2$s (%1$s).</string>
+    <string name="install_shizuku">התקן Shizuku כדי להשתמש באימות מזהה (%s).</string>
+    <string name="start_shizuku">Shizuku אינו פועל.</string>
+
+    <string name="bootloader_locked">Bootloader נעול</string>
+    <string name="bootloader_user">שורש האמון נקבע על ידי המשתמש</string>
+    <string name="bootloader_unlocked">Bootloader פתוח</string>
+    <string name="bootloader_unknown">סטטוס Bootloader לא ידוע</string>
+    <string name="bootloader_summary_sw_level">מכשיר זה אינו תומך באימות מפתח ברמת חומרה.</string>
+    <string name="cert_chain_not_trusted">שרשרת התעודות אינה מהימנה</string>
+    <string name="cert_chain_not_trusted_summary">תעודה בוטלה או שאימות חתימה נכשל בשרשרת התעודות.</string>
+    <string name="unknown_root_cert">תעודת שורש לא ידועה</string>
+    <string name="unknown_root_cert_summary">תעודת השורש אינה רשות תעודה מהימנה ידועה.</string>
+    <string name="aosp_root_cert">תעודת שורש אימות תוכנת AOSP</string>
+    <string name="aosp_root_cert_summary">המפתח הפרטי של מפתח האימות ידוע, שרשרת התעודות עלולה להיות מזויפת.</string>
+    <string name="google_root_cert">תעודת שורש אימות חומרה של Google</string>
+    <string name="google_root_cert_summary">מכשירים תואמי GMS יכולים להשתמש במפתח אימות החתום על ידי Google.</string>
+    <string name="google_root_cert_rkp">אימות מפתח מרחוק של Google</string>
+    <string name="google_root_cert_rkp_summary">מפתח אימות שסופק מרחוק בעל אבטחה חזקה יותר וזמינות גבוהה יותר.</string>
+    <string name="knox_root_cert">תעודת שורש אימות Samsung Knox</string>
+    <string name="knox_root_cert_summary">אימות Knox חתום באמצעות מפתח אימות של Samsung (SAK).</string>
+    <string name="oem_root_cert">תעודת שורש של יצרן</string>
+    <string name="oem_root_cert_summary">מכשיר זה סומך על תעודת שורש זו, אך אחרים עלולים לא לסמוך עליה.</string>
+    <string name="patch_level_outdated">גרסת תיקון האימות מיושנת</string>
+    <string name="patch_level_outdated_summary">גרסת התיקון המאומת ישנה יותר מגרסת התיקון של המערכת הפועלת. זהו סימן נפוץ למזויפות. (אימות: %1$s, מערכת: %2$s)</string>
+    <string name="vbmeta_mismatch">אי-התאמה בhash של אימות ההפעלה המאומת</string>
+    <string name="vbmeta_mismatch_summary">הhash של אימות ההפעלה המאומת אינו תואם את digest הvbmeta של המערכת הפועלת. זהו סימן חזק למזויפות או שחזור של אימות.</string>
+    <string name="vbmeta_missing">hash של אימות ההפעלה המאומת חסר</string>
+    <string name="vbmeta_missing_summary">המכשיר מדווח על digest vbmeta ריק או כולו אפסים, לכן מצב ההפעלה לעולם לא אומת.</string>
+    <string name="software_attestation">אימות תוכנה</string>
+    <string name="software_attestation_summary">מפתח זה אינו נתמך בחומרה. האימות נוצר בתוכנה ללא שורש אמון חומרתי.</string>
+    <string name="verified_boot_key_suspicious">מפתח אימות ההפעלה אינו חוקי</string>
+    <string name="verified_boot_key_suspicious_summary">מפתח אימות ההפעלה מורכב מאפסים בלבד, מה שמצפים רק בbootloader פתוח או לא מאומת. זהו סימן חזק למזויפות.</string>
+
+    <string name="cert_chain">שרשרת תעודות</string>
+    <string name="cert_chain_description">שרשרת תעודות היא רשימת תעודות המשמשות לאימות מפתח. השרשרת מתחילה בתעודה המשויכת למפתח, וכל תעודה חתומה על ידי הבאה בשרשרת. השרשרת מסתיימת בתעודת שורש, ומהימנות האימות תלויה בתעודת השורש של השרשרת.</string>
+    <string name="cert_info">מידע תעודה</string>
+    <string name="cert_subject">נושא: </string>
+    <string name="cert_not_before">מתאריך: </string>
+    <string name="cert_not_after">עד תאריך: </string>
+    <string name="cert_error_sign">שגיאת חתימה: </string>
+    <string name="cert_error_revoked">בוטל: </string>
+    <string name="cert_error_expired">פג תוקף: </string>
+    <string name="provisioning_info_certs_issued">מספר תעודות שהונפקו ב30 הימים האחרונים: </string>
+    <string name="provisioning_info_manufacturer">יצרן: </string>
+    <string name="revocation_list_publish_time">זמן פרסום רשימת ביטולים</string>
+    <string name="revocation_list_description">רשימת הביטולים משמשת לבדיקה אם תעודות בוטלו. זו מראה את זמן הפרסום של רשימת הביטולים המשמשת כעת.</string>
+    <string name="revocation_list_save">שמור</string>
+    <string name="revocation_list_save_unavailable">התחבר לאינטרנט לפחות פעם אחת כדי להוריד את רשימת CRL לפני השמירה</string>
+    <string name="revocation_list_save_success">נשמר</string>
+    <string name="revocation_list_save_failed">לא נשמר</string>
+
+    <string name="revocation_status_initial">⚙️ רשימה ראשונית הורדה</string>
+    <string name="revocation_status_new_fetch">✨ רשימה חדשה התקבלה!</string>
+    <string name="revocation_status_up_to_date">✅ CRL מעודכן</string>
+    <string name="revocation_status_offline_cached">⚠️ המכשיר לא מקוון - משתמש בCRL מהמטמון</string>
+    <string name="revocation_status_offline_bundled">❌ לא מקוון - CRL מיושן</string>
+
+    <string name="error_attest_rsa_key_ec_only">אין שרשרת תעודות RSA</string>
+    <string name="error_attest_rsa_key_ec_only_summary"><![CDATA[הקובץ מכיל רק שרשרת תעודות EC.<br><br>להצגה, בטל את אימות מפתח RSA.]]></string>
+    <string name="error_attest_ec_key_rsa_only">אין שרשרת תעודות EC</string>
+    <string name="error_attest_ec_key_rsa_only_summary"><![CDATA[הקובץ מכיל רק שרשרת תעודות RSA.<br><br>להצגה, הפעל את אימות מפתח RSA.]]></string>
+    <string name="error_invalid_file">לא ניתן לנתח קובץ</string>
+    <string name="error_invalid_file_summary"><![CDATA[סיבות אפשריות:<br><br>• הקובץ פגום או מזויף<br><br>• עלול להכיל תווים לא חוקיים<br><br>• פורמט קובץ לא נתמך]]></string>
+
+    <string name="error_message_subtitle">הודעות מפורטות:</string>
+    <string name="error_unknown">שגיאה לא ידועה</string>
+    <string name="error_unavailable">לא ניתן לבצע אימות</string>
+    <string name="error_unavailable_summary">האימות נכשל. התאם את האפשרויות בתפריט ונסה שוב. סיבה נפוצה לכישלון עקבי באימות היא חוסר היכולת להשתמש במפתח האימות שסופק במפעל, ייתכן עקב תצורה שגויה של המכשיר או מחיצת persist פגומה.</string>
+    <string name="error_cant_parse_cert">לא ניתן לנתח תעודה</string>
+    <string name="error_cant_parse_cert_summary">פורמט התעודה שגוי או מכיל תכונות לא נתמכות.</string>
+    <string name="error_strongbox_unavailable">StrongBox אינו זמין</string>
+    <string name="error_strongbox_unavailable_summary">מכשיר זה מוצהר כתומך בStrongBox, אך הוא אינו זמין כעת.</string>
+    <string name="error_deviceids_unavailable">לא ניתן לאמת מזהי מכשיר</string>
+    <string name="error_deviceids_unavailable_summary">מכשיר זה מוצהר כתומך באימות מזהים, אך המזהים לא קיימים, לא תואמים, או שהמכשיר כבר לא יכול לאמת את המזהים שלו. התאם את האפשרויות בתפריט ונסה שוב.</string>
+    <string name="error_out_of_keys">אין מפתחות אימות שסופקו מרחוק</string>
+    <string name="error_out_of_keys_summary">מכשיר זה לא רשום בשרת אספקת המפתחות, או שהשרת מסרב באופן קבוע להנפיק מפתחות.</string>
+    <string name="error_out_of_keys_transient">כרגע אין מפתחות אימות שסופקו מרחוק</string>
+    <string name="error_out_of_keys_transient_summary">מאגר המפתחות אזל. נסה שוב עם חיבור לאינטרנט. אם השרת מסרב זמנית להנפיק מפתחות, בדוק עדכוני מערכת.</string>
+    <string name="error_unavailable_transient">כרגע לא ניתן לבצע אימות</string>
+    <string name="error_unavailable_transient_summary">הבעיה זמנית. התאם את האפשרויות בתפריט ונסה שוב.</string>
+    <string name="error_keys_not_provisioned">אין מפתחות אימות</string>
+    <string name="error_keys_not_provisioned_summary">לא ניתן לאסוף מפתחות אימות שסופקו מרחוק, ואין מפתחות אימות שסופקו במפעל.</string>
+    <string name="error_remote_key_provisioning">שגיאת אימות מפתח מרחוק</string>
+    <string name="error_remote_key_provisioning_summary">לא ניתן לאסוף מפתח אימות משרת אספקת המפתחות.</string>
+
+    <string name="rpc_hardware_info">מידע חומרה</string>
+    <string name="rpc_hardware_info_description">מידע החומרה של רכיב שסופק מרחוק.</string>
+    <string name="rpc_version_number">גרסה</string>
+    <string name="rpc_version_number_description">גרסת המימוש של חומרת הרכיב שסופק מרחוק. הגרסה שכאן חייבת להתאים לגרסה שמדווחת בCsrPayload שמיוצר על ידי ממשק הHAL.</string>
+    <string name="rpc_author_name">ספק</string>
+    <string name="rpc_author_name_description">שם הארגון של יוצר מימוש IRemotelyProvisionedComponent.</string>
+    <string name="rpc_unique_id">מזהה</string>
+    <string name="rpc_unique_id_description">מזהה לא שקוף למימוש זה של IRemotelyProvisionedComponent. לכל מימוש חייב להיות מזהה ייחודי משאר המימושים, והוא חייב להיות עקבי בכל המכשירים.</string>
+    <string name="rpc_eek_curve">עקומת EEK</string>
+    <string name="rpc_eek_curve_description">עקומה המשמשת לאימות שרשרת תעודות Endpoint Encryption Key (EEK) ולניהול GEEK להצפנה של ProtectedData. משמשת רק בזרימת V1/V2 CSR; V3 הסירה את הEEK לחלוטין.</string>
+    <string name="rkp_device_info">מידע מכשיר</string>
+    <string name="rkp_device_info_description">מידע מכשיר מכיל מידע על המכשיר החתום על ידי IRemotelyProvisionedComponent HAL. ערכים אלו נועדים לבדיקה על ידי השרת כדי לאמת שבקשת חתימת התעודה, שמיוצרת על ידי מופע של IRemotelyProvisionedComponent HAL, מגיעה מהמכשיר הצפוי על בסיס ערכים שהועלו לראשונה במהלך ייצור המכשיר במפעל.</string>
+    <string name="rkp_dice_chain">שרשרת תעודות DICE</string>
+    <string name="rkp_dice_chain_description">שרשרת הDICE משקפת את שלבי ההפעלה של המכשיר. כל רשומה מודדת את הקוד וההגדרות של שלב הפעלה וחתומה על ידי מפתח שנגזר מהשלב הקודם. שרשרת פגומה מכילה רק רשומה עצמית חתומה אחת ואינה נושאת מדדי הפעלה.</string>
+    <string name="dice_chain_valid">שרשרת DICE אומתה</string>
+    <string name="dice_chain_valid_summary">כל רשומה בשרשרת הDICE חתومة כהלכה על ידי מפתח שלב ההפעלה הקודם.</string>
+    <string name="dice_chain_degenerate">שרשרת DICE פגומה</string>
+    <string name="dice_chain_degenerate_summary">שרשרת הDICE היא רשומה עצמית חתומה אחת. החתימה שלה תקפה אך היא אינה נושאת מדדי שלבי הפעלה.</string>
+    <string name="dice_chain_invalid">חתימת שרשרת DICE אינה חוקית</string>
+    <string name="dice_chain_invalid_summary">חתימה בשרשרת הDICE נכשלת באימות מול מפתח השלב הקודם. השרשרת עלולה להיות מזויפת או פגומה.</string>
+    <string name="rkp_hostname">שם מארח אימות מרחוק</string>
+    <string name="rkp_hostname_empty">אימות מפתח מרחוק מושבת</string>
+
+    <string name="attestation">אימות</string>
+    <string name="attestation_version_description"><![CDATA[<font face="sans-serif-medium">גרסה:</font><br>גרסת תכונת אימות המפתח.]]></string>
+    <string name="keymaster_version_description"><![CDATA[<font face="sans-serif-medium">גרסה:</font><br>גרסת שכבת החומרה המופשטת של Keymaster או KeyMint (HAL).]]></string>
+    <string name="security_level_description"><![CDATA[<font face="sans-serif-medium">רמת אבטחה:</font><br>מבנה נתונים זה מציין את המידה בה מוגנת תכונה בתוכנה, כמו זוג מפתחות, בהתבסס על מיקומה במכשיר.<p><ul><li gap="8sp"><font face="sans-serif-medium">תוכנה</font><br>הלוגיקה ליצירת וניהול התכונה מיושמת במערכת Android. למטרות יצירת ושמירת זוגות מפתחות, מיקום זה פחות מאובטח מהTEE אך מאובטח יותר ממרחב התהליך של האפליקציה שלך.</li><li gap="8sp"><font face="sans-serif-medium">TrustedEnvironment</font><br>הלוגיקה ליצירת וניהול התכונה מיושמת בחומרה מאובטחת, כמו TEE. למטרות יצירת ושמירת זוגות מפתחות, מיקום זה מאובטח יותר כי חומרה מאובטחת עמידה מאוד מפני פגיעה מרחוק.</li><li gap="8sp"><font face="sans-serif-medium">StrongBox</font><br>הלוגיקה ליצירת וניהול התכונה מיושמת ב<a href="https://developer.android.com/training/articles/keystore#HardwareSecurityModule">מודול אבטחת חומרה</a> ייעודי. למטרות יצירת ושמירת זוגות מפתחות, מיקום זה מאובטח יותר כי הוא עמיד מאוד מפני פגיעה מרחוק ותגרעות חומרה כנגד המודול.</li></ul>]]></string>
+    <string name="attestation_summary_format">גרסה: %1$s\nרמת אבטחה: %2$s</string>
+    <string name="attestation_challenge">אתגר אימות</string>
+    <string name="attestation_challenge_description">מכיל את האתגר שסופק בזמן יצירת המפתח. בדוק אם הערך הזה תואם לערך ששרת שלך סיפק. אחרת, השירות שלך עלול להיות פגיע לשחזור של תעודות אימות ישנות.</string>
+    <string name="unique_id">מזהה ייחודי</string>
+    <string name="unique_id_description"><![CDATA[ערך זה מזהה את המכשיר, אך רק למשך זמן מוגבל. הוא <a href="https://source.android.com/security/keystore/attestation#unique-id">מחשב</a> ומשמש רק על ידי אפליקציות מערכת. בכל האפליקציות האחרות, uniqueId ריק.]]></string>
+
+    <string name="empty">(ריק)</string>
+    <string name="security_level_software">תוכנה</string>
+    <string name="security_level_trusted_environment">TrustedEnvironment</string>
+    <string name="security_level_strongbox">StrongBox</string>
+
+    <string name="sw_enforced_description"><![CDATA[פריט זה מאוכף על ידי מערכת Android, לא על ידי חומרת המכשיר.]]></string>
+    <string name="tee_enforced_description"><![CDATA[פריט זה מאוכף על ידי חומרת המכשיר.]]></string>
+
+    <string name="authorization_list">רשימת הרשאות</string>
+    <string name="authorization_list_purpose">מטרה</string>
+    <string name="authorization_list_algorithm">אלגוריתם</string>
+    <string name="authorization_list_keySize">גודל מפתח</string>
+    <string name="authorization_list_digest">דיגסטים</string>
+    <string name="authorization_list_padding">מילוי</string>
+    <string name="authorization_list_ecCurve">עקומת EC</string>
+    <string name="authorization_list_rsaPublicExponent">אקספוננט ציבורי RSA</string>
+    <string name="authorization_list_rollbackResistance">עמידות מפני Rollback</string>
+    <string name="authorization_list_activeDateTime">תאריך ושעת הפעלה</string>
+    <string name="authorization_list_originationExpireDateTime">תאריך ושעת פקיעת יצירה</string>
+    <string name="authorization_list_usageExpireDateTime">תאריך ושעת פקיעת שימוש</string>
+    <string name="authorization_list_noAuthRequired">לא נדרשת אימות</string>
+    <string name="authorization_list_userAuthType">סוג אימות משתמש</string>
+    <string name="authorization_list_authTimeout">השהיית אימות</string>
+    <string name="authorization_list_allowWhileOnBody">אפשר בזמן על הגוף</string>
+    <string name="authorization_list_trustedUserPresenceRequired">נדרשת נוכחות משתמש מהימנה</string>
+    <string name="authorization_list_trustedConfirmationRequired">נדרש אישור מהימן</string>
+    <string name="authorization_list_unlockedDeviceRequired">נדרש מכשיר פתוח</string>
+    <string name="authorization_list_allApplications">כל האפליקציות</string>
+    <string name="authorization_list_applicationId">מזהה אפליקציה</string>
+    <string name="authorization_list_creationDateTime">תאריך ושעת יצירה</string>
+    <string name="authorization_list_origin">מקור</string>
+    <string name="authorization_list_rollbackResistant">עמיד מפני Rollback</string>
+    <string name="authorization_list_rootOfTrust">שורש אמון</string>
+    <string name="copied_to_clipboard">הועתק ללוח!</string>
+    <string name="authorization_list_osVersion">גרסת מערכת הפעלה</string>
+    <string name="authorization_list_osPatchLevel">גרסת תיקון מערכת הפעלה</string>
+    <string name="authorization_list_attestationApplicationId">מזהה אפליקציה</string>
+    <string name="authorization_list_attestationIdBrand">מותג</string>
+    <string name="authorization_list_attestationIdDevice">מכשיר</string>
+    <string name="authorization_list_attestationIdProduct">מוצר</string>
+    <string name="authorization_list_attestationIdSerial">סיריאל</string>
+    <string name="authorization_list_attestationIdImei">IMEI</string>
+    <string name="authorization_list_attestationIdSecondImei">IMEI שני</string>
+    <string name="authorization_list_attestationIdMeid">MEID</string>
+    <string name="authorization_list_attestationIdManufacturer">יצרן</string>
+    <string name="authorization_list_attestationIdModel">דגם</string>
+    <string name="authorization_list_vendorPatchLevel">גרסת תיקון ספק</string>
+    <string name="authorization_list_bootPatchLevel">גרסת תיקון הפעלה</string>
+    <string name="authorization_list_mgfDigest">דיגסט RSA-OAEP MGF</string>
+    <string name="authorization_list_earlyBootOnly">הפעלה מוקדמת בלבד</string>
+    <string name="authorization_list_usageCountLimit">מגבלת ספירת שימוש</string>
+    <string name="authorization_list_deviceUniqueAttestation">אימות ייחודי למכשיר</string>
+    <string name="authorization_list_identityCredentialKey">מפתח תעודת זהות</string>
+    <string name="authorization_list_moduleHash">Hash מודול</string>
+
+    <string name="authorization_list_description"><![CDATA[
+    מבנה נתונים זה מכיל את מאפייני זוג המפתחות themselves, כפי שהוגדרו בשכבת החומרה המופשטת של Keymaster או KeyMint (HAL). אתה משווה ערכים אלו למצב הנוכחי של המכשיר או לסט של ערכים צפויים כדי לאמת שזוג מפתחות עדיין תקין לשימוש באפליקציה שלך.
+    ]]></string>
+    <string name="authorization_list_purpose_description"><![CDATA[
+    מציין את סט המטרות שלשמן ניתן להשתמש במפתח.
+    ]]></string>
+    <string name="authorization_list_algorithm_description"><![CDATA[
+    מציין את האלגוריתם הקריפטוגרפי שבו נעשה שימוש במפתח. באובייקט AuthorizationList של אימות, ערך האלגוריתם הוא תמיד RSA או EC.
+    ]]></string>
+    <string name="authorization_list_keySize_description"><![CDATA[
+    מציין את הגודל, בביטים, של המפתח, במדידה הרגילה לאלגוריתם של המפתח.
+    ]]></string>
+    <string name="authorization_list_digest_description"><![CDATA[
+    מציין את אלגוריתמי הדיגסט שבהם ניתן להשתמש עם המפתח לביצוע פעולות חתימה ואימות. תג זה רלוונטי למפתחות RSA, ECDSA וHMAC.
+    ]]></string>
+    <string name="authorization_list_padding_description"><![CDATA[
+    מציין את מצבי המילוי שבהם ניתן להשתמש עם המפתח. תג זה רלוונטי למפתחות RSA וAES.
+    ]]></string>
+    <string name="authorization_list_ecCurve_description"><![CDATA[
+    סט הפרמטרים המשמשים ליצירת זוג מפתחות עקומה אליפטית (EC), שעושה שימוש בECDSA לחתימה ואימות, במאגר המפתחות של מערכת Android.
+    ]]></string>
+    <string name="authorization_list_rsaPublicExponent_description"><![CDATA[
+    מציין את ערך האקספוננט הציבורי לזוג מפתחות RSA. תג זה רלוונטי רק למפתחות RSA, ונדרש לכל מפתחות RSA.
+    ]]></string>
+    <string name="authorization_list_rollbackResistance_description"><![CDATA[
+    מציין שהמפתח עמיד בפני Rollback, מה שאומר שכאשר הוא נמחק על ידי deleteKey או deleteAllKeys, המפתח מובטח להימחק לצמיתות ולהפוך לשימושי. ייתכן שמפתחות ללא תג זה יימחקו ואז ישוחזרו מגיבוי.
+    ]]></string>
+    <string name="authorization_list_activeDateTime_description"><![CDATA[
+    מציין את התאריך והשעה שבהם המפתח הופך לפעיל.
+    ]]></string>
+    <string name="authorization_list_originationExpireDateTime_description"><![CDATA[
+    מציין את התאריך והשעה שבהם המפתח פוקע למטרות חתימה והצפנה.
+    ]]></string>
+    <string name="authorization_list_usageExpireDateTime_description"><![CDATA[
+    מציין את התאריך והשעה שבהם המפתח פוקע למטרות אימות ופענוח.
+    ]]></string>
+    <string name="authorization_list_noAuthRequired_description"><![CDATA[
+    מציין שלא נדרשת אימות לשימוש במפתח זה.
+    ]]></string>
+    <string name="authorization_list_userAuthType_description"><![CDATA[
+    מציין את סוגי המאמתים של המשתמש שבהם ניתן להשתמש כדי לאשר מפתח זה.
+    ]]></string>
+    <string name="authorization_list_authTimeout_description"><![CDATA[
+    מציין את הזמן בשניות שלשמן המפתח מותר לשימוש, לאחר אימות.
+    ]]></string>
+    <string name="authorization_list_allowWhileOnBody_description"><![CDATA[
+    מאפשר להשתמש במפתח לאחר תקופת פקיעת האימות שלו אם המשתמש עדיין לובש את המכשיר על גופו. שים לב שחיישן בטיחות על הגוף קובע אם המכשיר נלבש על גוף המשתמש.
+    ]]></string>
+    <string name="authorization_list_trustedUserPresenceRequired_description"><![CDATA[
+    מציין שמפתח זה ניתן לשימוש רק אם המשתמש סיפק הוכחה לנוכחות פיזית.
+    ]]></string>
+    <string name="authorization_list_trustedConfirmationRequired_description"><![CDATA[
+    מציין שהמפתח ניתן לשימוש רק אם המשתמש מספק אישור של הנתונים לחתימה באמצעות טוקן אישור.
+    ]]></string>
+    <string name="authorization_list_unlockedDeviceRequired_description"><![CDATA[
+    דורש שמסך המכשיר יהיה פתוח אם נעשה שימוש במפתח.
+    ]]></string>
+    <string name="authorization_list_allApplications_description"><![CDATA[
+    מציין אם כל האפליקציות במכשיר יכולות לגשת לזוג המפתחות.
+    ]]></string>
+    <string name="authorization_list_applicationId_description"><![CDATA[
+    כאשר הוא מסופק לgenerateKey או importKey, תג זה מציין נתונים הנדרשים במהלך כל השימושים במפתח.
+    ]]></string>
+    <string name="authorization_list_creationDateTime_description"><![CDATA[
+    מציין את התאריך והשעה שבהם המפתח נוצר, במילישניות מאז 1 בינואר 1970. תג זה אופציונלי ולקינוח בלבד.
+    ]]></string>
+    <string name="authorization_list_origin_description"><![CDATA[
+    מציין היכן המפתח נוצר, אם ידוע. תג זה לא ניתן לציון במהלך יצירת או ייבוא של מפתח, חייב להתווסף למאפייני המפתח על ידי הtrustlet.
+    ]]></string>
+    <string name="authorization_list_rollbackResistant_description"><![CDATA[
+    מציין שהמפתח עמיד בפני Rollback, מה שאומר שכאשר הוא נמחק על ידי deleteKey או deleteAllKeys, המפתח מובטח להימחק לצמיתות ולהפוך לשימושי. ייתכן שמפתחות ללא תג זה יימחקו ואז ישוחזרו מגיבוי.
+    ]]></string>
+    <string name="authorization_list_rootOfTrust_description"><![CDATA[
+    אוסף ערכים זה מגדיר מידע מפתח על סטטוס המכשיר.<br/><p>
+    verifiedBootKey: <br/>Hash מאובטח של המפתח שמאמת את תמונת המערכת.<br/><br/>
+    deviceLocked: <br/>נכון אם הbootloader של המכשיר נעול, מה שמאפשר בדיקת Verified Boot ומונע הפצת תמונת מכשיר לא חתומה.<br/><br/>
+    verifiedBootState: <br/>מבנה נתונים זה מספק את מצב ההפעלה הנוכחי של המכשיר, שמייצג את רמת ההגנה שמסופקת למשתמש ולאפליקציות לאחר שהמכשיר מסיים לעלות.<br/><br/>
+    verifiedBootHash: <br/>דיגסט של כל הנתונים המוגנים על ידי Verified Boot. עבור מכשירים שעושים שימוש במימוש Android Verified Boot של Verified Boot, ערך זה מכיל את Digest של מבנה VBMeta, או מבנה metadata של Verified Boot.
+    </p>]]></string>
+    <string name="authorization_list_osVersion_description"><![CDATA[
+    גרסת מערכת ההפעלה של Android המשויכת לKeymaster, שצוינה כמספר שלם בן 6 ספרות. למשל, גרסה 8.1.0 מיוצגת כ080100.
+    ]]></string>
+    <string name="authorization_list_osPatchLevel_description"><![CDATA[
+    החודש והשנה המשויכים לתיקון האבטחה המשמש בKeymaster, שצוינו כמספר שלם בן 6 ספרות. למשל, תיקון אוגוסט 2018 מיוצג כ201808.
+    ]]></string>
+    <string name="authorization_list_attestationApplicationId_description"><![CDATA[
+    מבנה נתונים זה משקף את אמונת פלטפורמת Android לגבי אילו אפליקציות מורשות להשתמש בחומרת מפתח סודית תחת אימות. המזהה יכול להכיל חבילות מרובות אם ורק אם חבילות מרובות חולקות את הUID זהה.
+    ]]></string>
+    <string name="authorization_list_attestationIdBrand_description"><![CDATA[
+    מספק את שם המותג של המכשיר, כפי שמחזיר Build.BRAND בAndroid. שדה זה נקבע רק כאשר מבקשים אימות של מזהי המכשיר.
+    ]]></string>
+    <string name="authorization_list_attestationIdDevice_description"><![CDATA[
+    מספק את שם המכשיר של המכשיר, כפי שמחזיר Build.DEVICE בAndroid. שדה זה נקבע רק כאשר מבקשים אימות של מזהי המכשיר.
+    ]]></string>
+    <string name="authorization_list_attestationIdProduct_description"><![CDATA[
+    מספק את שם המוצר של המכשיר, כפי שמחזיר Build.PRODUCT בAndroid. שדה זה נקבע רק כאשר מבקשים אימות של מזהי המכשיר.
+    ]]></string>
+    <string name="authorization_list_attestationIdSerial_description"><![CDATA[
+    מספק את מספר הסיריאל של המכשיר. שדה זה נקבע רק כאשר מבקשים אימות של מזהי המכשיר.
+    ]]></string>
+    <string name="authorization_list_attestationIdImei_description"><![CDATA[
+    מספק את הIMEI של אחד הרדיוים במכשיר לפעולות ייבוא ויצירת מפתח מאומת. שדה זה נקבע רק כאשר מבקשים אימות של מזהי המכשיר.
+    ]]></string>
+    <string name="authorization_list_attestationIdSecondImei_description"><![CDATA[
+    מספק IMEI נוסף של אחד הרדיוים במכשיר לפעולות ייבוא ויצירת מפתח מאומת. שדה זה נקבע רק כאשר מבקשים אימות של מזהי המכשיר.
+    ]]></string>
+    <string name="authorization_list_attestationIdMeid_description"><![CDATA[
+    מספק את הMEIDs לכל הרדיוים במכשיר. שדה זה נקבע רק כאשר מבקשים אימות של מזהי המכשיר.
+    ]]></string>
+    <string name="authorization_list_attestationIdManufacturer_description"><![CDATA[
+    מספק את שם היצרן של המכשיר, כפי שמחזיר Build.MANUFACTURER בAndroid. שדה זה נקבע רק כאשר מבקשים אימות של מזהי המכשיר.
+    ]]></string>
+    <string name="authorization_list_attestationIdModel_description"><![CDATA[
+    מספק את שם הדגם של המכשיר, כפי שמחזיר Build.MODEL בAndroid. שדה זה נקבע רק כאשר מבקשים אימות של מזהי המכשיר.
+    ]]></string>
+    <string name="authorization_list_vendorPatchLevel_description"><![CDATA[
+    מציין את רמת תיקון האבטחה של תמונת הספק המותקנת במכשיר כדי להשתמש במפתח זה. הערך מופיע בפורמט YYYYMMDD, שמייצג את תאריך תיקון האבטחה של הספק. למשל, אם מפתח נוצר במכשיר Android עם תיקון האבטחה של הספק מ1 באוגוסט 2018, הערך יהיה 20180801.
+    ]]></string>
+    <string name="authorization_list_bootPatchLevel_description"><![CDATA[
+    מציין את רמת תיקון האבטחה של תמונת הkernel המותקנת במכשיר כדי להשתמש במפתח זה. הערך מופיע בפורמט YYYYMMDD, שמייצג את תאריך תיקון האבטחה של המערכת. למשל, אם מפתח נוצר במכשיר Android עם תיקון האבטחה של המערכת מ5 באוגוסט 2018, הערך יהיה 20180805.
+    ]]></string>
+    <string name="authorization_list_mgfDigest_description"><![CDATA[
+    מציין את אלגוריתמי הדיגסט של MGF1 שבהם ניתן להשתמש בהצפנה/פענוח RSA עם מילוי OAEP. ערכים אפשריים מוגדרים על ידי enums של Digest.
+    ]]></string>
+    <string name="authorization_list_earlyBootOnly_description"><![CDATA[
+    מפתחות שסומנו עם EARLY_BOOT_ONLY יכולים לשמש רק במהלך הפעלה מוקדמת, עד שIKeyMintDevice::earlyBootEnded() נקרא.
+    ]]></string>
+    <string name="authorization_list_usageCountLimit_description"><![CDATA[
+    מציין את מספר הפעמים שניתן להשתמש במפתח. ניתן להשתמש בזה כדי להגביל את השימוש במפתח. הערך הוא מספר שלם בן 32 ביט שמייצג את מספר הניסיונות שנותרו.
+    ]]></string>
+    <string name="authorization_list_deviceUniqueAttestation_description"><![CDATA[
+    הוא מציין שמבקשים אימות באמצעות מפתח ייחודי למכשיר, ולא מפתח batch. כאשר נעשה שימוש במפתח ייחודי למכשיר, השרשרת שהוחזרה צריכה להכיל שתיים או שלוש תעודות.
+    ]]></string>
+    <string name="authorization_list_identityCredentialKey_description"><![CDATA[
+    הוא משמש באימותים שמיוצרים על ידי IIdentityCredential HAL כאשר הHAL הזה מאמת את מפתחות התעודה. IIdentityCredential מייצר אימותים בסגנון KeyMint.
+    ]]></string>
+    <string name="authorization_list_moduleHash_description"><![CDATA[
+    מציין את hash הSHA-256 של פרטי המודול בפורמט DER.
+    ]]></string>
+
+    <string name="knox">אימות Samsung Knox</string>
+    <string name="knox_description"><![CDATA[
+    אימות Samsung Knox היא תכונה שמאמת את שלמות הנתונים של מכשיר Samsung על ידי בדיקה שהמכשיר אינו מופעל או מפעיל קושחה לא רשמית.
+    ]]></string>
+    <string name="knox_challenge">@string/attestation_challenge</string>
+    <string name="knox_challenge_description">@string/attestation_challenge_description</string>
+    <string name="knox_id_attest">אימות מזהה</string>
+    <string name="knox_id_attest_description"><![CDATA[
+    בדוק אם הIMEI ומספר הסיריאל שונו.
+    ]]></string>
+    <string name="knox_integrity">סטטוס שלמות</string>
+    <string name="knox_integrity_description"><![CDATA[
+    יישום Keymaster מהימן (TA) בSecure World אוסף נתונים אלו:
+    <ul>
+    <li gap="8sp">שם החבילה של האפליקציה המבקשת, קוד גרסה ומפתח מפתח.</li>
+    <li gap="8sp">מידע חתום על מצב המכשיר הנוכחי והסביבה הצפויה.</li>
+    <li gap="8sp">קריאות חומרה שמציינות אם קושחה לא מהימנה נטענה אי פעם למכשיר.</li>
+    </ul>
+    ]]></string>
+    <string name="knox_record_hash">Hash רשומת אימות</string>
+    <string name="knox_record_hash_description"><![CDATA[
+    דיגסט SHA256 של הTA המבקש את נתוני סטטוס השלמות מICCC.
+    ]]></string>
+</resources>
