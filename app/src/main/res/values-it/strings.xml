@@ -296,7 +296,7 @@
     Quando fornito a generateKey o importKey, questo tag specifica i dati necessari durante tutti gli usi della chiave.
     ]]></string>
     <string name="authorization_list_creationDateTime_description"><![CDATA[
-    Specifica la data e l\'ora in cui la chiave è stata creata, in millisecondi dal 1 gennaio 1970. Questo tag è opzionale e solo informativo.
+    Specifica la data e l\'ora di creazione della chiave, memorizzate in millisecondi dal 1° gennaio 1970 (Unix epoch), mostrate qui come data e ora UTC formattate. Questo tag è facoltativo e ha solo scopo informativo.
     ]]></string>
     <string name="authorization_list_origin_description"><![CDATA[
     Specifica dove è stata creata la chiave, se noto. Questo tag potrebbe non essere specificato durante la generazione o l\'importazione della chiave e deve essere aggiunto alle caratteristiche della chiave dal trustlet.
@@ -315,7 +315,7 @@
     La versione del sistema operativo Android associata a Keymaster, specificata come numero intero a sei cifre. Ad esempio, la versione 8.1.0 è rappresentata come 080100.
     ]]></string>
     <string name="authorization_list_osPatchLevel_description"><![CDATA[
-    Il mese e l\'anno associati alla patch di sicurezza in uso all\'interno di Keymaster, specificati come numero intero a sei cifre. Ad esempio, la patch di agosto 2018 è rappresentata come 201808.
+    Il mese e l\'anno associati alla patch di sicurezza utilizzata nel Keymaster, memorizzati come numero intero di sei cifre (YYYYMM), mostrati qui come YYYY-MM. Ad esempio, la patch di sicurezza di agosto 2018 viene mostrata come 2018-08.
     ]]></string>
     <string name="authorization_list_attestationApplicationId_description"><![CDATA[
     Questa struttura dati riflette la convinzione della piattaforma Android su quali app sono autorizzate a utilizzare il materiale della chiave segreta in fase di attestazione. L\'ID può comprendere più pacchetti se e solo se più pacchetti condividono lo stesso UID.
@@ -348,10 +348,10 @@
     Fornisce il nome del modello del dispositivo, come restituito da Build.MODEL in Android. Questo campo è impostato solo quando si richiede l\'attestazione degli identificatori del dispositivo.
     ]]></string>
     <string name="authorization_list_vendorPatchLevel_description"><![CDATA[
-    Specifica il livello della patch di sicurezza dell\'immagine del fornitore che deve essere installata sul dispositivo affinché questa chiave possa essere utilizzata. Il valore appare nella forma AAAA-MM-GG, che rappresenta la data della patch di sicurezza del fornitore. Ad esempio, se una chiave è stata generata su un dispositivo Android con la patch di sicurezza del fornitore del 1 agosto 2018 installata, questo valore sarebbe 20180801.
+    Specifica il livello della patch di sicurezza dell\'immagine del produttore che deve essere installata sul dispositivo affinché questa chiave possa essere utilizzata, mostrato qui come YYYY-MM-DD. Ad esempio, se una chiave è stata generata su un dispositivo Android con la patch di sicurezza del produttore del 1° agosto 2018 installata, questa app mostrerà 2018-08-01.
     ]]></string>
     <string name="authorization_list_bootPatchLevel_description"><![CDATA[
-    Specifica il livello della patch di sicurezza dell\'immagine del kernel che deve essere installata sul dispositivo affinché questa chiave possa essere utilizzata. Il valore appare nella forma AAAA-MM-GG, che rappresenta la data della patch di sicurezza del sistema. Ad esempio, se una chiave è stata generata su un dispositivo Android con la patch di sicurezza del sistema del 5 agosto 2018 installata, questo valore sarebbe 20180805.
+    Specifica il livello della patch di sicurezza dell\'immagine del kernel che deve essere installata sul dispositivo affinché questa chiave possa essere utilizzata, mostrato qui come YYYY-MM-DD. Ad esempio, se una chiave è stata generata su un dispositivo Android con la patch di sicurezza del sistema del 5 agosto 2018 installata, questa app mostrerà 2018-08-05.
     ]]></string>
     <string name="authorization_list_mgfDigest_description"><![CDATA[
     Specifica gli algoritmi di digest MGF1 che possono essere utilizzati con la crittografia/decrittografia RSA con padding OAEP. I valori possibili sono definiti dall\'enum Digest.

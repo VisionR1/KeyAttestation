@@ -296,7 +296,7 @@
     When provided to generateKey or importKey, this tag specifies data that is necessary during all uses of the key.
     ]]></string>
     <string name="authorization_list_creationDateTime_description"><![CDATA[
-    Specifies the date and time the key was created, in milliseconds since January 1, 1970. This tag is optional and informational only.
+    Specifies the date and time the key was created, stored as milliseconds since January 1, 1970 (Unix epoch), shown here as a formatted UTC date and time. This tag is optional and informational only.
     ]]></string>
     <string name="authorization_list_origin_description"><![CDATA[
     Specifies where the key was created, if known. This tag may not be specified during key generation or import, and must be added to the key characteristics by the trustlet.
@@ -315,7 +315,7 @@
     The version of the Android operating system associated with the Keymaster, specified as a six-digit integer. For example, version 8.1.0 is represented as 080100.
     ]]></string>
     <string name="authorization_list_osPatchLevel_description"><![CDATA[
-    The month and year associated with the security patch that is being used within the Keymaster, specified as a six-digit integer. For example, the August 2018 patch is represented as 201808.
+    The month and year associated with the security patch that is being used within the Keymaster, stored as a six-digit integer (YYYYMM), shown here as YYYY-MM. For example, the August 2018 patch would be shown as 2018-08.
     ]]></string>
     <string name="authorization_list_attestationApplicationId_description"><![CDATA[
     This data structure reflects the Android platform\'s belief as to which apps are allowed to use the secret key material under attestation. The ID can comprise multiple packages if and only if multiple packages share the same UID.
@@ -348,10 +348,10 @@
     Provides the device\'s model name, as returned by Build.MODEL in Android. This field is set only when requesting attestation of the device\'s identifiers.
     ]]></string>
     <string name="authorization_list_vendorPatchLevel_description"><![CDATA[
-    Specifies the vendor image security patch level that must be installed on the device for this key to be used. The value appears in the form YYYYMMDD, representing the date of the vendor security patch. For example, if a key were generated on an Android device with the vendor\'s August 1, 2018 security patch installed, this value would be 20180801.
+    Specifies the vendor image security patch level that must be installed on the device for this key to be used, shown here as YYYY-MM-DD. For example, if a key were generated on an Android device with the vendor\'s August 1, 2018 security patch installed, this app would show 2018-08-01.
     ]]></string>
     <string name="authorization_list_bootPatchLevel_description"><![CDATA[
-    Specifies the kernel image security patch level that must be installed on the device for this key to be used. The value appears in the form YYYYMMDD, representing the date of the system security patch. For example, if a key were generated on an Android device with the system\'s August 5, 2018 security patch installed, this value would be 20180805.
+    Specifies the kernel image security patch level that must be installed on the device for this key to be used, shown here as YYYY-MM-DD. For example, if a key were generated on an Android device with the system\'s August 5, 2018 security patch installed, this app would show 2018-08-05.
     ]]></string>
     <string name="authorization_list_mgfDigest_description"><![CDATA[
     Specifies the MGF1 digest algorithms that may be used with RSA encryption/decryption with OAEP padding. Possible values are defined by the Digest enum.

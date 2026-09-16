@@ -296,7 +296,7 @@
     Quando fornecida para generateKey ou importKey, esta tag especifica os dados necessários durante todos os usos da chave.
     ]]></string>
     <string name="authorization_list_creationDateTime_description"><![CDATA[
-    Especifica a data e hora em que a chave foi criada, em milissegundos, desde 1 de janeiro de 1970. Esta tag é opcional e apenas informativa.
+    Especifica a data e a hora em que a chave foi criada, armazenadas em milissegundos desde 1º de janeiro de 1970 (Unix epoch), exibidas aqui como data e hora UTC formatadas. Esta tag é opcional e tem apenas finalidade informativa.
     ]]></string>
     <string name="authorization_list_origin_description"><![CDATA[
     Especifica onde a chave foi criada, se conhecida. Esta tag não pode ser especificada durante a geração ou importação da chave e deve ser adicionada às características da chave pelo trustlet.
@@ -315,7 +315,7 @@
     A versão do sistema operacional Android associada ao Keymaster, especificada como um número inteiro de seis dígitos. Por exemplo, a versão 8.1.0 é representada como 080100.
     ]]></string>
     <string name="authorization_list_osPatchLevel_description"><![CDATA[
-    O mês e o ano associados ao patch de segurança que está sendo usado no Keymaster, especificado como um número inteiro de seis dígitos. Por exemplo, o patch de agosto de 2018 é representado como 201808.
+    O mês e o ano associados ao patch de segurança utilizado no Keymaster, armazenados como um número inteiro de seis dígitos (YYYYMM), exibidos aqui como YYYY-MM. Por exemplo, o patch de segurança de agosto de 2018 será exibido como 2018-08.
     ]]></string>
     <string name="authorization_list_attestationApplicationId_description"><![CDATA[
     Essa estrutura de dados reflete a crença da plataforma Android sobre quais apps têm permissão para usar o material da chave secreta sob o atestado. O ID pode compreender vários pacotes se e somente se vários pacotes compartilharem o mesmo UID.
@@ -348,10 +348,10 @@
     Fornece o nome do modelo do dispositivo, conforme retornado por Build.MODEL no Android. Este campo é definido apenas ao solicitar atestado dos identificadores do dispositivo.
     ]]></string>
     <string name="authorization_list_vendorPatchLevel_description"><![CDATA[
-    Especifica o nível do patch de segurança da imagem do fornecedor que deve ser instalado no dispositivo para que essa chave seja usada. O valor aparece no formato AAAAMMDD, representando a data do patch de segurança do fornecedor. Por exemplo, se uma chave fosse gerada em um dispositivo Android com o patch de segurança de 1 de agosto de 2018 do fornecedor instalado, esse valor seria 20180801.
+    Especifica o nível do patch de segurança da imagem do fabricante que deve estar instalado no dispositivo para que esta chave possa ser usada, exibido aqui como YYYY-MM-DD. Por exemplo, se uma chave foi gerada em um dispositivo Android com o patch de segurança do fabricante de 1º de agosto de 2018 instalado, este app exibirá 2018-08-01.
     ]]></string>
     <string name="authorization_list_bootPatchLevel_description"><![CDATA[
-    Especifica o nível do patch de segurança da imagem do kernel que deve ser instalado no dispositivo para que essa chave seja usada. O valor aparece no formato AAAAMMDD, representando a data do patch de segurança do sistema. Por exemplo, se uma chave fosse gerada em um dispositivo Android com o patch de segurança de 5 de agosto de 2018 do sistema instalado, esse valor seria 20180805.
+    Especifica o nível do patch de segurança da imagem do kernel que deve estar instalado no dispositivo para que esta chave possa ser usada, exibido aqui como YYYY-MM-DD. Por exemplo, se uma chave foi gerada em um dispositivo Android com o patch de segurança do sistema de 5 de agosto de 2018 instalado, este app exibirá 2018-08-05.
     ]]></string>
     <string name="authorization_list_mgfDigest_description"><![CDATA[
     Especifica os algoritmos de resumo MGF1 que podem ser usados ​​com criptografia/descriptografia RSA com preenchimento OAEP. Os valores possíveis são definidos pela enumeração Digest.

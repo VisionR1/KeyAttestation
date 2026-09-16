@@ -296,7 +296,7 @@
     如果将此标记提供给 generateKey 或 importKey，则可指定使用相应密钥时所必需的数据。
     ]]></string>
     <string name="authorization_list_creationDateTime_description"><![CDATA[
-    用于指定相应密钥的创建日期和时间（以距 1970 年 1 月 1 日的毫秒数计）。此标记为可选标记，仅供参考。
+    指定密钥的创建日期和时间，以自 1970 年 1 月 1 日（Unix epoch）以来的毫秒数存储，此处以格式化的 UTC 日期和时间显示。此标签为可选项，仅用于提供信息。
     ]]></string>
     <string name="authorization_list_origin_description"><![CDATA[
     用于指定相应密钥是在哪里创建的（如果知道）。在生成或导入密钥期间可以不指定此标记，但此标记必须要由 Trustlet 添加到密钥特性中。
@@ -315,7 +315,7 @@
     与 Keymaster 关联的 Android 操作系统的版本，使用一个 6 位整数表示。例如，版本 8.1.0 表示为 080100。
     ]]></string>
     <string name="authorization_list_osPatchLevel_description"><![CDATA[
-    与 Keymaster 中使用的安全补丁程序关联的月份和年度，使用一个 6 位整数表示。例如，2018 年 8 月的补丁程序表示为 201808。
+    与 Keymaster 中使用的安全补丁对应的月份和年份，以六位整数（YYYYMM）存储，此处显示为 YYYY-MM。例如，2018 年 8 月的安全补丁显示为 2018-08。
     ]]></string>
     <string name="authorization_list_attestationApplicationId_description"><![CDATA[
     此数据结构反映了 Android 平台允许哪些应用使用认证中的密钥材料。当且仅当多个软件包共享同一 UID 时，此 ID 才可以包含多个软件包。
@@ -348,10 +348,10 @@
     提供设备的型号名称（由 Android 中的 Build.MODEL 返回）。仅在请求认证该设备的标识符时才会设置此字段。
     ]]></string>
     <string name="authorization_list_vendorPatchLevel_description"><![CDATA[
-    规定为了使用此密钥而必须在设备上安装的供应商映像安全补丁级别。此值以 YYYYMMDD 的形式显示，表示供应商安全补丁的日期。例如，如果密钥在 Android 设备上生成，且相应设备安装了供应商于 2018 年 8 月 1 日提供的安全补丁，其值将表示为 20180801。
+    指定设备必须安装的厂商镜像安全补丁级别才能使用此密钥，此处显示为 YYYY-MM-DD。例如，如果密钥是在安装了厂商 2018 年 8 月 1 日安全补丁的 Android 设备上生成的，此应用将显示 2018-08-01。
     ]]></string>
     <string name="authorization_list_bootPatchLevel_description"><![CDATA[
-    规定为了使用此密钥而必须在设备上安装的内核映像安全补序级别。此值以 YYYYMMDD 的形式显示，表示系统安全补丁的日期。例如，如果密钥在 Android 设备上生成，且相应设备安装了系统于 2018 年 8 月 5 日提供的安全补丁，其值将表示为 20180805。
+    指定设备必须安装的内核镜像安全补丁级别才能使用此密钥，此处显示为 YYYY-MM-DD。例如，如果密钥是在安装了系统 2018 年 8 月 5 日安全补丁的 Android 设备上生成的，此应用将显示 2018-08-05。
     ]]></string>
     <string name="authorization_list_mgfDigest_description"><![CDATA[
     指定可与带有 OAEP 填充的 RSA 加密/解密一起使用的 MGF1 摘要算法。可能的值由 Digest 枚举定义。

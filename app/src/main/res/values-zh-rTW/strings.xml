@@ -296,7 +296,7 @@
     如果將此標記提供給 generateKey 或 importKey，則可指定使用對應金鑰時所必需的資料。
     ]]></string>
     <string name="authorization_list_creationDateTime_description"><![CDATA[
-    用於指定金鑰的建立日期和時間（以距 1970 年 1 月 1 日的毫秒數計）。此標記為選配標記，僅供參考。
+    指定金鑰的建立日期與時間，以自 1970 年 1 月 1 日（Unix epoch）起的毫秒數儲存，此處以格式化的 UTC 日期與時間顯示。此標籤為選用項目，僅供資訊用途。
     ]]></string>
     <string name="authorization_list_origin_description"><![CDATA[
     用於指定金鑰的建立位置（如果知道）。在建立或匯入金鑰期間可以不指定此標記，但此標記必須要由 Trustlet 新增到金鑰特性中。
@@ -315,7 +315,7 @@
     與 Keymaster 關聯 Android 作業系統的版本，使用一個 6 位整數表示。例如：版本 8.1.0 表示為 080100。
     ]]></string>
     <string name="authorization_list_osPatchLevel_description"><![CDATA[
-    與 Keymaster 關聯 Android 安全性更新修補的月份和年度，使用一個 6 位整數表示。例如：2018 年 8 月的更新修補表示為 201808。
+    與 Keymaster 中使用的安全性更新相關的月份與年份，以六位數整數（YYYYMM）儲存，此處顯示為 YYYY-MM。例如，2018 年 8 月的安全性更新顯示為 2018-08。
     ]]></string>
     <string name="authorization_list_attestationApplicationId_description"><![CDATA[
     此資料結構反映了 Android 平台允許哪些應用程式使用認證中的金鑰材料。只有多個套件軟體共享同一個 UID 時，此識別碼才可以包含多個套件軟體。
@@ -348,10 +348,10 @@
     提供裝置的型號名稱（由 Android 中的 Build.MODEL 回傳）。只在請求認證該裝置的識別碼時才會設置此欄位。
     ]]></string>
     <string name="authorization_list_vendorPatchLevel_description"><![CDATA[
-    規定為了使用此金鑰而必須在裝置上安裝的供應商映像安全更新修補等級。此值以 YYYYMMDD 的形式顯示，表示供應商安全更新修補的日期。例如：如果金鑰在 Android 裝置上產生，且對應裝置安裝了供應商於 2018 年 8 月 1 日提供的安全更新修補，其值將表示為 20180801。
+    指定裝置必須安裝的廠商映像安全性更新層級才能使用此金鑰，此處顯示為 YYYY-MM-DD。例如，如果金鑰是在安裝了廠商 2018 年 8 月 1 日安全性更新的 Android 裝置上產生，此應用程式會顯示 2018-08-01。
     ]]></string>
     <string name="authorization_list_bootPatchLevel_description"><![CDATA[
-    規定為了使用此金鑰而必須在裝置上安裝的內核映像安全更新修補等級。此值以 YYYYMMDD 的形式顯示，表示內核安全更新修補的日期。例如：如果金鑰在 Android 裝置上產生，且對應裝置安裝了內核於 2018 年 8 月 5 日提供的安全更新修補，其值將表示為 20180805。
+    指定裝置必須安裝的核心映像安全性更新層級才能使用此金鑰，此處顯示為 YYYY-MM-DD。例如，如果金鑰是在安裝了系統 2018 年 8 月 5 日安全性更新的 Android 裝置上產生，此應用程式會顯示 2018-08-05。
     ]]></string>
     <string name="authorization_list_mgfDigest_description"><![CDATA[
     指定帶有 OAEP 填充的 RSA 加密/解密一起使用的 MGF1 摘要算法。可能的值由「摘要」枚舉定義。
