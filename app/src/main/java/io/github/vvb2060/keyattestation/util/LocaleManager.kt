@@ -16,14 +16,14 @@ import java.util.Locale
 object LocaleManager {
 
     private val supportedLocales = listOf(
-        Locale("en"),
-        Locale("el"),
-		Locale("it"),
-        Locale("iw"),
-        Locale("pt", "BR"),
-        Locale("uk", "UA"),
-        Locale("zh", "CN"),
-        Locale("zh", "TW")
+        Locale("el"),       // Greek
+        Locale("en"),       // English
+        Locale("it"),       // Italian
+        Locale("iw"),       // Hebrew
+        Locale("pt", "BR"), // Portuguese (Brazil)
+        Locale("uk", "UA"), // Ukrainian
+        Locale("zh", "CN"), // Chinese (Simplified)
+        Locale("zh", "TW")  // Chinese (Traditional)
     )
 
     fun getLocaleCodes() = listOf("") + supportedLocales.map {
