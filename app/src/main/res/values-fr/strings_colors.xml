@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="color_default_gray">Gris (Default)</string>
+    <string name="color_original">Original</string>
+    <string name="color_pure_black">Noir intense</string>
+    <string name="color_blue">Bleu</string>
+    <string name="color_green">Vert</string>
+    <string name="color_orange">Orange</string>
+    <string name="color_pink">Rose</string>
+    <string name="color_purple">Violet</string>
+    <string name="color_red">Rouge</string>
+    <string name="color_dynamic">Dynamique (Material You)</string>
+</resources>

@@ -1,0 +1,398 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="menu_language">Langue</string>
+    <string name="menu_color">Couleur</string>
+    <string name="secret_mode">Mode Secret</string>
+    <string name="use_shizuku">Utilisez Shizuku</string>
+    <string name="use_sak">Utiliser l\'attestation Knox</string>
+    <string name="use_strongbox">Utilisez StrongBox</string>
+    <string name="use_attest_key">Utiliser la clé d\'attestation</string>
+    <string name="import_attest_key">Clé d\'attestation à importer</string>
+    <string name="attest_device_props">Vérifier les propriétés de l\'appareil</string>
+    <string name="attest_rsa_key">Certifier une clé RSA</string>
+    <string name="id_type_serial">Certifier le numéro de série de l\'appareil</string>
+    <string name="id_type_imei">Vérifier l\'IMEI de l\'appareil</string>
+    <string name="id_type_meid">Vérifier le MEID de l\'appareil</string>
+    <string name="include_unique_id">Ajouter un identifiant unique</string>
+    <string name="rkp_test">Test RKP</string>
+    <string name="reset">Réinitialiser</string>
+    <string name="load_certs">Charger à partir d\'un fichier</string>
+    <string name="save_certs">Enregistrer dans un fichier</string>
+    <string name="about">À propos</string>
+    <string name="open_source_info">Ce logiciel est open source sous licence %2$s (%1$s).</string>
+    <string name="install_shizuku">Installez Shizuku pour utiliser l\'attestation d\'identité (%s).</string>
+    <string name="start_shizuku">Shizuku n\'est pas fonctionnel.</string>
+
+    <string name="bootloader_locked">Le bootloader est verrouillé</string>
+    <string name="bootloader_user">La racine de confiance définie par l\'utilisateur final</string>
+    <string name="bootloader_unlocked">Le bootloader est déverrouillé</string>
+    <string name="bootloader_unknown">L\'état du bootloader est inconnu</string>
+    <string name="bootloader_summary_sw_level">Cet appareil ne prend pas en charge l\'attestation de clé au niveau matériel.</string>
+    <string name="cert_chain_not_trusted">La chaîne de certificats n\'est pas fiable</string>
+    <string name="cert_chain_not_trusted_summary">Un certificat a été révoqué ou la vérification de la signature a échoué dans la chaîne de certification.</string>
+    <string name="unknown_root_cert">Certificat racine inconnu</string>
+    <string name="unknown_root_cert_summary">Le certificat racine n\'est pas une autorité de certification de confiance connue.</string>
+    <string name="aosp_root_cert">Certificat racine d\'attestation logicielle AOSP</string>
+    <string name="aosp_root_cert_summary">La clé privée de la clé d\'attestation est connue; la chaîne de certification peut être altérée.</string>
+    <string name="google_root_cert">Certificat racine d\'attestation matérielle de Google</string>
+    <string name="google_root_cert_summary">Les appareils compatibles GMS peuvent utiliser une clé d\'attestation signée par Google.</string>
+    <string name="google_root_cert_rkp">Gestion des clés à distance par Google</string>
+    <string name="google_root_cert_rkp_summary">Une clé d\'attestation fournie à distance offre une sécurité renforcée et une meilleure disponibilité.</string>
+    <string name="knox_root_cert">Certificat racine d\'attestation Samsung Knox</string>
+    <string name="knox_root_cert_summary">L\'attestation Knox est signée à l\'aide de la clé d\'attestation Samsung (SAK).</string>
+    <string name="oem_root_cert">Certificat racine OEM</string>
+    <string name="oem_root_cert_summary">Cet appareil considère ce certificat racine comme fiable, mais il se peut que d\'autres appareils ne le considèrent pas comme tel.</string>
+    <string name="software_attestation">Attestation logicielle</string>
+    <string name="software_attestation_summary">Cette clé n\'est pas protégée par le matériel. L\'attestation a été générée par un logiciel, sans racine de confiance matérielle.</string>
+    <string name="verified_boot_key_suspicious">La clé du système de démarrage vérifiée est invalide</string>
+    <string name="verified_boot_key_suspicious_summary">La clé du système de démarrage vérifié est composée uniquement de zéros, ce qui n\'est normal que si le bootloader est déverrouillé ou non vérifié. C\'est un signe évident d\'altération.</string>
+
+    <string name="cert_chain">Chaîne de certificats</string>
+    <string name="cert_chain_description">Une chaîne de certificats est une liste de certificats utilisés pour authentifier une clé. La chaîne commence par le certificat associé à cette clé, et chaque certificat est signé par le certificat suivant dans la chaîne. La chaîne se termine par un certificat racine, et la fiabilité de l\'attestation dépend du certificat racine de la chaîne.</string>
+    <string name="cert_info">Informations sur le certificat</string>
+    <string name="cert_subject">sujet: </string>
+    <string name="cert_not_before">de: </string>
+    <string name="cert_not_after">jusqu\'à: </string>
+    <string name="cert_error_sign">erreur de signature: </string>
+    <string name="cert_error_revoked">révoqué: </string>
+    <string name="cert_error_expired">expiré: </string>
+    <string name="provisioning_info_certs_issued">nombre de certificats délivrés au cours des 30 derniers jours: </string>
+    <string name="provisioning_info_manufacturer">fabricant: </string>
+    <string name="revocation_list_publish_time">Date de publication de la liste des révocations</string>
+    <string name="revocation_list_description">La liste de révocation sert à vérifier si des certificats ont été révoqués. Elle indique la date de publication de la liste de révocation actuellement utilisée.</string>
+    <string name="revocation_list_save">Enregistrer</string>
+    <string name="revocation_list_save_unavailable">Connectez-vous à Internet au moins une fois pour télécharger la liste CRL avant d\'enregistrer</string>
+    <string name="revocation_list_save_success">Enregistré</string>
+    <string name="revocation_list_save_failed">Non sauvegardé</string>
+    
+    <string name="revocation_status_initial">⚙️ Liste initiale téléchargée</string>
+    <string name="revocation_status_new_fetch">✨ Nouvelle liste récupérée!</string>
+    <string name="revocation_status_up_to_date">✅ CRL : Dernières informations</string>
+    <string name="revocation_status_offline_cached">⚠️ Appareil hors ligne - utilisation d\'une liste CRL mise en cache</string>
+    <string name="revocation_status_offline_bundled">❌ Hors ligne - CRL obsolète</string>
+
+    <string name="error_attest_rsa_key_ec_only">Aucune chaîne de certificats RSA</string>
+    <string name="error_attest_rsa_key_ec_only_summary"><![CDATA[Le fichier ne contient que la chaîne de certificats EC.<br><br>Pour l\'afficher, désactivez la clé RSA Attest.]]></string>
+	<string name="error_attest_ec_key_rsa_only">Aucune chaîne de certificats EC</string>
+	<string name="error_attest_ec_key_rsa_only_summary"><![CDATA[Le fichier ne contient que la chaîne de certificats RSA.<br><br>Pour l\'afficher, activez la clé RSA Attest.]]></string>
+	<string name="error_invalid_file">Impossible d\'analyser le fichier</string>
+	<string name="error_invalid_file_summary"><![CDATA[Causes possibles :<br><br>• Fichier corrompu ou altéré<br><br>• Peut contenir des caractères non valides<br><br>• Format de fichier non pris en charge]]></string>
+
+    <string name="error_message_subtitle">Messages détaillés:</string>
+    <string name="error_unknown">Erreur inconnue</string>
+    <string name="error_unavailable">Impossible de certifier</string>
+    <string name="error_unavailable_summary">
+    L\'attestation a échoué. Modifiez les options dans le menu et réessayez.
+    L\'une des raisons courantes expliquant l\'échec systématique de l\'attestation est l\'impossibilité d\'utiliser la clé d\'attestation fournie par le fabricant,
+    probablement en raison d\'un périphérique mal configuré ou d\'une partition persistante corrompue.
+    </string>
+    <string name="error_cant_parse_cert">Impossible d\'analyser le certificat</string>
+    <string name="error_cant_parse_cert_summary">
+    Le format du certificat est incorrect ou contient des fonctionnalités non prises en charge.
+    </string>
+    <string name="error_strongbox_unavailable">StrongBox n\'est pas disponible</string>
+    <string name="error_strongbox_unavailable_summary">
+    Cet appareil est censé prendre en charge StrongBox, mais cette fonctionnalité n\'est actuellement pas disponible.
+    </string>
+    <string name="error_deviceids_unavailable">Impossible de valider les identifiants des appareils</string>
+    <string name="error_deviceids_unavailable_summary">
+    Cet appareil est censé prendre en charge l\'attestation d\'identité, mais les identifiants n\'existent pas ou ne correspondent pas,
+    ou bien l\'appareil ne peut plus valider ses identifiants. Modifiez les paramètres dans le menu et réessayez.
+    </string>
+    <string name="error_out_of_keys">Aucune clé fournie à distance pour l\'attestation</string>
+    <string name="error_out_of_keys_summary">
+    Cet appareil n\'est pas enregistré auprès du serveur de gestion des clés, ou bien ce dernier refuse systématiquement de délivrer des clés.
+    </string>
+    <string name="error_out_of_keys_transient">Il n\'y a actuellement aucune clé provisionnée à distance pour l\'attestation</string>
+    <string name="error_out_of_keys_transient_summary">
+    Le nombre de clés disponibles est épuisé. Veuillez réessayer en vous connectant à Internet.
+    Si le serveur refuse temporairement de délivrer des clés, vérifiez s\'il existe des mises à jour du système.
+    </string>
+    <string name="error_unavailable_transient">Impossible pour le moment de certifier</string>
+    <string name="error_unavailable_transient_summary">
+    Ce problème est temporaire. Modifiez les paramètres dans le menu, puis réessayez.
+    </string>
+    <string name="error_keys_not_provisioned">Pas de clés d\'attestation</string>
+    <string name="error_keys_not_provisioned_summary">
+    Impossible de récupérer les clés d\'attestation fournies à distance ; aucune clé d\'attestation n\'a été fournie par le fabricant.
+    </string>
+    <string name="error_remote_key_provisioning">Erreur de déploiement de clés à distance</string>
+    <string name="error_remote_key_provisioning_summary">
+    Impossible de récupérer la clé d\'attestation auprès du serveur de gestion des clés.
+    </string>
+
+    <string name="rpc_hardware_info">Informations sur le matériel</string>
+    <string name="rpc_hardware_info_description">
+    Informations matérielles du composant installé à distance.
+    </string>
+    <string name="rpc_version_number">Version</string>
+    <string name="rpc_version_number_description">
+    Version de déploiement du matériel des composants fournis à distance.
+    La version indiquée ici doit correspondre à celle mentionnée dans le CsrPayload généré par l\'interface HAL.
+    </string>
+    <string name="rpc_author_name">Fournisseur</string>
+    <string name="rpc_author_name_description">
+    Nom de l\'organisation de l\'auteur de l\'implémentation de IRemotelyProvisionedComponent.
+    </string>
+    <string name="rpc_unique_id">Identifiant</string>
+    <string name="rpc_unique_id_description">
+    Un identifiant opaque pour cette implémentation de IRemotelyProvisionedComponent.
+    Chaque implémentation doit disposer d\'un identifiant unique par rapport à toutes les autres implémentations, et celui-ci doit être cohérent sur tous les appareils.
+    </string>
+    <string name="rpc_eek_curve">Courbe EEK</string>
+    <string name="rpc_eek_curve_description">
+    La courbe utilisée pour valider la chaîne de certificats de la clé de chiffrement de point d\'extrémité (EEK) et négocier la clé GEEK pour le chiffrement des données protégées (ProtectedData).
+    Utilisé uniquement par le flux CSR V1/V2 ; la version V3 a complètement supprimé l\'EEK.
+    </string>
+    <string name="rkp_device_info">Informations sur l\'appareil</string>
+    <string name="rkp_device_info_description">
+    Les informations sur le périphérique contiennent des données relatives au périphérique signé par le HAL IRemotelyProvisionedComponent.
+    Ces valeurs sont destinées à être vérifiées par le serveur afin de s\'assurer que la demande de signature de certificat,
+    générée par une instance HAL IRemotelyProvisionedComponent, provient bien de l\'appareil attendu,
+    sur la base des valeurs initialement chargées lors de la fabrication de l\'appareil en usine.
+    </string>
+    <string name="rkp_dice_chain">Chaîne de certificats DICE</string>
+    <string name="rkp_dice_chain_description">
+    La chaîne DICE reflète les étapes de démarrage de l\'appareil.
+    Chaque entrée contient les informations relatives au code et à la configuration d\'une étape de démarrage et est signée par une clé dérivée de l\'étape précédente.
+    Une chaîne dégénérée ne contient qu\'une seule entrée auto-signée et ne comporte aucune mesure de démarrage.
+    </string>
+    <string name="dice_chain_valid">Chaîne DICE vérifiée</string>
+    <string name="dice_chain_valid_summary">Chaque entrée de la chaîne DICE est correctement signée par la clé de l\'étape de démarrage précédente.</string>
+    <string name="dice_chain_degenerate">Chaîne DICE dégénérée</string>
+    <string name="dice_chain_degenerate_summary">La chaîne DICE est constituée d\'une seule entrée auto-signée. Sa signature est valide, mais elle ne contient aucune mesure relative à la phase de démarrage.</string>
+    <string name="dice_chain_invalid">Signature de la chaîne DICE non valide</string>
+    <string name="dice_chain_invalid_summary">Une signature dans la chaîne DICE n\'a pas pu être vérifiée par rapport à la clé de l\'étape précédente. La chaîne est peut-être falsifiée ou corrompue.</string>
+    <string name="rkp_hostname">Configuration à distance du nom d\'hôte</string>
+    <string name="rkp_hostname_empty">La mise à disposition des clés à distance est désactivée</string>
+
+    <string name="attestation">Attestation</string>
+    <string name="attestation_version_description"><![CDATA[<font face="sans-serif-medium">Version:</font><br>La version de la fonctionnalité d\'attestation de clé.]]></string>
+    <string name="keymaster_version_description"><![CDATA[<font face="sans-serif-medium">Version:</font><br>La version de la couche d\'abstraction matérielle (HAL) Keymaster ou KeyMint.]]></string>
+    <string name="security_level_description"><![CDATA[<font face="sans-serif-medium">Niveau de sécurité:</font><br>Cette structure de données indique le niveau de protection dont bénéficie une fonctionnalité logicielle, telle qu\'une paire de clés, en fonction de son emplacement sur l\'appareil.<p><ul><li gap="8sp"><font face="sans-serif-medium">Logiciel</font><br>La logique de création et de gestion de cette fonctionnalité est implémentée dans le système Android. En ce qui concerne la création et le stockage des paires de clés, cet emplacement est moins sécurisé que le TEE, mais plus sécurisé que l\'espace de processus de votre application.</li><li gap="8sp"><font face="sans-serif-medium">Environnement Fiable</font><br>La logique de création et de gestion de la fonctionnalité est implémentée dans du matériel sécurisé, tel qu’un TEE. Pour la création et le stockage des paires de clés, cet emplacement est plus sûr car le matériel sécurisé est hautement résistant aux attaques à distance.</li><li gap="8sp"><font face="sans-serif-medium">StrongBox</font><br>La logique de création et de gestion de la fonctionnalité est implémentée dans un <a href="https://developer.android.com/training/articles/keystore#HardwareSecurityModule">Hardware security module</a>. Pour la création et le stockage des paires de clés, cet emplacement est plus sûr car il est hautement résistant aux compromissions à distance et aux attaques matérielles visant le module.</li></ul>]]></string>
+    <string name="attestation_summary_format">Version: %1$s\nNiveau de sécurité : %2$s</string>
+    <string name="attestation_challenge">Contestation d\'une certification</string>
+    <string name="attestation_challenge_description">Contient le code d\'authentification fourni lors de la création de la clé. Vérifiez si cette valeur correspond à celle fournie par votre serveur. Dans le cas contraire, votre service pourrait être vulnérable à la réutilisation d\'anciens certificats d\'attestation.</string>
+    <string name="unique_id">Identifiant unique</string>
+    <string name="unique_id_description"><![CDATA[Cette valeur permet d\'identifier l\'appareil, mais uniquement pendant une durée limitée. Il est <a href="https://source.android.com/security/keystore/attestation#unique-id">calculé</a> et n\'est utilisé que par les applications système. Dans toutes les autres applications, le champ « uniqueId » est vide.]]></string>
+
+    <string name="empty">(vide)</string>
+    <string name="security_level_software">Logiciel</string>
+    <string name="security_level_trusted_environment">Environnement fiable</string>
+    <string name="security_level_strongbox">StrongBox</string>
+
+    <string name="sw_enforced_description"><![CDATA[Cette fonctionnalité est gérée par le système Android, et non par le matériel de l\'appareil.]]></string>
+    <string name="tee_enforced_description"><![CDATA[Cette fonctionnalité est assurée par le matériel de l\'appareil.]]></string>
+
+    <string name="authorization_list">Liste des autorisations</string>
+    <string name="authorization_list_purpose">Objectif</string>
+    <string name="authorization_list_algorithm">Algorithme</string>
+    <string name="authorization_list_keySize">Taille de la clé</string>
+    <string name="authorization_list_digest">Résumés</string>
+    <string name="authorization_list_padding">Remplissage</string>
+    <string name="authorization_list_ecCurve">Courbe EC</string>
+    <string name="authorization_list_rsaPublicExponent">Exposant public RSA</string>
+    <string name="authorization_list_rollbackResistance">Pas de retour en arrière</string>
+    <string name="authorization_list_activeDateTime">Date et heure de début de validité</string>
+    <string name="authorization_list_originationExpireDateTime">Date et heure d\'expiration de la création</string>
+    <string name="authorization_list_usageExpireDateTime">Date et heure d\'expiration de l\'utilisation</string>
+    <string name="authorization_list_noAuthRequired">Aucune authentification requise</string>
+    <string name="authorization_list_userAuthType">Type d\'authentification de l\'utilisateur</string>
+    <string name="authorization_list_authTimeout">Délai d\'expiration de l\'authentification</string>
+    <string name="authorization_list_allowWhileOnBody">Autoriser si porté sur soi</string>
+    <string name="authorization_list_trustedUserPresenceRequired">Présence d\'un utilisateur de confiance requise</string>
+    <string name="authorization_list_trustedConfirmationRequired">Confirmation fiable requise</string>
+    <string name="authorization_list_unlockedDeviceRequired">Un appareil débloqué est nécessaire</string>
+    <string name="authorization_list_allApplications">Toutes les applications</string>
+    <string name="authorization_list_applicationId">Identifiant de l\'application</string>
+    <string name="authorization_list_creationDateTime">Date et heure de création</string>
+    <string name="authorization_list_origin">Origine</string>
+    <string name="authorization_list_rollbackResistant">Pas de risque de retour en arrière</string>
+    <string name="authorization_list_rootOfTrust">Racine de confiance</string>
+	<string name="copy_verifiedBootHash">Copier la valeur verifiedBootHash</string>
+	<string name="copied_verifiedBootHash_to_clipboard">verifiedBootHash copié dans le presse-papiers!</string>
+    <string name="authorization_list_osVersion">Version de l\'OS</string>
+    <string name="authorization_list_osPatchLevel">Niveau de correctif de l\'OS</string>
+    <string name="authorization_list_attestationApplicationId">Identifiant de l\'application</string>
+    <string name="authorization_list_attestationIdBrand">Marque</string>
+    <string name="authorization_list_attestationIdDevice">Appareil</string>
+    <string name="authorization_list_attestationIdProduct">Produit</string>
+    <string name="authorization_list_attestationIdSerial">Série</string>
+    <string name="authorization_list_attestationIdImei">IMEI</string>
+    <string name="authorization_list_attestationIdSecondImei">Deuxième IMEI</string>
+    <string name="authorization_list_attestationIdMeid">MEID</string>
+    <string name="authorization_list_attestationIdManufacturer">Fabricant</string>
+    <string name="authorization_list_attestationIdModel">Modèle</string>
+    <string name="authorization_list_vendorPatchLevel">Niveau de correctif du fournisseur</string>
+    <string name="authorization_list_bootPatchLevel">Niveau du patch de démarrage</string>
+    <string name="authorization_list_mgfDigest">Condensé MGF RSA-OAEP</string>
+    <string name="authorization_list_earlyBootOnly">Démarrage anticipé uniquement</string>
+    <string name="authorization_list_usageCountLimit">Limite du nombre d\'utilisations</string>
+    <string name="authorization_list_deviceUniqueAttestation">Attestation spécifique à l’appareil</string>
+    <string name="authorization_list_identityCredentialKey">Clé d\'identification</string>
+    <string name="authorization_list_moduleHash">Hachage du module</string>
+
+    <string name="authorization_list_description"><![CDATA[
+    Cette structure de données contient les propriétés de la paire de clés elles-mêmes, telles qu’elles sont définies dans la couche d’abstraction matérielle (HAL) de Keymaster ou KeyMint. Vous comparez ces valeurs à l’état actuel de l’appareil ou à un ensemble de valeurs attendues afin de vérifier qu’une paire de clés est toujours valide pour une utilisation dans votre application.
+    ]]></string>
+    <string name="authorization_list_purpose_description"><![CDATA[
+    Précise l\'ensemble des finalités pour lesquelles la clé peut être utilisée.
+    ]]></string>
+    <string name="authorization_list_algorithm_description"><![CDATA[
+    Spécifie l\'algorithme cryptographique avec lequel la clé est utilisée. Dans un objet « Liste d\'autorisation d\'attestation », la valeur de l\'algorithme est toujours RSA ou EC.
+    ]]></string>
+    <string name="authorization_list_keySize_description"><![CDATA[
+    Spécifie la taille en bits de la clé, calculée selon la méthode habituelle pour l\'algorithme de la clé.
+    ]]></string>
+    <string name="authorization_list_digest_description"><![CDATA[
+    Spécifie les algorithmes de hachage pouvant être utilisés avec la clé pour effectuer des opérations de signature et de vérification. Cette balise s\'applique aux clés RSA, ECDSA et HMAC.
+    ]]></string>
+    <string name="authorization_list_padding_description"><![CDATA[
+    Spécifie les modes de remplissage pouvant être utilisés avec la clé. Cette balise concerne les clés RSA et AES.
+    ]]></string>
+    <string name="authorization_list_ecCurve_description"><![CDATA[
+    L\'ensemble des paramètres utilisés pour générer une paire de clés à courbe elliptique (EC), qui utilise le protocole ECDSA pour la signature et la vérification, au sein du keystore du système Android.
+    ]]></string>
+    <string name="authorization_list_rsaPublicExponent_description"><![CDATA[
+    Spécifie la valeur de l\'exposant public d\'une paire de clés RSA. Cette balise ne concerne que les clés RSA et est obligatoire pour toutes les clés RSA.
+    ]]></string>
+    <string name="authorization_list_rollbackResistance_description"><![CDATA[
+    Indique que la clé est protégée contre une restauration, ce qui signifie que lorsqu’elle est supprimée à l’aide de la commande `deleteKey` ou `deleteAllKeys`, elle est définitivement supprimée et devient inutilisable. Il est possible que des clés ne portant pas cette balise soient supprimées puis restaurées à partir d’une sauvegarde.
+    ]]></string>
+    <string name="authorization_list_activeDateTime_description"><![CDATA[
+    Indique la date et l\'heure auxquelles la clé devient active.
+    ]]></string>
+    <string name="authorization_list_originationExpireDateTime_description"><![CDATA[
+    Indique la date et l\'heure auxquelles la clé expire à des fins de signature et de chiffrement.
+    ]]></string>
+    <string name="authorization_list_usageExpireDateTime_description"><![CDATA[
+    Indique la date et l\'heure auxquelles la clé expire à des fins de vérification et de déchiffrements.
+    ]]></string>
+    <string name="authorization_list_noAuthRequired_description"><![CDATA[
+    Indique qu\'aucune authentification n\'est requise pour utiliser cette clé.
+    ]]></string>
+    <string name="authorization_list_userAuthType_description"><![CDATA[
+    Spécifie les types d\'identifiants utilisateur pouvant être utilisés pour autoriser cette clé.
+    ]]></string>
+    <string name="authorization_list_authTimeout_description"><![CDATA[
+    Spécifie la durée, en secondes, pendant laquelle la clé est autorisée à être utilisée, après l\'authentification.
+    ]]></string>
+    <string name="authorization_list_allowWhileOnBody_description"><![CDATA[
+    Permet d\'utiliser la clé après l\'expiration du délai d\'authentification si l\'utilisateur porte toujours l\'appareil sur lui. Notez qu\'un capteur de présence sécurisé détermine si l\'appareil est porté par l\'utilisateur.
+    ]]></string>
+    <string name="authorization_list_trustedUserPresenceRequired_description"><![CDATA[
+    Précise que cette clé n\'est utilisable que si l\'utilisateur a fourni une preuve de sa présence physique.
+    ]]></string>
+    <string name="authorization_list_trustedConfirmationRequired_description"><![CDATA[
+    Précise que la clé ne peut être utilisée que si l\'utilisateur confirme les données à signer à l\'aide d\'un jeton d\'approbation (token).
+    ]]></string>
+    <string name="authorization_list_unlockedDeviceRequired_description"><![CDATA[
+    Exige que l\'écran de l\'appareil soit déverrouillé si la clé est utilisée.
+    ]]></string>
+    <string name="authorization_list_allApplications_description"><![CDATA[
+    Indique si toutes les applications d\'un appareil peuvent accéder à la paire de clés.
+    ]]></string>
+    <string name="authorization_list_applicationId_description"><![CDATA[
+    Lorsqu\'elle est fournie à la fonction `generateKey` ou `importKey`, cette balise spécifie les données nécessaires à chaque utilisation de la clé.
+    ]]></string>
+    <string name="authorization_list_creationDateTime_description"><![CDATA[
+    Indique la date et l\'heure de création de la clé, stockées en millisecondes depuis le 1er janvier 1970 (époque Unix), affichées ici sous la forme d\'une date et d\'une heure UTC formatées. Cette balise est facultative et n\'a qu\'une valeur informative.
+    ]]></string>
+    <string name="authorization_list_origin_description"><![CDATA[
+    Indique où la clé a été créée, si cette information est connue. Cette balise ne peut pas être spécifiée lors de la génération ou de l\'importation de la clé, et doit être ajoutée aux caractéristiques de la clé par le module de confiance (Trustlet).
+    ]]></string>
+    <string name="authorization_list_rollbackResistant_description"><![CDATA[
+    Indique que la clé est protégée contre la restauration, ce qui signifie que lorsqu’elle est supprimée à l’aide de la commande `deleteKey` ou `deleteAllKeys`, elle est définitivement supprimée et devient inutilisable. Il est possible que des clés ne portant pas cette balise soient supprimées puis restaurées à partir d’une sauvegarde.
+    ]]></string>
+    <string name="authorization_list_rootOfTrust_description"><![CDATA[
+    Cet ensemble de valeurs définit les informations essentielles concernant l\'état de l\'appareil.<br/><p>
+    verifiedBootKey: <br/>Un hachage sécurisé de la clé permettant de vérifier l\'image système.<br/><br/>
+    deviceLocked: <br/>Vrai si le bootloader de l\'appareil est verrouillé, ce qui active la vérification du démarrage sécurisé (Verified Boot) et empêche la programmation d\'une image non signée sur l\'appareil.<br/><br/>
+    verifiedBootState: <br/>Cette structure de données fournit l\'état actuel de démarrage de l\'appareil, qui correspond au niveau de protection offert à l\'utilisateur et aux applications une fois le démarrage de l\'appareil terminé.<br/><br/>
+    verifiedBootHash: <br/>Un condensé de toutes les données protégées par Verified Boot. Pour les appareils utilisant l\'implémentation Android de Verified Boot, cette valeur contient le condensé de la structure VBMeta, c\'est-à-dire la structure de métadonnées de Verified Boot.
+    </p>]]></string>
+    <string name="authorization_list_osVersion_description"><![CDATA[
+    Version du système d\'exploitation Android associée à Keymaster, exprimée sous la forme d\'un nombre entier à six chiffres. Par exemple, la version 8.1.0 est représentée par 080100.
+    ]]></string>
+    <string name="authorization_list_osPatchLevel_description"><![CDATA[
+    Le mois et l\'année associés au correctif de sécurité utilisé dans Keymaster, stockés sous la forme d\'un nombre entier à six chiffres (YYYYMM), affichés ici sous la forme YYYY-MM. Par exemple, le correctif d\'août 2018 sera affiché 2018-08.
+    ]]></string>
+    <string name="authorization_list_attestationApplicationId_description"><![CDATA[
+    Cette structure de données reflète la politique de la plateforme Android concernant les applications autorisées à utiliser la clé secrète dans le cadre de l\'attestation. L\'identifiant peut englober plusieurs paquets si et seulement si plusieurs paquets partagent le même UID.
+    ]]></string>
+    <string name="authorization_list_attestationIdBrand_description"><![CDATA[
+    Indique le nom de la marque de l\'appareil, tel qu\'il est renvoyé par la méthode Build.BRAND sous Android. Ce champ n\'est renseigné que lors d\'une demande d\'attestation des identifiants de l\'appareil.
+    ]]></string>
+    <string name="authorization_list_attestationIdDevice_description"><![CDATA[
+    Fournit le nom de l\'appareil, tel qu\'il est renvoyé par la méthode Build.DEVICE sous Android. Ce champ n\'est renseigné que lors d\'une demande d\'attestation des identifiants de l\'appareil.
+    ]]></string>
+    <string name="authorization_list_attestationIdProduct_description"><![CDATA[
+    Fournit le nom du produit de l\'appareil, tel qu\'il est renvoyé par la méthode Build.PRODUCT sous Android. Ce champ n\'est renseigné que lors d\'une demande d\'attestation des identifiants de l\'appareil.
+    ]]></string>
+    <string name="authorization_list_attestationIdSerial_description"><![CDATA[
+    Indique le numéro de série de l\'appareil. Ce champ n\'est renseigné que lors d\'une demande d\'attestation des identifiants de l\'appareil.
+    ]]></string>
+    <string name="authorization_list_attestationIdImei_description"><![CDATA[
+    Indique l\'IMEI de l\'un des modules radio de l\'appareil afin de certifier les opérations de génération ou d\'importation de clés. Ce champ n\'est renseigné que lors d\'une demande de certification des identifiants de l\'appareil.
+    ]]></string>
+    <string name="authorization_list_attestationIdSecondImei_description"><![CDATA[
+    Fournit un numéro IMEI supplémentaire correspondant à l\'un des modules radio de l\'appareil afin de valider les opérations de génération ou d\'importation de clés. Ce champ n\'est renseigné que lors d\'une demande de validation des identifiants de l\'appareil.
+    ]]></string>
+    <string name="authorization_list_attestationIdMeid_description"><![CDATA[
+    Fournit les MEID de tous les modules radio présents sur l\'appareil. Ce champ n\'est renseigné que lors d\'une demande d\'attestation des identifiants de l\'appareil.
+    ]]></string>
+    <string name="authorization_list_attestationIdManufacturer_description"><![CDATA[
+    Indique le nom du fabricant de l\'appareil, tel qu\'il est renvoyé par la méthode Build.MANUFACTURER sous Android. Ce champ n\'est renseigné que lors d\'une demande d\'attestation des identifiants de l\'appareil.
+    ]]></string>
+    <string name="authorization_list_attestationIdModel_description"><![CDATA[
+    Fournit le nom du modèle de l\'appareil, tel qu\'il est renvoyé par la méthode Build.MODEL sous Android. Ce champ n\'est renseigné que lors d\'une demande d\'attestation des identifiants de l\'appareil.
+    ]]></string>
+    <string name="authorization_list_vendorPatchLevel_description"><![CDATA[
+    Spécifie le niveau de correctif de sécurité de l\'image du fournisseur qui doit être installé sur l\'appareil pour que cette clé puisse être utilisée, affiché ici sous la forme YYYY-MM-DD. Par exemple, si une clé a été générée sur un appareil Android sur lequel le correctif de sécurité du fournisseur du 1er août 2018 est installé, cette application affichera 2018-08-01.
+    ]]></string>
+    <string name="authorization_list_bootPatchLevel_description"><![CDATA[
+    Spécifie le niveau de correctif de sécurité de l\'image du noyau qui doit être installé sur l\'appareil pour que cette clé puisse être utilisée, affiché ici sous la forme YYYY-MM-DD. Par exemple, si une clé a été générée sur un appareil Android sur lequel le correctif de sécurité du système du 5 août 2018 est installé, cette application affichera 2018-08-05.
+    ]]></string>
+    <string name="authorization_list_mgfDigest_description"><![CDATA[
+    Spécifie les algorithmes de hachage MGF1 pouvant être utilisés avec le chiffrement/déchiffrement RSA avec remplissage OAEP. Les valeurs possibles sont définies par l\'énumération « Digest ».
+    ]]></string>
+    <string name="authorization_list_earlyBootOnly_description"><![CDATA[
+    Les clés associées au tag EARLY_BOOT_ONLY ne peuvent être utilisées que pendant la phase initiale de démarrage, jusqu\'à ce que la fonction IKeyMintDevice::earlyBootEnded() soit exécutée.
+    ]]></string>
+    <string name="authorization_list_usageCountLimit_description"><![CDATA[
+    Spécifie le nombre de fois où une clé peut être utilisée. Ce paramètre permet de limiter l\'utilisation d\'une clé. La valeur est un entier de 32 bits représentant le nombre actuel de tentatives restantes.
+    ]]></string>
+    <string name="authorization_list_deviceUniqueAttestation_description"><![CDATA[
+    Cela indique qu\'une attestation utilisant une clé propre à l\'appareil est demandée, plutôt qu\'une clé de lot. Lorsqu\'une clé propre à l\'appareil est utilisée, la chaîne renvoyée doit contenir deux ou trois certificats.
+    ]]></string>
+    <string name="authorization_list_identityCredentialKey_description"><![CDATA[
+    Il est utilisé dans les attestations générées par le HAL IIdentityCredential lorsque ce dernier atteste des clés de certification. IIdentityCredential génère des attestations de type KeyMint.
+    ]]></string>
+    <string name="authorization_list_moduleHash_description"><![CDATA[
+    Spécifie le hachage SHA-256 des informations relatives au module encodées au format DER.
+    ]]></string>
+
+    <string name="knox">Attestation Samsung Knox</string>
+    <string name="knox_description"><![CDATA[
+    Samsung Knox Attestation est une fonctionnalité qui vérifie l\'intégrité des données d\'un appareil Samsung en s\'assurant que celui-ci n\'est pas rooté et qu\'il n\'utilise pas de micrologiciel non officiel.
+    ]]></string>
+    <string name="knox_challenge">@string/attestation_challenge</string>
+    <string name="knox_challenge_description">@string/attestation_challenge_description</string>
+    <string name="knox_id_attest">Attestation d\'identité</string>
+    <string name="knox_id_attest_description"><![CDATA[
+    Vérifiez si l\'IMEI et le numéro de série ont été modifiés.
+    ]]></string>
+    <string name="knox_integrity">Statut d\'intégrité</string>
+    <string name="knox_integrity_description"><![CDATA[
+    L\'application de confiance (TA) Keymaster dans Secure World collecte ces données:
+    <ul>
+    <li gap="8sp">Le nom du package, le code de version et la clé de développement de l\'application requérante.</li>
+    <li gap="8sp">Informations signées concernant l\'état actuel de l\'appareil et l\'environnement attendu.</li>
+    <li gap="8sp">Les valeurs des sécurités matérielles indiquant si un micrologiciel non fiable a déjà été chargé sur l\'appareil.</li>
+    </ul>
+    ]]></string>
+    <string name="knox_record_hash">Hachage du rapport d\'attestation</string>
+    <string name="knox_record_hash_description"><![CDATA[
+    Un hachage SHA256 de la TA demandant les données relatives à l\'intégrité à l\'ICCC.
+    ]]></string>
+</resources>

@@ -18,6 +18,7 @@ object LocaleManager {
     private val supportedLocales = listOf(
         Locale("el"),       // Greek
         Locale("en"),       // English
+        Locale("fr"),       // French
         Locale("it"),       // Italian
         Locale("iw"),       // Hebrew
         Locale("pt", "BR"), // Portuguese (Brazil)
