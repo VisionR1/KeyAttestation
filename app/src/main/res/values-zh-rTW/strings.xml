@@ -47,6 +47,31 @@
     <string name="verified_boot_key_suspicious">Verified Boot 金鑰無效</string>
     <string name="verified_boot_key_suspicious_summary">Verified Boot 金鑰全部為零，這通常只會出現在開機載入程式已解除鎖定或未驗證的情況下。這是裝置遭到竄改的強烈跡象。</string>
 
+
+    <string name="menu_fake_report">偽裝報告（娛樂）</string>
+    <string name="menu_fake_report_options">偽裝報告選項</string>
+    <string name="fake_report_enable">開啟偽裝報告</string>
+    <string name="fake_report_disable">關閉偽裝報告</string>
+    <string name="fake_report_follow_real">跟隨真實結果</string>
+    <string name="fake_report_keybox_kind">根憑證 / keybox</string>
+    <string name="fake_report_boot">引導載入程式狀態</string>
+    <string name="fake_report_cert_section">憑證鏈與吊銷</string>
+    <string name="fake_report_page">整份報告</string>
+    <string name="fake_report_page_report">正常報告</string>
+    <string name="fake_report_cert_status">憑證狀態</string>
+    <string name="fake_report_cert_real">跟隨真實結果</string>
+    <string name="fake_report_cert_ok">正常</string>
+    <string name="fake_report_cert_expired">已過期</string>
+    <string name="fake_report_cert_revoked">已吊銷</string>
+    <string name="fake_report_cert_bad_signature">簽章錯誤</string>
+    <string name="fake_report_revocation">憑證吊銷狀態</string>
+    <string name="fake_report_revocation_real">跟隨真實結果</string>
+    <string name="fake_report_revocation_none">沒有憑證被吊銷</string>
+    <string name="fake_report_revocation_pristine">全部被吊銷</string>
+    <string name="fake_report_boot_unverified">已解鎖且未驗證</string>
+    <string name="fake_report_boot_failed">已鎖定但驗證失敗</string>
+    <string name="bootloader_unverified">引導載入程式已解鎖且未驗證</string>
+    <string name="bootloader_failed">驗證式啟動失敗</string>
     <string name="cert_chain">憑證鏈</string>
     <string name="cert_chain_description">憑證鏈是用於驗證金鑰的憑證列表。從這個金鑰的憑證開始，每個憑證均由鏈中下一個憑證簽章，到根憑證為止。認證的可信度取決於憑證鏈的根憑證。</string>
     <string name="cert_info">憑證資訊</string>

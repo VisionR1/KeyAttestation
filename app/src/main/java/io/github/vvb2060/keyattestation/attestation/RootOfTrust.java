@@ -81,6 +81,32 @@ public class RootOfTrust {
         }
     }
 
+    /**
+     * Display-only copy for the simulated report. Nothing outside the rendering layer
+     * receives it, and the parsed root of trust stays untouched.
+     */
+    public RootOfTrust(Boolean locked, int state) {
+        this(spoofBootKey(locked, state), locked != null && locked, state, new byte[32]);
+    }
+
+    /**
+     * A zero boot key is flagged as suspicious, so only present that for the states where
+     * the app itself legitimately shows it (unlocked or unverified boot).
+     */
+    private static byte[] spoofBootKey(Boolean locked, int state) {
+        if (locked == null) {
+            return new byte[32];
+        }
+        if (locked && state == KM_VERIFIED_BOOT_VERIFIED) {
+            var key = new byte[32];
+            for (int i = 0; i < key.length; i++) {
+                key[i] = (byte) (0x5a + i * 7);
+            }
+            return key;
+        }
+        return new byte[32];
+    }
+
     public byte[] getVerifiedBootKey() {
         return verifiedBootKey;
     }

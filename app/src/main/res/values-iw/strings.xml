@@ -47,6 +47,31 @@
     <string name="verified_boot_key_suspicious">מפתח Verified Boot אינו תקין</string>
     <string name="verified_boot_key_suspicious_summary">מפתח Verified Boot מורכב מאפסים בלבד, מה שמצופה רק ב-bootloader פתוח או לא מאומת. זהו סימן חזק לזיוף.</string>
 
+
+    <string name="menu_fake_report">דוח מדומה (לשעשוע)</string>
+    <string name="menu_fake_report_options">אפשרויות דוח מדומה</string>
+    <string name="fake_report_enable">הפעלת דוח מדומה</string>
+    <string name="fake_report_disable">כיבוי דוח מדומה</string>
+    <string name="fake_report_follow_real">לפי התוצאה האמיתית</string>
+    <string name="fake_report_keybox_kind">תעודת שורש / keybox</string>
+    <string name="fake_report_boot">מצב טוען האתחול</string>
+    <string name="fake_report_cert_section">שרשרת אישורים וביטול</string>
+    <string name="fake_report_page">הדוח כולו</string>
+    <string name="fake_report_page_report">דוח רגיל</string>
+    <string name="fake_report_cert_status">מצב האישור</string>
+    <string name="fake_report_cert_real">לפי התוצאה האמיתית</string>
+    <string name="fake_report_cert_ok">תקין</string>
+    <string name="fake_report_cert_expired">פג תוקף</string>
+    <string name="fake_report_cert_revoked">בוטל</string>
+    <string name="fake_report_cert_bad_signature">שגיאת חתימה</string>
+    <string name="fake_report_revocation">אישורים מבוטלים</string>
+    <string name="fake_report_revocation_real">לפי התוצאה האמיתית</string>
+    <string name="fake_report_revocation_none">אין אישורים מבוטלים</string>
+    <string name="fake_report_revocation_pristine">הכול מבוטל</string>
+    <string name="fake_report_boot_unverified">לא נעול, אתחול לא מאומת</string>
+    <string name="fake_report_boot_failed">נעול, אימות האתחול נכשל</string>
+    <string name="bootloader_unverified">טוען האתחול אינו נעול ואינו מאומת</string>
+    <string name="bootloader_failed">אימות האתחול נכשל</string>
     <string name="cert_chain">שרשרת תעודות</string>
     <string name="cert_chain_description">שרשרת תעודות היא רשימת תעודות המשמשות לאימות מפתח. השרשרת מתחילה בתעודה המשויכת למפתח, וכל תעודה חתומה על ידי הבאה בשרשרת. השרשרת מסתיימת בתעודת שורש, ומהימנות האימות תלויה בתעודת השורש של השרשרת.</string>
     <string name="cert_info">מידע תעודה</string>

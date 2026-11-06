@@ -47,6 +47,31 @@
     <string name="verified_boot_key_suspicious">La clé du système de démarrage vérifiée est invalide</string>
     <string name="verified_boot_key_suspicious_summary">La clé du système de démarrage vérifié est composée uniquement de zéros, ce qui n\'est normal que si le bootloader est déverrouillé ou non vérifié. C\'est un signe évident d\'altération.</string>
 
+
+    <string name="menu_fake_report">Rapport simulé (amusement)</string>
+    <string name="menu_fake_report_options">Options du rapport simulé</string>
+    <string name="fake_report_enable">Activer le rapport simulé</string>
+    <string name="fake_report_disable">Désactiver le rapport simulé</string>
+    <string name="fake_report_follow_real">Suivre le résultat réel</string>
+    <string name="fake_report_keybox_kind">Certificat racine / keybox</string>
+    <string name="fake_report_boot">État du chargeur d\'amorçage</string>
+    <string name="fake_report_cert_section">Chaîne et révocation</string>
+    <string name="fake_report_page">Rapport entier</string>
+    <string name="fake_report_page_report">Rapport normal</string>
+    <string name="fake_report_cert_status">État du certificat</string>
+    <string name="fake_report_cert_real">Suivre le résultat réel</string>
+    <string name="fake_report_cert_ok">Normal</string>
+    <string name="fake_report_cert_expired">Expiré</string>
+    <string name="fake_report_cert_revoked">Révoqué</string>
+    <string name="fake_report_cert_bad_signature">Erreur de signature</string>
+    <string name="fake_report_revocation">Certificats révoqués</string>
+    <string name="fake_report_revocation_real">Suivre le résultat réel</string>
+    <string name="fake_report_revocation_none">Aucun certificat révoqué</string>
+    <string name="fake_report_revocation_pristine">Tous révoqués</string>
+    <string name="fake_report_boot_unverified">Déverrouillé, démarrage non vérifié</string>
+    <string name="fake_report_boot_failed">Verrouillé, échec du démarrage vérifié</string>
+    <string name="bootloader_unverified">Le chargeur d\'amorçage est déverrouillé et non vérifié</string>
+    <string name="bootloader_failed">Échec du démarrage vérifié</string>
     <string name="cert_chain">Chaîne de certificats</string>
     <string name="cert_chain_description">Une chaîne de certificats est une liste de certificats utilisés pour authentifier une clé. La chaîne commence par le certificat associé à cette clé, et chaque certificat est signé par le certificat suivant dans la chaîne. La chaîne se termine par un certificat racine, et la fiabilité de l\'attestation dépend du certificat racine de la chaîne.</string>
     <string name="cert_info">Informations sur le certificat</string>

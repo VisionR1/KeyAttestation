@@ -47,6 +47,31 @@
     <string name="verified_boot_key_suspicious">Недійсний ключ Verified Boot</string>
     <string name="verified_boot_key_suspicious_summary">Ключ Verified Boot складається лише з нулів, що очікується лише для розблокованого або неперевіреного завантажувача. Це вагома ознака втручання.</string>
 
+
+    <string name="menu_fake_report">Фальшивий звіт (для розваги)</string>
+    <string name="menu_fake_report_options">Параметри фальшивого звіту</string>
+    <string name="fake_report_enable">Увімкнути фальшивий звіт</string>
+    <string name="fake_report_disable">Вимкнути фальшивий звіт</string>
+    <string name="fake_report_follow_real">За справжнім результатом</string>
+    <string name="fake_report_keybox_kind">Кореневий сертифікат / keybox</string>
+    <string name="fake_report_boot">Стан завантажувача</string>
+    <string name="fake_report_cert_section">Ланцюжок і відкликання</string>
+    <string name="fake_report_page">Увесь звіт</string>
+    <string name="fake_report_page_report">Звичайний звіт</string>
+    <string name="fake_report_cert_status">Стан сертифіката</string>
+    <string name="fake_report_cert_real">За справжнім результатом</string>
+    <string name="fake_report_cert_ok">Нормальний</string>
+    <string name="fake_report_cert_expired">Прострочений</string>
+    <string name="fake_report_cert_revoked">Відкликаний</string>
+    <string name="fake_report_cert_bad_signature">Помилка підпису</string>
+    <string name="fake_report_revocation">Відкликані сертифікати</string>
+    <string name="fake_report_revocation_real">За справжнім результатом</string>
+    <string name="fake_report_revocation_none">Жоден сертифікат не відкликано</string>
+    <string name="fake_report_revocation_pristine">Усі відкликані</string>
+    <string name="fake_report_boot_unverified">Розблоковано, неперевірене завантаження</string>
+    <string name="fake_report_boot_failed">Заблоковано, перевірка завантаження не вдалася</string>
+    <string name="bootloader_unverified">Завантажувач розблоковано, перевірки немає</string>
+    <string name="bootloader_failed">Перевірене завантаження не вдалося</string>
     <string name="cert_chain">Ланцюжок сертифікатів</string>
     <string name="cert_chain_description">Ланцюжок сертифікатів — це список сертифікатів, що використовуються для автентифікації ключа. Ланцюжок починається з сертифіката, пов\'язаного з цим ключем, і кожен сертифікат підписаний наступним у ланцюжку. Ланцюжок закінчується кореневим сертифікатом, і довіра до атестації залежить від кореневого сертифіката ланцюжка.</string>
     <string name="cert_info">Інформація про сертифікат</string>

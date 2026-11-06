@@ -112,7 +112,8 @@ public class EatAttestation extends Attestation {
     }
 
     /** Find the submod containing the key information, and return its security level. */
-    public int getAttestationSecurityLevel() {
+    @Override
+    protected int realAttestationSecurityLevel() {
         if (teeEnforced != null && teeEnforced.getAlgorithm() != null) {
             return teeEnforced.getSecurityLevel();
         } else if (softwareEnforced != null && softwareEnforced.getAlgorithm() != null) {
@@ -122,7 +123,8 @@ public class EatAttestation extends Attestation {
         }
     }
 
-    public RootOfTrust getRootOfTrust() {
+    @Override
+    protected RootOfTrust realRootOfTrust() {
         return rootOfTrust;
     }
 

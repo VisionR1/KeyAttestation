@@ -47,6 +47,31 @@
     <string name="verified_boot_key_suspicious">Chave do Verified Boot inválida</string>
     <string name="verified_boot_key_suspicious_summary">A chave do Verified Boot contém apenas zeros, algo esperado apenas quando o bootloader está desbloqueado ou não verificado. Este é um forte sinal de adulteração.</string>
 
+
+    <string name="menu_fake_report">Relatório falso (diversão)</string>
+    <string name="menu_fake_report_options">Opções do relatório falso</string>
+    <string name="fake_report_enable">Ativar relatório falso</string>
+    <string name="fake_report_disable">Desativar relatório falso</string>
+    <string name="fake_report_follow_real">Seguir o resultado real</string>
+    <string name="fake_report_keybox_kind">Certificado raiz / keybox</string>
+    <string name="fake_report_boot">Estado do bootloader</string>
+    <string name="fake_report_cert_section">Cadeia e revogação</string>
+    <string name="fake_report_page">Relatório inteiro</string>
+    <string name="fake_report_page_report">Relatório normal</string>
+    <string name="fake_report_cert_status">Estado do certificado</string>
+    <string name="fake_report_cert_real">Seguir o resultado real</string>
+    <string name="fake_report_cert_ok">Normal</string>
+    <string name="fake_report_cert_expired">Expirado</string>
+    <string name="fake_report_cert_revoked">Revogado</string>
+    <string name="fake_report_cert_bad_signature">Erro de assinatura</string>
+    <string name="fake_report_revocation">Certificados revogados</string>
+    <string name="fake_report_revocation_real">Seguir o resultado real</string>
+    <string name="fake_report_revocation_none">Nenhum certificado revogado</string>
+    <string name="fake_report_revocation_pristine">Todos revogados</string>
+    <string name="fake_report_boot_unverified">Desbloqueado, boot não verificado</string>
+    <string name="fake_report_boot_failed">Bloqueado, boot verificado falhou</string>
+    <string name="bootloader_unverified">O bootloader está desbloqueado e não verificado</string>
+    <string name="bootloader_failed">A inicialização verificada falhou</string>
     <string name="cert_chain">Cadeia de certificados</string>
     <string name="cert_chain_description">A cadeia de certificados é uma lista de certificados usados para autenticar uma chave. A cadeia começa com o certificado associado a essa chave, e cada certificado é assinado pelo próximo na cadeia. A cadeia termina com um certificado root, e a confiabilidade do atestado depende do certificado root da cadeia.</string>
     <string name="cert_info">Informações do certificado</string>

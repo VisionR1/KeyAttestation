@@ -12,6 +12,16 @@
         android:title="@string/menu_color" />
 	
     <item
+        android:id="@+id/menu_fake_report"
+        android:showAsAction="never"
+        android:title="@string/menu_fake_report" />
+
+    <item
+        android:id="@+id/menu_fake_report_options"
+        android:showAsAction="never"
+        android:title="@string/menu_fake_report_options" />
+
+    <item
         android:id="@+id/menu_secret_mode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
