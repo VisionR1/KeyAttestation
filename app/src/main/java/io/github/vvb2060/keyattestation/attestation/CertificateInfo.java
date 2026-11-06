@@ -35,6 +35,30 @@ public class CertificateInfo {
         return cert;
     }
 
+    /**
+     * Display-only copy used by the simulated report: same certificate object, a different
+     * reported status. Only the rendering layer ever receives it.
+     */
+    public CertificateInfo(CertificateInfo base, int fakeStatus) {
+        this.cert = base.cert;
+        this.issuer = base.issuer;
+        this.status = fakeStatus;
+        this.securityException = fakeStatus == base.status ? base.securityException : null;
+        this.attestation = base.attestation;
+        this.certException = base.certException;
+        this.provisioningInfo = base.provisioningInfo;
+    }
+
+    public CertificateInfo(CertificateInfo base, X509Certificate fakeCert) {
+        this.cert = fakeCert;
+        this.issuer = base.issuer;
+        this.status = base.status;
+        this.securityException = base.securityException;
+        this.attestation = base.attestation;
+        this.certException = base.certException;
+        this.provisioningInfo = base.provisioningInfo;
+    }
+
     public RootPublicKey.Status getIssuer() {
         return issuer;
     }

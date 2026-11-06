@@ -47,6 +47,31 @@
     <string name="verified_boot_key_suspicious">Verified Boot 密钥无效</string>
     <string name="verified_boot_key_suspicious_summary">Verified Boot 密钥全部由零组成，这通常只会出现在引导加载程序已解锁或未验证的情况下。这强烈表明设备可能已被篡改。</string>
 
+
+    <string name="menu_fake_report">伪装报告（娱乐）</string>
+    <string name="menu_fake_report_options">伪装报告选项</string>
+    <string name="fake_report_enable">开启伪装报告</string>
+    <string name="fake_report_disable">关闭伪装报告</string>
+    <string name="fake_report_follow_real">跟随真实结果</string>
+    <string name="fake_report_keybox_kind">根证书 / keybox</string>
+    <string name="fake_report_boot">引导加载状态</string>
+    <string name="fake_report_cert_section">证书链与吊销</string>
+    <string name="fake_report_page">整个报告</string>
+    <string name="fake_report_page_report">正常报告</string>
+    <string name="fake_report_cert_status">证书状态</string>
+    <string name="fake_report_cert_real">跟随真实结果</string>
+    <string name="fake_report_cert_ok">正常</string>
+    <string name="fake_report_cert_expired">已过期</string>
+    <string name="fake_report_cert_revoked">已吊销</string>
+    <string name="fake_report_cert_bad_signature">签名错误</string>
+    <string name="fake_report_revocation">证书吊销状态</string>
+    <string name="fake_report_revocation_real">跟随真实结果</string>
+    <string name="fake_report_revocation_none">没有证书被吊销</string>
+    <string name="fake_report_revocation_pristine">全部被吊销</string>
+    <string name="fake_report_boot_unverified">已解锁且未校验</string>
+    <string name="fake_report_boot_failed">已锁定但校验失败</string>
+    <string name="bootloader_unverified">引导加载程序已解锁且未校验</string>
+    <string name="bootloader_failed">校验启动失败</string>
     <string name="cert_chain">证书链</string>
     <string name="cert_chain_description">证书链是用于验证密钥的证书列表。从该密钥的证书开始，每个证书均由链中下一个证书签名，到根证书为止。认证的可信度取决于证书链的根证书。</string>
     <string name="cert_info">证书信息</string>

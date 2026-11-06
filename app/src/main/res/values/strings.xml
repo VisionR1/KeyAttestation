@@ -47,6 +47,31 @@
     <string name="verified_boot_key_suspicious">Verified boot key is invalid</string>
     <string name="verified_boot_key_suspicious_summary">The verified boot key is only zeros, which is only expected on an unlocked or unverified bootloader. This is a strong sign of tampering.</string>
 
+    <string name="menu_fake_report">Fake report (fun)</string>
+    <string name="menu_fake_report_options">Fake report options</string>
+    <string name="fake_report_enable">Enable fake report</string>
+    <string name="fake_report_disable">Disable fake report</string>
+    <string name="fake_report_follow_real">Follow the real result</string>
+    <string name="fake_report_keybox_kind">Root certificate / keybox</string>
+    <string name="fake_report_boot">Bootloader state</string>
+    <string name="fake_report_cert_section">Certificate chain and revocation</string>
+    <string name="fake_report_page">Whole report</string>
+    <string name="fake_report_page_report">Normal report</string>
+    <string name="fake_report_cert_status">Certificate status</string>
+    <string name="fake_report_cert_real">Follow the real result</string>
+    <string name="fake_report_cert_ok">Normal</string>
+    <string name="fake_report_cert_expired">Expired</string>
+    <string name="fake_report_cert_revoked">Revoked</string>
+    <string name="fake_report_cert_bad_signature">Signature error</string>
+    <string name="fake_report_revocation">Revoked certificates</string>
+    <string name="fake_report_revocation_real">Follow the real result</string>
+    <string name="fake_report_revocation_none">No certificate revoked</string>
+    <string name="fake_report_revocation_pristine">All revoked</string>
+    <string name="fake_report_boot_unverified">Unlocked, unverified boot</string>
+    <string name="fake_report_boot_failed">Locked, verified boot failed</string>
+    <string name="bootloader_unverified">Bootloader is unlocked and unverified</string>
+    <string name="bootloader_failed">Verified boot failed</string>
+
     <string name="cert_chain">Certificate chain</string>
     <string name="cert_chain_description">Certificate chain is a list of certificates used to authenticate a key. The chain starts with the certificate associated with that key, and each certificate is signed by the next in the chain. The chain ends with a root certificate, and the trustworthiness of the attestation depends on the root certificate of the chain.</string>
     <string name="cert_info">Certificate info</string>

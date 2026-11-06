@@ -96,6 +96,7 @@ class HomeFragment : AppFragment(), HomeAdapter.Listener, MenuProvider {
     }
 
     override fun onDestroyView() {
+        FakeReport.onActivityRefresh = null
         super.onDestroyView()
         _binding = null
     }
@@ -118,6 +119,8 @@ class HomeFragment : AppFragment(), HomeAdapter.Listener, MenuProvider {
         binding.list.adapter = adapter
         binding.list.addItemDecoration(HomeItemDecoration(context))
 
+        FakeReport.onActivityRefresh = { activity?.invalidateOptionsMenu() }
+
         viewModel.getAttestationData().observe(viewLifecycleOwner) { res ->
             when (res.status) {
                 Status.SUCCESS -> {
@@ -138,6 +141,12 @@ class HomeFragment : AppFragment(), HomeAdapter.Listener, MenuProvider {
                 }
             }
         }
+    }
+
+    override fun onFakeReportChanged() = renderFakeReport()
+
+    override fun onFakeReportConfigure() {
+        FakeReportDialog.show(requireContext()) { renderFakeReport() }
     }
 
     override fun onAttestationInfoClick(data: Attestation) {
@@ -230,6 +239,10 @@ class HomeFragment : AppFragment(), HomeAdapter.Listener, MenuProvider {
     }
 
     override fun onPrepareMenu(menu: Menu) {
+        menu.findItem(R.id.menu_fake_report)?.title =
+            getString(if (FakeReport.enabled) R.string.fake_report_disable else R.string.menu_fake_report)
+        menu.findItem(R.id.menu_fake_report_options)?.isVisible = FakeReport.enabled
+
         menu.findItem(R.id.menu_secret_mode).apply {
             isVisible = true
             isChecked = viewModel.secretMode
@@ -391,9 +404,40 @@ class HomeFragment : AppFragment(), HomeAdapter.Listener, MenuProvider {
                 showAboutDialog()
             }
 
+            R.id.menu_fake_report -> {
+                FakeReport.enabled = !FakeReport.enabled
+                // 关闭时全部复原；开启时从"全正常"起步，只改用户主动选择的那一项
+                if (FakeReport.enabled) FakeReport.resetOverrides() else FakeReport.reset()
+                renderFakeReport()
+                if (FakeReport.enabled) {
+                    // 打开后立刻给出配置入口，免得用户找不到
+                    FakeReportDialog.show(requireContext()) { renderFakeReport() }
+                }
+            }
+
+            R.id.menu_fake_report_options -> FakeReportDialog.show(requireContext()) {
+                renderFakeReport()
+            }
+
             else -> return false
         }
         return true
+    }
+
+    /** Re-renders the list from the cached data; no keystore call, no disk write. */
+    private fun renderFakeReport() {
+        activity?.invalidateOptionsMenu()
+        val res = viewModel.getAttestationData().value ?: return
+        // 整页伪装成错误页时，即使真实数据正常也要走错误页分支
+        if (FakeReport.enabled && FakeReport.page == FakeReport.PAGE_ERROR) {
+            adapter.updateData(AttestationException(FakeReport.errorCode(), null))
+            return
+        }
+        when (res.status) {
+            Status.SUCCESS -> adapter.updateData(res.data!!)
+            Status.ERROR -> adapter.updateData(res.error as AttestationException)
+            Status.LOADING -> Unit
+        }
     }
 
     private fun showAboutDialog() {

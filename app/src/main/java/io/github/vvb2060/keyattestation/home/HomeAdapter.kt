@@ -18,6 +18,10 @@ class HomeAdapter(listener: Listener) : IdBasedRecyclerViewAdapter() {
 
     interface Listener {
         fun onCommonDataClick(data: Data)
+
+        fun onFakeReportChanged()
+
+        fun onFakeReportConfigure() = onFakeReportChanged()
         fun onAttestationInfoClick(data: Attestation)
         fun onRkpHostnameClick(data: String)
     }
@@ -29,7 +33,20 @@ class HomeAdapter(listener: Listener) : IdBasedRecyclerViewAdapter() {
 
     fun updateData(baseData: BaseData) {
         clear()
-        when (baseData.status) {
+        val fake = FakeReport.enabled
+
+        // 伪装成解析失败页时，首页没有 keybox 卡片，也没有引导加载状态卡片
+        if (fake && FakeReport.page == FakeReport.PAGE_ERROR) {
+            showErrorPage(AttestationException(FakeReport.errorCode(), null))
+            return
+        }
+
+        val status = if (fake && baseData is AttestationData && FakeReport.hasRootOverride) {
+            fakeRootStatus(FakeReport.rootKind)
+        } else {
+            baseData.status
+        }
+        when (status) {
             RootPublicKey.Status.NULL -> {
                 addItem(HeaderViewHolder.CREATOR, HeaderData(
                     R.string.error_remote_key_provisioning,
@@ -87,20 +104,24 @@ class HomeAdapter(listener: Listener) : IdBasedRecyclerViewAdapter() {
                     rikka.material.R.attr.colorSafe), ID_CERT_STATUS)
             }
         }
-
         var id = ID_CERT_INFO_START
+        // 不再插入“模拟报告”横幅：开启后应与真实报告看起来一模一样
+        val certChainTitle = R.string.cert_chain
+        val certChainDescription = R.string.cert_chain_description
         addItem(SubtitleViewHolder.CREATOR, CommonData(
-            R.string.cert_chain,
-            R.string.cert_chain_description), id++)
+            certChainTitle,
+            certChainDescription), id++)
 
         val certsList = baseData.certs
-        if (!certsList.isNullOrEmpty()) {
-            val containsEc = certsList.any { it.cert?.publicKey?.algorithm?.equals("EC", ignoreCase = true) == true || it.cert?.publicKey?.algorithm?.equals("ECDSA", ignoreCase = true) == true }
+        val fakeChain = fake && baseData is AttestationData
+        val shownCerts = if (fakeChain) fakeCertInfos(certsList) else certsList
+        if (!shownCerts.isNullOrEmpty()) {
+            val containsEc = shownCerts.any { it.cert?.publicKey?.algorithm?.equals("EC", ignoreCase = true) == true || it.cert?.publicKey?.algorithm?.equals("ECDSA", ignoreCase = true) == true }
 
             // Track unique serial numbers to block duplicates
             val seenSerials = mutableSetOf<String>()
 
-            certsList.forEach { certInfo ->
+            shownCerts.forEach { certInfo ->
                 val currentAlgo = certInfo.cert?.publicKey?.algorithm
                 val serialNumber = certInfo.cert?.serialNumber?.toString()
 
@@ -160,10 +181,13 @@ class HomeAdapter(listener: Listener) : IdBasedRecyclerViewAdapter() {
             else -> ""
         }
 
-        val dateDisplay = if (dateStr.isNotEmpty()) {
-            "$dateStr\n$statusLine"
-        } else {
-            statusLine
+        val dateDisplay = when {
+            fake && baseData is AttestationData && FakeReport.revocation == FakeReport.REVOCATION_PRISTINE ->
+                context.getString(R.string.fake_report_revocation_pristine)
+            fake && baseData is AttestationData && FakeReport.revocation == FakeReport.REVOCATION_NONE ->
+                context.getString(R.string.fake_report_revocation_none)
+            dateStr.isNotEmpty() -> "$dateStr\n$statusLine"
+            else -> statusLine
         }.trim().ifEmpty { null }
 
         addItem(CommonItemViewHolder.COMMON_CREATOR, CommonData(
@@ -181,12 +205,14 @@ class HomeAdapter(listener: Listener) : IdBasedRecyclerViewAdapter() {
     }
 
     private fun updateData(attestationData: AttestationData) {
+        val fake = FakeReport.enabled
         addItemAt(1, BootStateViewHolder.CREATOR, attestationData, ID_BOOT_STATUS)
 
         var id = ID_DESCRIPTION_START
         val attestation = attestationData.showAttestation ?: return
+        val hideWarnings = fake && FakeReport.hideTampering
 
-        if (attestationData.isSoftwareLevel) {
+        if (attestationData.isSoftwareLevel && !hideWarnings) {
             addItemAt(2, HeaderViewHolder.CREATOR, HeaderData(
                 R.string.software_attestation,
                 R.string.software_attestation_summary,
@@ -194,7 +220,7 @@ class HomeAdapter(listener: Listener) : IdBasedRecyclerViewAdapter() {
                 rikka.material.R.attr.colorWarning), ID_SOFTWARE_STATUS)
         }
 
-        if (attestationData.rootOfTrust?.isVerifiedBootKeySuspicious == true) {
+        if (attestationData.rootOfTrust?.isVerifiedBootKeySuspicious == true && !hideWarnings) {
             addItemAt(2, HeaderViewHolder.CREATOR, HeaderData(
                 R.string.verified_boot_key_suspicious,
                 R.string.verified_boot_key_suspicious_summary,
@@ -207,14 +233,22 @@ class HomeAdapter(listener: Listener) : IdBasedRecyclerViewAdapter() {
             R.string.attestation_version_description,
             R.string.security_level_description,
             Attestation.attestationVersionToString(attestation.attestationVersion),
-            attestation.attestationSecurityLevel), id++)
+            if (hideWarnings) {
+                Attestation.KM_SECURITY_LEVEL_TRUSTED_ENVIRONMENT
+            } else {
+                attestation.attestationSecurityLevel
+            }), id++)
 
         addItem(CommonItemViewHolder.SECURITY_LEVEL_CREATOR, SecurityLevelData(
             R.string.keymaster,
             R.string.keymaster_version_description,
             R.string.security_level_description,
             Attestation.keymasterVersionToString(attestation.keymasterVersion),
-            attestation.keymasterSecurityLevel), id++)
+            if (hideWarnings) {
+                Attestation.KM_SECURITY_LEVEL_TRUSTED_ENVIRONMENT
+            } else {
+                attestation.keymasterSecurityLevel
+            }), id++)
 
         addItem(CommonItemViewHolder.COMMON_CREATOR, CommonData(
             R.string.attestation_challenge,
@@ -366,6 +400,40 @@ class HomeAdapter(listener: Listener) : IdBasedRecyclerViewAdapter() {
 
     fun updateData(e: AttestationException) {
         clear()
+        // 只有整页伪装成"解析失败"时才替换；否则照常显示真实失败信息
+        val fake = FakeReport.enabled && FakeReport.page == FakeReport.PAGE_ERROR
+        val status = if (fake) fakeRootStatus(FakeReport.rootKind) else null
+        if (fake && status != null && FakeReport.hasRootOverride) {
+            val header = when (status) {
+                RootPublicKey.Status.NULL -> HeaderData(
+                    R.string.error_remote_key_provisioning, 0,
+                    R.drawable.ic_error_outline_24, rikka.material.R.attr.colorInactive)
+                RootPublicKey.Status.FAILED -> HeaderData(
+                    R.string.cert_chain_not_trusted, R.string.cert_chain_not_trusted_summary,
+                    R.drawable.ic_error_outline_24, rikka.material.R.attr.colorAlert)
+                RootPublicKey.Status.UNKNOWN -> HeaderData(
+                    R.string.unknown_root_cert, R.string.unknown_root_cert_summary,
+                    R.drawable.ic_error_outline_24, rikka.material.R.attr.colorWarning)
+                RootPublicKey.Status.AOSP -> HeaderData(
+                    R.string.aosp_root_cert, R.string.aosp_root_cert_summary,
+                    R.drawable.ic_error_outline_24, rikka.material.R.attr.colorWarning)
+                RootPublicKey.Status.GOOGLE -> HeaderData(
+                    R.string.google_root_cert, R.string.google_root_cert_summary,
+                    R.drawable.ic_trustworthy_24, rikka.material.R.attr.colorSafe)
+                RootPublicKey.Status.GOOGLE_RKP -> HeaderData(
+                    R.string.google_root_cert_rkp, R.string.google_root_cert_rkp_summary,
+                    R.drawable.ic_trustworthy_24, rikka.material.R.attr.colorSafe)
+                RootPublicKey.Status.KNOX -> HeaderData(
+                    R.string.knox_root_cert, R.string.knox_root_cert_summary,
+                    R.drawable.ic_trustworthy_24, rikka.material.R.attr.colorSafe)
+                RootPublicKey.Status.OEM -> HeaderData(
+                    R.string.oem_root_cert, R.string.oem_root_cert_summary,
+                    R.drawable.ic_trustworthy_24, rikka.material.R.attr.colorSafe)
+            }
+            addItem(HeaderViewHolder.CREATOR, header, ID_CERT_STATUS)
+            notifyDataSetChanged()
+            return
+        }
         addItem(HeaderViewHolder.CREATOR, HeaderData(
             e.titleResId,
             0,
@@ -375,6 +443,45 @@ class HomeAdapter(listener: Listener) : IdBasedRecyclerViewAdapter() {
         addItem(ErrorViewHolder.CREATOR, e, ID_ERROR_MESSAGE)
         notifyDataSetChanged()
     }
+
+
+    /** 真实的解析失败页：只有错误卡片和详细消息，没有 keybox 与引导加载状态。 */
+    private fun showErrorPage(e: AttestationException) {
+        addItem(HeaderViewHolder.CREATOR, HeaderData(
+            e.titleResId,
+            0,
+            R.drawable.ic_error_outline_24,
+            rikka.material.R.attr.colorInactive), ID_ERROR)
+        addItem(ErrorViewHolder.CREATOR, e, ID_ERROR_MESSAGE)
+        notifyDataSetChanged()
+    }
+
+    private fun fakeCertInfos(certs: List<CertificateInfo>?): List<CertificateInfo> {
+        if (certs.isNullOrEmpty()) return emptyList()
+        if (FakeReport.certStatus == FakeReport.CERT_REAL) return certs
+        // 映射到 CertificateInfo 自身的状态常量，其余证书仍沿用真实状态
+        val status = when (FakeReport.certStatus) {
+            FakeReport.CERT_OK -> CertificateInfo.CERT_NORMAL
+            FakeReport.CERT_EXPIRED -> CertificateInfo.CERT_EXPIRED
+            FakeReport.CERT_REVOKED -> CertificateInfo.CERT_REVOKED
+            FakeReport.CERT_BAD_SIGNATURE -> CertificateInfo.CERT_SIGN
+            else -> -1
+        }
+        if (status < 0) return certs
+        return certs.map { CertificateInfo(it, status) }
+    }
+
+    private fun fakeRootStatus(kind: Int): RootPublicKey.Status = when (kind) {
+        FakeReport.ROOT_GOOGLE_RKP -> RootPublicKey.Status.GOOGLE_RKP
+        FakeReport.ROOT_AOSP -> RootPublicKey.Status.AOSP
+        FakeReport.ROOT_KNOX -> RootPublicKey.Status.KNOX
+        FakeReport.ROOT_OEM -> RootPublicKey.Status.OEM
+        FakeReport.ROOT_UNKNOWN -> RootPublicKey.Status.UNKNOWN
+        FakeReport.ROOT_FAILED -> RootPublicKey.Status.FAILED
+        FakeReport.ROOT_NULL -> RootPublicKey.Status.NULL
+        else -> RootPublicKey.Status.GOOGLE
+    }
+
 
     fun allowFrameAt(position: Int): Boolean {
         if (position < 0) return false
@@ -398,6 +505,8 @@ class HomeAdapter(listener: Listener) : IdBasedRecyclerViewAdapter() {
     companion object {
 
         private const val ID_ERROR = 0L
+        private const val ID_ERROR_DETAIL = -2L
+        private const val ID_ERROR_CERT_STATUS = -3L
         private const val ID_CERT_STATUS = 1L
         private const val ID_BOOT_STATUS = 2L
         private const val ID_SOFTWARE_STATUS = 3L

@@ -751,6 +751,63 @@ public class AuthorizationList {
         return attestationApplicationId;
     }
 
+    /**
+     * Display-only copy for the simulated report: same tags, but no root of trust tag,
+     * so the bootloader section can be presented as the user chose. The parsed object
+     * itself is never modified.
+     */
+    public AuthorizationList(AuthorizationList base) {
+        purposes = base.purposes;
+        algorithm = base.algorithm;
+        keySize = base.keySize;
+        digests = base.digests;
+        paddingModes = base.paddingModes;
+        ecCurve = base.ecCurve;
+        mlDsaVariant = base.mlDsaVariant;
+        rsaPublicExponent = base.rsaPublicExponent;
+        mgfDigests = base.mgfDigests;
+        rollbackResistance = base.rollbackResistance;
+        earlyBootOnly = base.earlyBootOnly;
+        activeDateTime = base.activeDateTime;
+        originationExpireDateTime = base.originationExpireDateTime;
+        usageExpireDateTime = base.usageExpireDateTime;
+        usageCountLimit = base.usageCountLimit;
+        noAuthRequired = base.noAuthRequired;
+        userAuthType = base.userAuthType;
+        authTimeout = base.authTimeout;
+        allowWhileOnBody = base.allowWhileOnBody;
+        trustedUserPresenceReq = base.trustedUserPresenceReq;
+        trustedConfirmationReq = base.trustedConfirmationReq;
+        unlockedDeviceReq = base.unlockedDeviceReq;
+        allApplications = base.allApplications;
+        applicationId = base.applicationId;
+        creationDateTime = base.creationDateTime;
+        origin = base.origin;
+        rollbackResistant = base.rollbackResistant;
+        osVersion = base.osVersion;
+        osPatchLevel = base.osPatchLevel;
+        attestationApplicationId = base.attestationApplicationId;
+        brand = base.brand;
+        device = base.device;
+        product = base.product;
+        serialNumber = base.serialNumber;
+        imei = base.imei;
+        secondImei = base.secondImei;
+        meid = base.meid;
+        manufacturer = base.manufacturer;
+        model = base.model;
+        vendorPatchLevel = base.vendorPatchLevel;
+        bootPatchLevel = base.bootPatchLevel;
+        deviceUniqueAttestation = base.deviceUniqueAttestation;
+        identityCredentialKey = base.identityCredentialKey;
+        moduleHash = base.moduleHash;
+    }
+
+    /**
+     * Display-only copy for the simulated report: same tags, but no root of trust tag,
+     * so the bootloader section can be presented as the user chose. The parsed object
+     * itself is never modified.
+     */
     public String getBrand() {
         return brand;
     }

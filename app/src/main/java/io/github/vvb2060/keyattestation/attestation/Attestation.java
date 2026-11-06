@@ -132,9 +132,32 @@ public abstract class Attestation {
         return attestationVersion;
     }
 
-    public abstract int getAttestationSecurityLevel();
+    /**
+     * Display-only variant used by the simulated report: reports TEE as the security level
+     * and returns a chosen root of trust. Every other field is shared with the real data,
+     * and the real parse result is left untouched.
+     */
+    public void applyFakeReport(io.github.vvb2060.keyattestation.home.FakeReportState state) {
+        this.fakeReport = state;
+    }
 
-    public abstract RootOfTrust getRootOfTrust();
+    private io.github.vvb2060.keyattestation.home.FakeReportState fakeReport;
+
+    public int getAttestationSecurityLevel() {
+        if (fakeReport != null) return KM_SECURITY_LEVEL_TRUSTED_ENVIRONMENT;
+        return realAttestationSecurityLevel();
+    }
+
+    protected abstract int realAttestationSecurityLevel();
+
+
+    public RootOfTrust getRootOfTrust() {
+        if (fakeReport != null) return fakeReport.locked() == null ? null : new RootOfTrust(fakeReport.locked(), fakeReport.bootState());
+        return realRootOfTrust();
+    }
+
+    protected abstract RootOfTrust realRootOfTrust();
+
 
     // Returns one of the KM_VERSION_* values define above.
     public int getKeymasterVersion() {
@@ -142,6 +165,7 @@ public abstract class Attestation {
     }
 
     public int getKeymasterSecurityLevel() {
+        if (fakeReport != null) return KM_SECURITY_LEVEL_TRUSTED_ENVIRONMENT;
         return keymasterSecurityLevel;
     }
 

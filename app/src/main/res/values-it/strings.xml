@@ -47,6 +47,31 @@
     <string name="verified_boot_key_suspicious">Chiave Verified Boot non valida</string>
     <string name="verified_boot_key_suspicious_summary">La chiave Verified Boot è composta solo da zeri, condizione prevista solo in caso di bootloader sbloccato o non verificato. È un chiaro segnale di manomissione.</string>
 
+
+    <string name="menu_fake_report">Report simulato (divertimento)</string>
+    <string name="menu_fake_report_options">Opzioni del report simulato</string>
+    <string name="fake_report_enable">Attiva report simulato</string>
+    <string name="fake_report_disable">Disattiva report simulato</string>
+    <string name="fake_report_follow_real">Segui il risultato reale</string>
+    <string name="fake_report_keybox_kind">Certificato radice / keybox</string>
+    <string name="fake_report_boot">Stato del bootloader</string>
+    <string name="fake_report_cert_section">Catena e revoca</string>
+    <string name="fake_report_page">Report completo</string>
+    <string name="fake_report_page_report">Report normale</string>
+    <string name="fake_report_cert_status">Stato del certificato</string>
+    <string name="fake_report_cert_real">Segui il risultato reale</string>
+    <string name="fake_report_cert_ok">Normale</string>
+    <string name="fake_report_cert_expired">Scaduto</string>
+    <string name="fake_report_cert_revoked">Revocato</string>
+    <string name="fake_report_cert_bad_signature">Errore di firma</string>
+    <string name="fake_report_revocation">Certificati revocati</string>
+    <string name="fake_report_revocation_real">Segui il risultato reale</string>
+    <string name="fake_report_revocation_none">Nessun certificato revocato</string>
+    <string name="fake_report_revocation_pristine">Tutti revocati</string>
+    <string name="fake_report_boot_unverified">Sbloccato, avvio non verificato</string>
+    <string name="fake_report_boot_failed">Bloccato, avvio verificato non riuscito</string>
+    <string name="bootloader_unverified">Il bootloader è sbloccato e non verificato</string>
+    <string name="bootloader_failed">Avvio verificato non riuscito</string>
     <string name="cert_chain">Catena di certificati</string>
     <string name="cert_chain_description">La catena di certificati è un elenco di certificati utilizzati per autenticare una chiave. La catena inizia con il certificato associato a quella chiave e ogni certificato è firmato dal successivo nella catena. La catena termina con un certificato radice e l\'affidabilità dell\'attestazione dipende dal certificato radice della catena.</string>
     <string name="cert_info">Info certificato</string>

@@ -71,11 +71,13 @@ public class Asn1Attestation extends Attestation {
         return Asn1Utils.getAsn1SequenceFromBytes(attestationExtensionBytes);
     }
 
-    public int getAttestationSecurityLevel() {
+    @Override
+    protected int realAttestationSecurityLevel() {
         return attestationSecurityLevel;
     }
 
-    public RootOfTrust getRootOfTrust() {
+    @Override
+    protected RootOfTrust realRootOfTrust() {
         RootOfTrust tee = teeEnforced.getRootOfTrust();
         if (tee != null) return tee;
         return softwareEnforced.getRootOfTrust();

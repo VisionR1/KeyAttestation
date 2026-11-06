@@ -47,6 +47,31 @@
     <string name="verified_boot_key_suspicious">Μη έγκυρο κλειδί Verified Boot</string>
     <string name="verified_boot_key_suspicious_summary">Το κλειδί Verified Boot αποτελείται μόνο από μηδενικά, κάτι που αναμένεται μόνο όταν ο bootloader είναι ξεκλείδωτος ή μη επαληθευμένος. Αυτό αποτελεί ισχυρή ένδειξη παραποίησης.</string>
 
+
+    <string name="menu_fake_report">Ψεύτικη αναφορά (διασκέδαση)</string>
+    <string name="menu_fake_report_options">Επιλογές ψεύτικης αναφοράς</string>
+    <string name="fake_report_enable">Ενεργοποίηση ψεύτικης αναφοράς</string>
+    <string name="fake_report_disable">Απενεργοποίηση ψεύτικης αναφοράς</string>
+    <string name="fake_report_follow_real">Ακολούθησε το πραγματικό αποτέλεσμα</string>
+    <string name="fake_report_keybox_kind">Πιστοποιητικό ρίζας / keybox</string>
+    <string name="fake_report_boot">Κατάσταση φορτωτή εκκίνησης</string>
+    <string name="fake_report_cert_section">Αλυσίδα και ανάκληση</string>
+    <string name="fake_report_page">Ολόκληρη η αναφορά</string>
+    <string name="fake_report_page_report">Κανονική αναφορά</string>
+    <string name="fake_report_cert_status">Κατάσταση πιστοποιητικού</string>
+    <string name="fake_report_cert_real">Ακολούθησε το πραγματικό αποτέλεσμα</string>
+    <string name="fake_report_cert_ok">Κανονικό</string>
+    <string name="fake_report_cert_expired">Έληξε</string>
+    <string name="fake_report_cert_revoked">Ανακλήθηκε</string>
+    <string name="fake_report_cert_bad_signature">Σφάλμα υπογραφής</string>
+    <string name="fake_report_revocation">Ανακλημένα πιστοποιητικά</string>
+    <string name="fake_report_revocation_real">Ακολούθησε το πραγματικό αποτέλεσμα</string>
+    <string name="fake_report_revocation_none">Κανένα πιστοποιητικό δεν ανακλήθηκε</string>
+    <string name="fake_report_revocation_pristine">Όλα ανακλημένα</string>
+    <string name="fake_report_boot_unverified">Ξεκλείδωτο, μη επαληθευμένη εκκίνηση</string>
+    <string name="fake_report_boot_failed">Κλειδωμένο, αποτυχία επαληθευμένης εκκίνησης</string>
+    <string name="bootloader_unverified">Ο φορτωτής εκκίνησης είναι ξεκλείδωτος και μη επαληθευμένος</string>
+    <string name="bootloader_failed">Η επαληθευμένη εκκίνηση απέτυχε</string>
     <string name="cert_chain">Αλυσίδα πιστοποιητικών</string>
     <string name="cert_chain_description">Η αλυσίδα πιστοποιητικών είναι μια λίστα πιστοποιητικών που χρησιμοποιούνται για τον έλεγχο ταυτότητας ενός κλειδιού. Η αλυσίδα ξεκινά με το πιστοποιητικό που σχετίζεται με αυτό το κλειδί και κάθε πιστοποιητικό υπογράφεται από τον επόμενο στην αλυσίδα. Η αλυσίδα τελειώνει με πιστοποιητικό ρίζας και η αξιοπιστία της βεβαίωσης εξαρτάται από το πιστοποιητικό ρίζας της αλυσίδας.</string>
     <string name="cert_info">Πληροφορίες πιστοποιητικού</string>
